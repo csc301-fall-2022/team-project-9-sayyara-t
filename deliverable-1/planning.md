@@ -54,16 +54,7 @@
 
 ----
 ## Intellectual Property Confidentiality Agreement 
-> Note this section is **not marked** but must be completed briefly if you have a partner. If you have any questions, please ask on Piazza.
->  
-**By default, you own any work that you do as part of your coursework.** However, some partners may want you to keep the project confidential after the course is complete. As part of your first deliverable, you should discuss and agree upon an option with your partner. Examples include:
-1. You can share the software and the code freely with anyone with or without a license, regardless of domain, for any use.
-2. You can upload the code to GitHub or other similar publicly available domains.
-3. You will only share the code under an open-source license with the partner but agree to not distribute it in any way to any other entity or individual. 
-4. You will share the code under an open-source license and distribute it as you wish but only the partner can access the system deployed during the course.
-5. You will only reference the work you did in your resume, interviews, etc. You agree to not share the code or software in any capacity with anyone unless your partner has agreed to it.
-
-**Briefly describe which option you have agreed to. Your partner cannot ask you to sign any legally binding agreements or documents pertaining to non-disclosure, confidentiality, IP ownership, etc.**
+We will only share the code under an open-source license with the partner but agree to not distribute it in any way to any other entity or individual. 
 
 ----
 
@@ -71,26 +62,21 @@
 
 #### Q6: What are the roles & responsibilities on the team?
 
-Describe the different roles on the team and the responsibilities associated with each role. 
- * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.  
- * Add role(s) to your Team-[Team_Number]-[Team_Name].csv file on the main folder
-
-List each team member and:
- * A description of their role(s) and responsibilities including the components they'll work on and non-software related work
- * 3 technical strengths and weaknesses each (e.g. languages, frameworks, libraries, development methodologies, etc.)
+| Name      | Role | Responsibilities | Strengths | Weakness
+| ------- | ------------------ | ----------------- | ----------- | -----------
+| Ling    | Title       |
+| Brian   | Scrum Master|
+| Kevin   |             |
+| Harry   |             |
+| Tehilla | DevOps      |
+| Bradley |             |
+| Daniel  | Client Communicator |
 
 
 #### Q7: What operational events will you have as a team?
-
-Describe meetings (and other events) you are planning to have. 
- * When and where? Recurring or ad hoc? In-person or online?
- * What's the purpose of each meeting?
- * Other events could be coding sessions, code reviews, quick weekly sync meeting online, etc.
- * You should have at least 2 meetings with your project partner (if you have one) before D1 is due. Describe them here:
-   * What did you discuss during the meetings?
-   * What were the outcomes of each meeting?
-   * You must keep track of meeting minutes and add them to your repo.
-   * You must have a regular meeting schedule established by the second meeting.  
+ * Our group will have weekly meetings in the Thursday tutorial sessions, and if the alloted time on Zoom is insuffient, all conversations should be carried forward to our Discord server. In the weeks before a deliverable or a major milestone, we will have up to 2 additional meetings per week at a time most convinient for everyone. All meetings will be hosted online, unless otherwise planned with the agreement of all group members. 
+ * The weekly meeting serves as a sync between all group members to keep track of progress and answer potential questions. These should not be deeply technical in nature. If technical meetings are required then they will be scheduled through our Discord server at a convinient time. 
+ * In our project partner meetings, we primarily clarified on the way this project is set up to be built by multiple teams simutanously. We proposed plans for functionality seperation and this was ultimated accepted by the partner as the overarching structure for this project going forward. In addition, the partner explained user stories in detail, granting us deeper understanding in the problem we are trying to address. Partner expectations and project specifications have also be discussed in these meetings. 
   
 #### Q8: What artifacts will you use to self-organize?
 
@@ -105,14 +91,14 @@ List/describe the artifacts you will produce in order to organize your team.
 
 #### Q9: What are the rules regarding how your team works?
 
-Describe your team's working culture.
+The general culture and atmosphere should be generally casual. 
 
 **Communications:**
- * What is the expected frequency? What methods/channels are appropriate? 
- * If you have a partner project, what is your process (in detail) for communicating with your partner?
+ * The group is expected to meet at least once a week to discuss current progress. Outside of the Thursday tutorial sessions on Zoom, all communication should go through Discord. These intra-group communication can be casual as long as they are polite and respectful.
+ * For communicating with our partner, we will primarily be using Discord. Should an occasion arise where a discussion with the partner is required, one person from the group can ping the partner through Discord and set up a time. All group members should participate in partner meetings. These discussions should be strictly professional. 
  
 **Meetings:**
- * How are people held accountable for attending meetings, completing action items? Is there a moderator or process?
+ * All group members are expected to attend all meetings, and should be available on Discord most of the time. Occasionally missing meetings and messages are acceptable as long as any potential absences are communicated to the group beforehand. In the case of repeated neglegence, the missing member's participation will be noted in group surveys and will be reflected in participation marks throughout the project duration. 
 
 
 ----
