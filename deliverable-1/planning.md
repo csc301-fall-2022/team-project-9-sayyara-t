@@ -158,11 +158,11 @@ A lot of clarification came from each meeting, and the meetings helped section o
   
 #### Q8: What artifacts will you use to self-organize?
 
-- Google docs for updating and coordinating on responses
-- Github issues for prioritizing and assigning tasks
-- Github Milestones to determine work completion
-- Discord server for general communication, with channels for subteams
-- Discord server for communication with our partner
+Our main tool for coordinating team members will be Github (specifically milestones and issues). Issues allow us to articulate issues and assign them to team members with priority. Milestones allow us to group issues and place them on a timeline. One of the advantages of choosing Github is that issues may be closed with pull requests or commits and so we can easily keep track of our code and progress simultaneously.
+
+Milestones will be decided by the team at the start of each sprint (after each deliverable) and theme overseen by the relevant team leads.
+Our team also likes using Google docs for updating and coordinating on responses for which we want group input and consensus, or for meeting minutes
+Meeting minutes will be delegated by the individual in charge of the meeting (the person whose responsibilities are more directly addressed by the meeting), and the default will be for the meeting leader to take the minutes themselves.
 
 
 #### Q9: What are the rules regarding how your team works?
@@ -179,8 +179,8 @@ The general culture and atmosphere should be generally casual.
 ----
 ## Highlights
 
-1. Initially we were paired with our partner alongside two other groups with the expectation that we would all develop separate components on the same application. However, that was not feasible since it would require the collaboration of over 20 people on various parts of frontend/backend. Instead, we suggested that we all split up and have each team develop their own MVP. Later on our partner can choose to continue with the best one, or try and combine them together. This proposal was greenlit by our partner and served to cut dependency between different groups.
-2. We decided to work on customer-shop interactions
-3. We realized that our application can’t force trust between customers and shop owners
-4. Coordinating modeling to avoid backend/frontend conflicts later
+1. Initially we were paired with our partner alongside two other groups with the expectation that we would all develop separate components on the same application. Our partner thought he was getting a large team of over 20 students, split into 3 subteams. Our options were either to try and work together as a large team, or to split into smaller teams and work independently. Working together would give us the opportunity for a larger scope. However, it would entail coordinating over 20 students with no set hierarchy and compromising our grades based on their standards. Given the options, we felt it was important to work alone, and communicated that to our partner.
+2. The second major decision we made was in terms of scope. Once we were working independently of the other team, the proposed scope was too large. We had to decide what we felt the core problem is that our partner wishes to solve and choose an MVP that targeted this core issue. The initial Sayyara app tried to solve 2 issues simultaneously: auto shop management, and auto shop-customer interactions. We feel that the second issue is more pertinent as it is unique to this problem domain and cannot be solved by some generic store management application. Based on this insight, we landed on the features and problem presented over the course of this report.
+3. We had a major debate about implementing warranties to accompany work quotes and invoices. The argument for including this feature was that it completes the work cycle, allows for reworks free of charge, and builds trust between the shop and customer. The argument against including this feature was that it initiated a long and complicated process we could not enforce. Just because we list a warranty does not mean we need to abide by it. This means that it is out of scope for us to brainstorm ways for the mechanic to follow through, or for the customer to completely trust the mechanic. There would need to be a limit. For this reason, we are tabling the conversation about warranty and rework orders until we have further conversation with our partner about his intentions and resources on the matter. Our current MVP design excludes it.
+4. Our group was unsure whether to proceed to splitting into subteams, or to invest time in creating basic data models and specifications as a group. An argument for splitting up was that it allows everyone to get to work on something instead of waiting for group decisions. An argument against splitting up is that coordination at the beginning will allow for much smoother integration of code later. We decided that we will initiate the conversation about design as a group to make sure we are somewhat on the same page, and then split up for the concrete elements of data modeling and UX design. This way, everyone is somewhat on the same page, but we do not stall progress too long, especially for the team members less interested in backend details and more interested in front end/UX work.
 
