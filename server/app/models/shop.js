@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Shop.hasMany(models.Service, {onDelete: 'CASCADE'})
       Shop.belongsToMany(models.User, {through: 'ShopAdmin'})
       Shop.belongsToMany(models.User, {through: 'Rating'})
     }
