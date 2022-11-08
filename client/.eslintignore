@@ -1,0 +1,2 @@
+# Add files that should be ignored by ESlint
+node_modules
