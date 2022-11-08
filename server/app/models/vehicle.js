@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Vehicle.init({
     id: {
-      tpye:DataTypes.UUID,
+      type:DataTypes.UUID,
       allowNull: false,
       unique: true 
     },
