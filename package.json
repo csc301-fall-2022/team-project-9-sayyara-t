@@ -1,7 +1,7 @@
 {
 	"name": "sayyara_app",
 	"scripts": {
-		"install": "cd server && npm install",
+		"install:all": "npm install && cd server && npm install",
 		"ci": "npm ci && cd server && npm ci",
 		"test:all": "jest",
 		"test:server:unit": "jest --testPathPattern=./server/tests/unit",
