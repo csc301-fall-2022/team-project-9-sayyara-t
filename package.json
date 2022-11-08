@@ -1,0 +1,12 @@
+{
+	"name": "sayyara_app",
+	"scripts": {
+		"install": "cd server && npm install",
+		"test:all": "jest",
+		"test:server:unit": "jest --testPathPattern=./server/tests/unit",
+		"test:server:integration": "jest --testPathPattern=./server/tests/integration"
+	},
+	"devDependencies": {
+		"jest": "^29.3.0"
+	}
+}

@@ -194,12 +194,6 @@
     "yargs-unparser": "^2.0.0",
     "yocto-queue": "^0.1.0"
   },
-  "devDependencies": {
-    "mocha": "^10.1.0"
-  },
-  "scripts": {
-    "test": "mocha"
-  },
   "author": "",
   "license": "ISC"
 }
