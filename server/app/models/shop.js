@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   Shop.init({
     id: {
       type:DataTypes.UUID,
+      primaryKey: true,
       allowNull: false,
       unique: true 
     },

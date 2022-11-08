@@ -16,12 +16,13 @@ module.exports = (sequelize, DataTypes) => {
   Service.init({
     id: {
       type:DataTypes.UUID,
+      primaryKey: true,
       allowNull: false,
       unique: true 
     },
     shop_id: {type: DataTypes.UUID, allowNull: false,
       references:{
-        model: Shop,
+        model: 'shop',
         key: 'id'
       }},
     name: {type: DataTypes.STRING, allowNull: false},

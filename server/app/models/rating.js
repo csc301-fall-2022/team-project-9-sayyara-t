@@ -16,17 +16,18 @@ module.exports = (sequelize, DataTypes) => {
   Rating.init({
     id: {
       type:DataTypes.UUID,
+      primaryKey: true,
       allowNull: false,
       unique: true 
     },
     user_id: {type: DataTypes.UUID, allowNull: false,
       references:{
-        model: User,
+        model: 'user',
         key: 'id'
       }},
     shop_id: {type: DataTypes.UUID, allowNull: false,
       references:{
-        model: Shop,
+        model: 'shop',
         key: 'id'
       }},
     comment: {type: DataTypes.STRING, allowNull: false},

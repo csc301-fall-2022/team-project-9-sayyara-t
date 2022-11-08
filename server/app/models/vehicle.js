@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Vehicle.init({
     id: {
       type:DataTypes.UUID,
+      primaryKey: true,
       allowNull: false,
       unique: true 
     },
@@ -28,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         allowNull: false,
         references:{
-            model: User,
+            model: 'user',
             key: 'id',
         }
     }
