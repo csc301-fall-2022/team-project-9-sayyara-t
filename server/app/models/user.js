@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasMany(models.Vehicle, {onDelete: 'CASCADE'})
       User.belongsToMany(models.Shop, {through: 'ShopAdmin'})
+      User.belongsToMany(models.Shop, {through: 'Rating'})
     }
   }
   User.init({

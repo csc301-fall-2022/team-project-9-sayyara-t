@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ShopAdmins', {
+    await queryInterface.createTable('Ratings', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -26,6 +26,18 @@ module.exports = {
           key: 'id',
         }
       },
+      comment: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      star: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      price: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -37,6 +49,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ShopAdmins');
+    await queryInterface.dropTable('Ratings');
   }
 };
