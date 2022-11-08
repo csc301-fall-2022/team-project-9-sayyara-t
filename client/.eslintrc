@@ -1,0 +1,36 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "react"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "semi": ["error", "always"],
+    "no-console": 1,
+    "default-case": 1,
+    "no-await-in-loop": 2,
+    "react/button-has-type": 1,
+    "react/prop-types": 2,
+    "react/require-default-props": 2,
+    "react/no-array-index-key": 2,
+    "react/react-in-jsx-scope": 2,
+    "react/jsx-uses-react": 2
+  }
+}
