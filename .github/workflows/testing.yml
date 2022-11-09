@@ -22,5 +22,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Upgrade NPM
+        run: npm install -g npm
       - run: npm run ci
       - run: npm run test:all
