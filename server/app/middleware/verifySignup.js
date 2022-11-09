@@ -1,6 +1,5 @@
 const db = require("../models");
-const User = db.user;
-const model_constants = require("../models/constants.js")
+const User = require("../models").User;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
     // Username
@@ -35,7 +34,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
 };
 
 checkRolesExisted = (req, res, next) => {
-    if (req.user.role_id >= model_constants.RoleList.length) {
+    if (req.body.role_id > 3) {
         res.status(400).send({
             message: "Failed! Role ID does not exist."
         });

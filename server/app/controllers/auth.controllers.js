@@ -1,7 +1,6 @@
 const db = require("../models");
-const model_constants = require("../models/constants.js")
 const config = require("../config/auth.config");
-const User = db.user;
+const User = require("../models").User;
 
 const Op = db.Sequelize.Op;
 
@@ -19,7 +18,9 @@ exports.signup = (req, res) => {
         phone: req.body.phone
     })
         .then(() => {
-            res.send({ message: "User was registered successfully!" });
+            res.status(200).send({
+                message: "User was registered successfully!"
+            });
         })
         .catch(err => {
             res.status(500).send({ message: err.message });
@@ -57,9 +58,9 @@ exports.signin = (req, res) => {
                 id: user.id,
                 username: user.username,
                 email: user.email,
-                role: model_constants.RoleList[user.role_id],
                 name: user.name,
                 phone: user.phone,
+                role_id: user.role_id,
                 accessToken: token
             });
         })

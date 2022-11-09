@@ -1,8 +1,7 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
-const model_constants = require("../models/constants.js")
 const db = require("../models");
-const User = db.user;
+const User = require("../models").User;
 
 verifyToken = (req, res, next) => {
     let token = req.headers["x-access-token"];
@@ -26,7 +25,7 @@ verifyToken = (req, res, next) => {
 
 isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
-        if (model_constants.RoleList[user.role_id] === "Admin"){
+        if (user.role_id === 1){
             return;
         }
 
@@ -38,7 +37,7 @@ isAdmin = (req, res, next) => {
 
 isShopOwner = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
-        if (model_constants.RoleList[user.role_id] === "Shop_Owner"){
+        if (user.role_id === 3){
             return;
         }
 
@@ -50,7 +49,7 @@ isShopOwner = (req, res, next) => {
 
 isVehicleOwner = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
-        if (model_constants.RoleList[user.role_id] === "Vehicle_Owner"){
+        if (user.role_id === 2){
             return;
         }
 
