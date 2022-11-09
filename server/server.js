@@ -30,6 +30,8 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
+require("./app/routes/shop.route")(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

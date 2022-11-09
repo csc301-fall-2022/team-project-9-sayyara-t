@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Vehicle.init({
     id: {
       type:DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      allowNull: false,
       unique: true 
     },
     plate: {type: DataTypes.STRING, allowNull: false},

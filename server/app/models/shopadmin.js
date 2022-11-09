@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   ShopAdmin.init({
     id: {
       type:DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      allowNull: false,
       unique: true 
     },
     user_id: {type: DataTypes.UUID, allowNull: false,
