@@ -11,14 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasMany(models.Vehicle, {onDelete: 'CASCADE'})
-      User.belongsToMany(models.Shop, {through: 'ShopAdmin'})
+      User.belongsToMany(models.Shop, {through: 'ShopAdmin'}) 
       User.belongsToMany(models.Shop, {through: 'Rating'})
     }
   }
   User.init({
     id: {
       type:DataTypes.UUID,
-      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
       unique: true 
     },
     role_id: {type: DataTypes.INTEGER, allowNull: false, defaultValue: 0},

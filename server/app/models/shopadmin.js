@@ -16,17 +16,18 @@ module.exports = (sequelize, DataTypes) => {
   ShopAdmin.init({
     id: {
       type:DataTypes.UUID,
-      allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
       unique: true 
     },
     user_id: {type: DataTypes.UUID, allowNull: false,
       references:{
-        model: User,
+        model: 'user',
         key: 'id'
       }},
     shop_id: {type: DataTypes.UUID, allowNull: false,
       references:{
-        model: Shop,
+        model: 'shop',
         key: 'id'
       }}
   }, {
