@@ -4,6 +4,8 @@ import {
   Checkbox,
   Typography
 } from '@mui/material';
+import { NavigationBar } from './NavigationBar';
+import { Body } from './Body';
 
 const LandingPage = () => {
   // Access material UI theme using this hook
@@ -12,8 +14,10 @@ const LandingPage = () => {
   // Material UI themes default components according the ThemeProvider, like the below Checkbox
   return (
     <>
-      <Checkbox defaultChecked/>
-      <Typography>This is the Landing Page!</Typography>
+      <NavigationBar></NavigationBar>
+      {/* <Checkbox defaultChecked/>
+      <Typography>Filter</Typography> */}
+      <Body></Body>
     </>
   );
 };
