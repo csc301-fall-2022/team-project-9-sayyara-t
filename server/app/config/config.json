@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "YourPasswordHere",
-    "database": "sayarra",
+    "password": "MySQLTr33B3ardPassword",
+    "database": "Sayyara",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
