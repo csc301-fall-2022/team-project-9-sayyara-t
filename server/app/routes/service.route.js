@@ -8,6 +8,7 @@ module.exports = app =>{
     router.delete("/:id", services.delete);
     router.get("/:id", services.findOne);
     router.get("/", services.findAll);
+    router.get("/shop/:shop_id", services.findAllByShopID);
 
     app.use('/api/services', router);
 }

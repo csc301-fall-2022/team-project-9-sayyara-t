@@ -26,7 +26,19 @@ exports.findAll = (req, res)=>{
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Shops."
+          err.message || "Some error occurred while retrieving Services."
+      });
+    });
+  }
+
+exports.findAllByShopID = (req, res)=>{
+    const shop_id = req.params.shop_id;
+    Service.findAll({attributes: ['id', 'shop_id', 'name', 'description', 'price', 'createdAt', 'updatedAt'], where: {shop_id:shop_id}})
+    .then(data=>{res.send(data)})
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Services."
       });
     });
   }
