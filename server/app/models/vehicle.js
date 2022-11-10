@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       unique: true 
     },
-    plate: {type: DataTypes.STRING, allowNull: false},
+    plate: {type: DataTypes.STRING, allowNull: false, unique: true},
     model: {type: DataTypes.STRING, allowNull: false},
-    vin:  {type: DataTypes.STRING, allowNull: false},
+    vin:  {type: DataTypes.STRING, allowNull: false, unique: true},
     mileage:  {type: DataTypes.STRING, allowNull: false},
     type:  {type: DataTypes.STRING, allowNull: false},
     user_id:{

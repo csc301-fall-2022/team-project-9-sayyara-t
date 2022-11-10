@@ -13,9 +13,8 @@ exports.create = (req, res)=>{
       }
     console.log(newVehicle);
 
-
     Vehicle.create(newVehicle).then(data=>{res.send(data)})
-    .catch(err => {
+      .catch(err => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while creating the Vehicle."
