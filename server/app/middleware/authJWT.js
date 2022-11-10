@@ -18,14 +18,16 @@ verifyToken = (req, res, next) => {
                 message: "Unauthorized!"
             });
         }
-        req.userId = decoded.id;
+        req.user_id = decoded.id;
         next();
     });
 };
 
 isAdmin = (req, res, next) => {
-    User.findByPk(req.userId).then(user => {
+    User.findByPk(req.user_id).then(user => {
         if (user.role_id === 1){
+            console.log("Admin Check Passed")
+            next();
             return;
         }
 
@@ -36,8 +38,9 @@ isAdmin = (req, res, next) => {
 };
 
 isShopOwner = (req, res, next) => {
-    User.findByPk(req.userId).then(user => {
+    User.findByPk(req.user_id).then(user => {
         if (user.role_id === 3){
+            next();
             return;
         }
 
@@ -48,8 +51,9 @@ isShopOwner = (req, res, next) => {
 };
 
 isVehicleOwner = (req, res, next) => {
-    User.findByPk(req.userId).then(user => {
+    User.findByPk(req.user_id).then(user => {
         if (user.role_id === 2){
+            next();
             return;
         }
 
