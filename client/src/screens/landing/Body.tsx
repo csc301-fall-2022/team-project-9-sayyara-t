@@ -59,24 +59,8 @@ export const Body = () => {
         setValue(event.target.value);
     };
 
-    const handleClick1 = () => {
-        setPrice(1);
-        console.log(price);
-    };
-    
-    const handleClick2 = () => {
-        setPrice(2);
-        console.log(price);
-    };
-
-    const handleClick3 = () => {
-        setPrice(3);
-        console.log(price);
-    };
-
-    const handleClick4 = () => {
-        setPrice(4);
-        console.log(price);
+    const handleClick = (price: number) => {
+        setPrice(price);
     };
 
     function valuetext(value: number) {
@@ -152,10 +136,10 @@ export const Body = () => {
                     </Typography>
                     </FormLabel>
                     <Stack direction='row' spacing={1}>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick1}>$</Button>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick2}>$$</Button>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick3}>$$$</Button>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick4}>$$$$</Button>
+                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(1)}>$</Button>
+                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(2)}>$$</Button>
+                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(3)}>$$$</Button>
+                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(4)}>$$$$</Button>
                     </Stack>
                 </FormControl>
 
