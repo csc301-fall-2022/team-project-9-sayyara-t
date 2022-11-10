@@ -1,6 +1,8 @@
+const { sequelize } = require("../models");
 const db = require("../models");
 const Shop = require("../models").Shop
 const ShopAdmin = require("../models").ShopAdmin
+const Rating = require("../models").Rating
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res)=>{
@@ -23,19 +25,43 @@ exports.create = (req, res)=>{
       });
 }
 
-exports.findAll = (req, res)=>{ 
+exports.findAll = async (req, res)=>{ 
   search = req.body.search == null ? "" : req.body.search;
-  Shop.findAll({where: {
-    name : {[Op.like]: '%' + search + '%'}
-    }
+  sort = req.body.sort == null ? "price" : req.body.sort
+  // List shops in order of their average price, based on their price
+  const totalAmount = await Rating.findAll({
+    attributes: [
+      'shop_id', [sequelize.fn('avg', sequelize.col(sort)), 'average_' + sort]
+    ],
+    group: ['shop_id'],
+    order: [['average_' + sort, 'DESC']]
   })
-  .then(data=>{res.send(data)})
-  .catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving Shops."
-    });
-  });
+  shopOrder = []
+  // Push Shops with ratings into array by order of their average 
+  for (var i = 0; i < totalAmount.length; i++){
+    shopOrder.push(totalAmount[i].shop_id)
+  }
+  // Shops that do not have ratings get pushed to the end
+  const allShops = await Shop.findAll()
+  for (var i = 0; i < allShops.length; i++){
+    // If the id of a shop is not in the array already, push it to the end of the array
+    if (shopOrder.indexOf(allShops[i].id) === -1){
+      shopOrder.push(allShops[i].id)
+    }
+  }
+
+  actualResponse = []
+
+  for (var i = 0; i < shopOrder.length; i++){
+    shopObject = await Shop.findOne({where: {name : {[Op.like]: '%' + search + '%'}, id : shopOrder[i]}})
+    if (shopObject != null){
+      actualResponse.push(shopObject)
+    }
+  }
+  console.log(totalAmount)
+  console.log(shopOrder)
+  console.log(actualResponse)
+  res.send(actualResponse)
 }
 
 exports.findAllByUserID = async (req, res) =>{
