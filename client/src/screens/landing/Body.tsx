@@ -12,6 +12,11 @@ import RadioGroup from '@mui/material/RadioGroup';
 import { useState } from 'react';
 import { Stack } from '@mui/system';
 import Slider from '@mui/material/Slider';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import { CardActionArea } from '@mui/material';
+import { Shop } from './Shop';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -81,115 +86,150 @@ export const Body = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
-        <Grid item xs={3}>
-                <Typography
-                    variant="h4"
-                    component="div"
-                    color="black"
-                    sx={{
-                        textAlign: 'left',
-                        mx: 8,
-                        p: 5,
-                        fontWeight: 'bold'
-                    }}
-                    >
-                    Filters
-                </Typography>
+            <Grid item xs={3}>
+                    <Typography
+                        variant="h4"
+                        component="div"
+                        color="black"
+                        sx={{
+                            textAlign: 'left',
+                            mx: 8,
+                            p: 5,
+                            fontWeight: 'bold'
+                        }}
+                        >
+                        Filters
+                    </Typography>
 
-            <FormControl
-            sx={{
-                textAlign: 'left',
-                mx: 8,
-                p: 5,
-                fontWeight: 'bold'
-            }}
-            >
-                <FormLabel id='filter-label'>
-                <Typography
-                    variant="h5"
-                    component="div"
-                    color="black"
-                    sx={{
-                        fontWeight: 'bold'
-                    }}
+                <FormControl
+                sx={{
+                    textAlign: 'left',
+                    mx: 8,
+                    p: 5,
+                    fontWeight: 'bold'
+                }}
+                >
+                    <FormLabel id='filter-label'>
+                    <Typography
+                        variant="h5"
+                        component="div"
+                        color="black"
+                        sx={{
+                            fontWeight: 'bold'
+                        }}
+                        >
+                        Sort
+                    </Typography>
+                    </FormLabel>
+                    <RadioGroup 
+                        name='filter'
+                        aria-labelledby='filter-label'
+                        value={value}
+                        onChange={handleChange}
                     >
-                    Sort
-                </Typography>
-                </FormLabel>
-                <RadioGroup 
-                    name='filter'
-                    aria-labelledby='filter-label'
-                    value={value}
-                    onChange={handleChange}
+                        <FormControlLabel control={<Radio />} label='Price' value='Price'/>
+                        <FormControlLabel control={<Radio />} label='Distance' value='Distance'/>
+                        <FormControlLabel control={<Radio />} label='Ratings' value='Ratings'/>
+                    </RadioGroup>
+                </FormControl>
+                <FormControl
+                sx={{
+                    textAlign: 'left',
+                    fontWeight: 'bold',
+                    mx: 13
+                }}
                 >
-                    <FormControlLabel control={<Radio />} label='Price' value='Price'/>
-                    <FormControlLabel control={<Radio />} label='Distance' value='Distance'/>
-                    <FormControlLabel control={<Radio />} label='Ratings' value='Ratings'/>
-                </RadioGroup>
-            </FormControl>
-            <FormControl
-            sx={{
-                textAlign: 'left',
-                fontWeight: 'bold',
-                mx: 13
-            }}
-            >
-                <FormLabel id='filter-label'>
-                <Typography
-                    variant="h5"
-                    component="div"
-                    color="black"
-                    sx={{
-                        fontWeight: 'bold'
-                    }}
-                >
-                    Price Range
-                </Typography>
-                </FormLabel>
-                <Stack direction='row' spacing={1}>
-                    <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick1}>$</Button>
-                    <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick2}>$$</Button>
-                    <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick3}>$$$</Button>
-                    <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick4}>$$$$</Button>
-                </Stack>
-            </FormControl>
+                    <FormLabel id='filter-label'>
+                    <Typography
+                        variant="h5"
+                        component="div"
+                        color="black"
+                        sx={{
+                            fontWeight: 'bold'
+                        }}
+                    >
+                        Price Range
+                    </Typography>
+                    </FormLabel>
+                    <Stack direction='row' spacing={1}>
+                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick1}>$</Button>
+                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick2}>$$</Button>
+                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick3}>$$$</Button>
+                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={handleClick4}>$$$$</Button>
+                    </Stack>
+                </FormControl>
 
-            <FormControl
-            sx={{
-                textAlign: 'left',
-                fontWeight: 'bold',
-                mx: 8,
-                p: 5
-            }}
-            >
-                <FormLabel id='filter-label'>
-                <Typography
-                    variant="h5"
-                    component="div"
-                    color="black"
+                <FormControl
+                sx={{
+                    textAlign: 'left',
+                    fontWeight: 'bold',
+                    mx: 8,
+                    p: 5
+                }}
+                >
+                    <FormLabel id='filter-label'>
+                    <Typography
+                        variant="h5"
+                        component="div"
+                        color="black"
+                        sx={{
+                            fontWeight: 'bold'
+                        }}
+                    >
+                        Distance
+                    </Typography>
+                    </FormLabel>
+                    <Box sx={{ width: 300 }}>
+                    <Slider
+                        aria-label="distance-filter"
+                        defaultValue={6}
+                        getAriaValueText={valuetext}
+                        step={1}
+                        marks={marks}
+                        max={10}
+                        min={6}
+                    />
+                    </Box>
+                </FormControl>
+            </Grid>
+            <Grid item xs={9}>
+                <Grid 
+                    container
+                    spacing={10}
                     sx={{
-                        fontWeight: 'bold'
+                        itemAlign: 'center',
+                        p: 10
                     }}
                 >
-                    Distance
-                </Typography>
-                </FormLabel>
-                <Box sx={{ width: 300 }}>
-                <Slider
-                    aria-label="distance-filter"
-                    defaultValue={6}
-                    getAriaValueText={valuetext}
-                    step={1}
-                    marks={marks}
-                    max={10}
-                    min={6}
-                />
-                </Box>
-            </FormControl>
-        </Grid>
-        <Grid item xs={9}>
-            <Item>xs=8</Item>
-        </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Shop></Shop>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Shop></Shop>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Shop></Shop>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Shop></Shop>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Shop></Shop>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Shop></Shop>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Shop></Shop>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Shop></Shop>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Shop></Shop>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Grid>
     </Box>
   );
