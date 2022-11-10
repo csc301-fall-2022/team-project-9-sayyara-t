@@ -9,7 +9,6 @@ exports.create = (req, res)=>{
       vin: req.body.vin,
       mileage: req.body.mileage,
       type: req.body.type,
-      description: req.body.description,
       user_id: req.body.user_id
       }
     console.log(newVehicle);
@@ -24,10 +23,22 @@ exports.create = (req, res)=>{
       });
 }
 
+exports.findAllByUserID = (req, res)=>{
+  const user_id = req.params.user_id;
+  Vehicle.findAll({attributes: ['id', 'user_id', 'plate', 'model', 'vin', 'mileage', 'type', 'createdAt', 'updatedAt'], where: {user_id:user_id}})
+  .then(data=>{res.send(data)})
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving Services."
+    });
+  });
+}
+
 exports.findOne = (req, res) => {
     const id = req.params.id; 
   
-    Vehicle.findByPk(id, {attributes: ['id', 'user_id', 'plate', 'model', 'vin', 'mileage', 'type', 'description', 'createdAt', 'updatedAt']})
+    Vehicle.findByPk(id, {attributes: ['id', 'user_id', 'plate', 'model', 'vin', 'mileage', 'type', 'createdAt', 'updatedAt']})
       .then(data => {
         if (data) {
           res.send(data);
@@ -39,7 +50,7 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Vehicle with id=" + id
+          message: err.message
         });
       });
   };
