@@ -9,5 +9,5 @@ module.exports = app =>{
     router.put("/:id", rating.update);
     router.delete("/:id", rating.delete);
 
-    app.use('/api/rating', router);
+    app.use('/api/ratings', router);
 }
