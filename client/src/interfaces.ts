@@ -4,8 +4,7 @@ export interface User {
   username: string,
   name: string,
   email: string,
-  phone: string,
-  vehicles: Array<Vehicle>
+  phone: string
 }
 
 export interface Vehicle {
@@ -27,11 +26,17 @@ export interface Shop {
   email: string,
   services: Array<Service>,
   description: string,
-  rating: number
+  time: Time
+}
+
+export interface Time {
+  start: string,
+  end: string
 }
 
 export interface Service {
   serviceId: string,
+  shopId: string,
   name: string,
   description: string,
   price: number
