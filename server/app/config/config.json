@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "YourPasswordHere",
-    "database": "sayarra",
-    "host": "127.0.0.1",
+    "password": "your password here",
+    "database": "sayyara",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
