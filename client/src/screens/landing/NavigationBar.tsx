@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { AppBar, Toolbar, Typography, Stack, Button } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
@@ -58,19 +58,21 @@ export const NavigationBar = () => {
               color="secondary"
               sx={{ 
                 display: { xs: 'none', sm: 'block' },
-                flexGrow: 1
+                flexGrow: 1,
+                mx: 10,
+                fontWeight: 'bold' 
             }}
             >
               Sayyara.
             </Typography>
             <Stack direction="row" spacing={15}>
-                <Button variant="contained"
+                <Button variant="contained" 
+                startIcon={<LocationOnIcon />}
                 sx={ {
                     borderRadius: 8,
                     color : '#eeeeee'
                 }}
                 >
-                    <LocationOnIcon></LocationOnIcon>
                     Location
                 </Button>
                 <Search>
@@ -82,13 +84,13 @@ export const NavigationBar = () => {
                     inputProps={{ 'aria-label': 'search' }}
                 />
                 </Search>
-                <Button variant="contained" 
+                <Button variant="contained"
+                startIcon={<LoginIcon />}
                 sx={ {
                     borderRadius: 8,
                     color : '#eeeeee'
                 }}
                 >
-                    <LoginIcon></LoginIcon>
                     Login
                 </Button>
             </Stack>
