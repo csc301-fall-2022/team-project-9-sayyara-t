@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import shop from '../../assets/images/shop.jpeg';
 
 
 export const Shop = () => {
@@ -14,7 +15,7 @@ export const Shop = () => {
         //   image="/images/shop.jpeg"
           component="img"
           height="auto"
-          image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSarTU3CAPmCKRJKcbYsRI2vxWDFqghrPHbg&usqp=CAU"
+          image={shop}
           
         />
         <CardContent>

@@ -7,6 +7,8 @@ import {
     Stack,
     Typography
 } from '@mui/material';
+import { ServiceInfo } from './ServiceInfo';
+
 
 const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -18,50 +20,6 @@ const Item = styled(Paper)(({ theme }) => ({
 // in combination with 
 export const ShopInfo = () => {
   return (
-    // <Box sx={{ flexGrow: 1}}>
-    //     <Grid container spacing={2}>
-    //         <Grid item xs={3}>
-    //             <Stack direction="column">
-    //                 <Typography
-    //                     variant="h4"
-    //                     component="div"
-    //                     sx={{
-    //                         textAlign: 'left',
-    //                         mx: 8,
-    //                         p: 5,
-    //                         fontWeight: "bold"
-    //                     }}
-    //                 >
-    //                     Shop name
-    //                 </Typography>
-    //                 <Typography
-    //                     variant="h6"
-    //                     component="div"
-    //                     sx={{
-    //                         textAlign: 'left',
-    //                         mx: 13
-    //                     }}
-    //                 >
-    //                     Address:
-    //                 </Typography>
-    //             </Stack>
-    //         </Grid>
-    //         <Grid item xs={9}>
-    //         <Typography
-    //                 variant="h4"
-    //                 component="div"
-    //                 sx={{
-    //                     textAlign: 'left',
-    //                     mx: 8,
-    //                     p: 5,
-    //                     fontWeight: "bold"
-    //                 }}
-    //             >
-    //                 Service List
-    //             </Typography>
-    //         </Grid>
-    //     </Grid>
-    // </Box>
     <Box>
         <Box 
             sx={{ 
@@ -72,20 +30,55 @@ export const ShopInfo = () => {
         >
         <Grid container spacing={3}>
             <Grid item xs>
-            <Item>Shop Name</Item>
+                <Item>
+                <Typography
+                        variant="h5"
+                        component="div"
+                        sx={{
+                            fontWeight: "bold"
+                        }}
+                    >
+                        Shop name
+                    </Typography>
+                </Item>
             </Grid>
             <Grid item xs>
-            <Item>Ratings</Item>
+                <Item>Ratings</Item>
             </Grid>
             <Grid item xs>
-            <Item>Price Range</Item>
+                <Item>Price Range</Item>
             </Grid>
             <Grid item xs>
-            <Item>Open Hours</Item>
+                <Item>Open Hours</Item>
             </Grid>
         </Grid>
         </Box>
-        <Typography>hello</Typography>
+        <Typography
+            variant="h4"
+            component="div"
+            sx={{
+                textAlign: 'left',
+                mx: 20,
+                fontWeight: "bold",
+                flexGrow: 1
+            }}
+        >
+            Service List
+        </Typography>
+        <Box 
+            sx={{ 
+                flexGrow: 1,
+                py: 5,
+                px: 20
+            }}
+        >
+            <Stack spacing={5} direction="column">
+                <ServiceInfo></ServiceInfo>
+                <ServiceInfo></ServiceInfo>
+                <ServiceInfo></ServiceInfo>
+                <ServiceInfo></ServiceInfo>
+            </Stack>
+        </Box>
     </Box>
   );
 };

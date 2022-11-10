@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Toolbar, Typography, Stack, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Stack, Button, Box } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
@@ -33,7 +33,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
       padding: theme.spacing(3, 3),
@@ -46,6 +46,8 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
       },
     },
 }));
+
+
 
 export const NavigationBar = () => {
   return (

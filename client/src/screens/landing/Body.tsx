@@ -12,10 +12,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import { useState } from 'react';
 import { Stack } from '@mui/system';
 import Slider from '@mui/material/Slider';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { CardActionArea } from '@mui/material';
 import { Shop } from './Shop';
 
 
