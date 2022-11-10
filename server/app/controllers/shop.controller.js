@@ -23,8 +23,13 @@ exports.create = (req, res)=>{
       });
 }
 
-exports.findAll = (req, res)=>{
-  Shop.findAll().then(data=>{res.send(data)})
+exports.findAll = (req, res)=>{ 
+  search = req.body.search == null ? "" : req.body.search;
+  Shop.findAll({where: {
+    name : {[Op.like]: '%' + search + '%'}
+    }
+  })
+  .then(data=>{res.send(data)})
   .catch(err => {
     res.status(500).send({
       message:
