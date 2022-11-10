@@ -31,7 +31,9 @@ db.sequelize.sync()
   });
 
 require("./app/routes/shop.route")(app);
-require("./app/routes/auth.routes")(app);
+require("./app/routes/auth.route")(app);
+require("./app/routes/user.route.js")(app);
+require("./app/routes/user.admin.route.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
