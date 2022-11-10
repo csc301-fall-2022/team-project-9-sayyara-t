@@ -1,0 +1,58 @@
+[
+  {
+    "shop_id": "1",
+    "name": "Silicon Valley Auto Repairs",
+    "address": "123 Sesame St",
+    "phone": "123-456-7890",
+    "email": "testemail1@gmail.com",
+    "time": {
+      "start": "9:00",
+      "end": "17:00"
+    },
+    "description": "Welcome to the shop",
+    "services": [
+      {
+        "service_id": "1",
+        "shop_id": "1",
+        "name": "Tire Change",
+        "description": "Changing the tires of a car",
+        "price": 200
+      },
+      {
+        "service_id": "2",
+        "shop_id": "1",
+        "name": "Repaint",
+        "description": "Repaint the exterior of a car",
+        "price": 800
+      }
+    ]
+  },
+  {
+    "shop_id": "2",
+    "name": "Homer's Auto Shop",
+    "address": "125 Sesame St",
+    "phone": "098-765-4321",
+    "email": "testemail2@gmail.com",
+    "time": {
+      "start": "9:00",
+      "end": "17:00"
+    },
+    "description": "Welcome to the shop!",
+    "services": [
+      {
+        "service_id": "3",
+        "shop_id": "2",
+        "name": "Detailing",
+        "description": "Cleaning the car",
+        "price": 350
+      },
+      {
+        "service_id": "4",
+        "shop_id": "2",
+        "name": "Engine Repair",
+        "description": "Repair the engine of a car",
+        "price": 1500
+      }
+    ]
+  }
+]
