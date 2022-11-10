@@ -28,13 +28,14 @@ exports.create = (req, res)=>{
 exports.findAll = async (req, res)=>{ 
   search = req.body.search == null ? "" : req.body.search;
   sort = req.body.sort == null ? "price" : req.body.sort
+
   // List shops in order of their average price, based on their price
   const totalAmount = await Rating.findAll({
     attributes: [
       'shop_id', [sequelize.fn('avg', sequelize.col(sort)), 'average_' + sort]
     ],
     group: ['shop_id'],
-    order: [['average_' + sort, 'DESC']]
+    order: [['average_' + sort, sort == "price" ? 'ASC' : 'DESC']]
   })
   shopOrder = []
   // Push Shops with ratings into array by order of their average 
@@ -55,6 +56,13 @@ exports.findAll = async (req, res)=>{
   for (var i = 0; i < shopOrder.length; i++){
     shopObject = await Shop.findOne({where: {name : {[Op.like]: '%' + search + '%'}, id : shopOrder[i]}})
     if (shopObject != null){
+      averageValue = 0
+      if (sort == 'price'){
+        averageValue = i < totalAmount.length ? parseInt(totalAmount[i]['dataValues']['average_price']) : 0
+      } else{
+        averageValue = i < totalAmount.length ? parseInt(totalAmount[i]['dataValues']['average_star']) : 0
+      }
+      shopObject['dataValues']['average_' + sort] = averageValue
       actualResponse.push(shopObject)
     }
   }
