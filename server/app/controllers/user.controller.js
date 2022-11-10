@@ -1,13 +1,12 @@
 const db = require("../models");
 const bcrypt = require("bcryptjs");
-const {Shop} = require("../models");
 const User = require("../models").User;
 const Op = db.Sequelize.Op;
 
 exports.findSelf = (req, res) => {
     const user_id = req.user_id;
 
-    Shop.findByPk(user_id)
+    User.findByPk(user_id)
         .then(data => {
             if (data) {
                 res.send(data);
@@ -51,7 +50,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const user_id = req.user_id;
 
-    Shop.destroy({
+    User.destroy({
         where: { id: user_id }
     })
         .then(num => {

@@ -25,6 +25,7 @@ exports.create = (req, res)=>{
 }
 
 exports.findAll = (req, res)=>{
+    console.log("Entered Function")
     User.findAll().then(data=>{res.send(data)})
         .catch(err => {
             res.status(500).send({
@@ -37,7 +38,7 @@ exports.findAll = (req, res)=>{
 exports.findOne = (req, res) => {
     const user_id = req.params.id;
 
-    Shop.findByPk(user_id)
+    User.findByPk(user_id)
         .then(data => {
             if (data) {
                 res.send(data);
@@ -81,7 +82,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const user_id = req.params.id;
 
-    Shop.destroy({
+    User.destroy({
         where: { id: user_id }
     })
         .then(num => {

@@ -26,6 +26,8 @@ verifyToken = (req, res, next) => {
 isAdmin = (req, res, next) => {
     User.findByPk(req.user_id).then(user => {
         if (user.role_id === 1){
+            console.log("Admin Check Passed")
+            next();
             return;
         }
 
@@ -38,6 +40,7 @@ isAdmin = (req, res, next) => {
 isShopOwner = (req, res, next) => {
     User.findByPk(req.user_id).then(user => {
         if (user.role_id === 3){
+            next();
             return;
         }
 
@@ -50,6 +53,7 @@ isShopOwner = (req, res, next) => {
 isVehicleOwner = (req, res, next) => {
     User.findByPk(req.user_id).then(user => {
         if (user.role_id === 2){
+            next();
             return;
         }
 
