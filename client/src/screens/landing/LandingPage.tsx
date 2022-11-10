@@ -22,4 +22,6 @@ const LandingPage = () => {
   );
 };
 
+// TODO: Chat bubble can be implemented using Floating Action Button in MUI
+
 export default LandingPage;
