@@ -1,5 +1,6 @@
 const db = require("../models");
 const Shop = require("../models").Shop
+const ShopAdmin = require("../models").ShopAdmin
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res)=>{
@@ -30,6 +31,19 @@ exports.findAll = (req, res)=>{
         err.message || "Some error occurred while retrieving Shops."
     });
   });
+}
+
+exports.findAllByUserID = async (req, res) =>{
+  const user_id = req.params.user_id;
+  // Get all ShopAdmin models, an array of dicts
+  const shopAdminModels = await ShopAdmin.findAll({attributes:  ['id', 'user_id', 'shop_id', 'createdAt', 'updatedAt'], 
+  where: {user_id:user_id}})
+  shopIDs = [];
+  // Iterate through all dicts of shopAdminModels
+  for (var i = 0; i < shopAdminModels.length; i++){
+    shopIDs.push(await Shop.findByPk(shopAdminModels[i].shop_id))
+  }
+  res.send(shopIDs)
 }
 
 exports.findOne = (req, res) => {
