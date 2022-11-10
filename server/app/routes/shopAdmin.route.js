@@ -5,6 +5,8 @@ module.exports = app =>{
 
     router.post("/", shopAdmins.create);
     router.get("/", shopAdmins.findAll);
+    router.get("/shop/:shop_id", shopAdmins.findAllByShopID);
+    router.get("/user/:user_id", shopAdmins.findAllByUserID);
     router.get("/:id", shopAdmins.findOne);
     router.put("/:id", shopAdmins.update);
     router.delete("/:id", shopAdmins.delete);

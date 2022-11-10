@@ -28,6 +28,30 @@ exports.findAll = (req, res)=>{
   });
 }
 
+exports.findAllByUserID = (req, res)=>{
+  const user_id = req.params.user_id;
+  shopAdmin.findAll({attributes:  ['id', 'user_id', 'shop_id', 'createdAt', 'updatedAt'], where: {user_id:user_id}})
+  .then(data=>{res.send(data)})
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving ShopAdmins."
+    });
+  });
+}
+
+exports.findAllByShopID = (req, res)=>{
+  const shop_id = req.params.shop_id;
+  shopAdmin.findAll({attributes:  ['id', 'user_id', 'shop_id', 'createdAt', 'updatedAt'], where: {shop_id:shop_id}})
+  .then(data=>{res.send(data)})
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving ShopAdmins."
+    });
+  });
+}
+
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
