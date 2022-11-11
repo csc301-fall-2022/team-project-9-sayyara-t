@@ -35,6 +35,11 @@ const VehicleCard = ({ vehicle, setVehicle, index, removeVehicle }: VehicleCardP
   const [isLoading, setIsLoading] = useState(false);
 
   const onVehicleRemove = async () => {
+    if (vehicle.vehicleId.length == 0) {
+      removeVehicle(index);
+      return;
+    }
+
     setIsLoading(true);
     await vehicleService.deleteVehicle(vehicle).then(() => removeVehicle(index), 
       (error: Error) => setErrorMessages([...errorMessages, error.message]));
