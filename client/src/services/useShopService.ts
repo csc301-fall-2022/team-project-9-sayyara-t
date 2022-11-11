@@ -9,7 +9,7 @@ export const useShopService = () => {
   const apiService = useAPIService();
 
   const getShop = async (shopId: string): Promise<Shop> => {
-    const result: RequestResult = await apiService.privateApiRequest(`${API_PATH}${shopId}`, 'GET', {});
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH}${shopId}`, 'GET', {});
 
     const data = result.data as Record<string, unknown>;
 
