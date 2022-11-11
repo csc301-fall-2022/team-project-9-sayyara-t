@@ -18,8 +18,10 @@ export const useAuthService = () => {
 
     const result: RequestResult = await apiService.apiRequest(`${API_PATH}signup`, 'POST', data);
 
+    const responseData = result.data as Record<string, unknown>;
+
     if (!result.success) {
-      const msg = result.data.message || "Unexpected Error";
+      const msg = responseData.message || "Unexpected Error";
       return Promise.reject<boolean>(new Error(`Failed to sign-up: ${msg}`));
     }
 
@@ -34,15 +36,17 @@ export const useAuthService = () => {
 
     const result: RequestResult = await apiService.apiRequest(`${API_PATH}signin`, 'POST', data);
 
+    const responseData = result.data as Record<string, unknown>;
+
     if (!result.success) {
-      const msg = result.data.message || "Unexpected Error";
+      const msg = responseData.message || "Unexpected Error";
       return Promise.reject<boolean>(new Error(`Failed to log in: ${msg}`));
     }
 
     // stores the token in the session storage under the key "x-access-token"
-    sessionStorage.setItem("x-access-token", <string>result.data.accessToken);
-    sessionStorage.setItem("userId", <string>result.data.id);
-    sessionStorage.setItem("roleId", <string>result.data.role_id);
+    sessionStorage.setItem("x-access-token", <string>responseData.accessToken);
+    sessionStorage.setItem("userId", <string>responseData.id);
+    sessionStorage.setItem("roleId", <string>responseData.role_id);
 
     return result.success;
   };
