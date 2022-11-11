@@ -4,7 +4,7 @@ import "@fontsource/nunito";
 const palette = {
   primary: {
     main: '#ff7248',
-    contrastText: '#ffffff'
+    contrastText: 'white'
   },
   secondary: {
     main: '#eeeeee'
