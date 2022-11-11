@@ -18,11 +18,74 @@
  * How do you access it? Are accounts pre-created or does a user register? Where do you start? etc. 
  * Provide clear steps for using each feature described above
  * This section is critical to testing your application and must be done carefully and thoughtfully
- 
+
  ## Development requirements
+
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
  * Briefly describe instructions for setting up and running the application (think a true README).
- 
+
+## Local
+
+- **Preliminary setup**
+  - Install [Node.js](https://nodejs.org/en/)
+  - If you do not have a remote MySQL server, install [MySQL 8.0](https://dev.mysql.com/downloads/) and setup a local server instance
+
+- **Dependency installation**
+
+  - At the root level, run `npm install` to Jest, a testing framework
+  - `cd ./server` and run `npm install` to install server dependencies
+  - `cd ./client` and run `npm install` to install client dependencies
+
+- **Database setup**
+
+  - Go to the the config file located at `./server/app/config/config.json`
+
+  - Under `development` fill out the connections details to your MySQL database
+
+    - Local database might look something like this
+
+      ```json
+      "development": {
+          "username": "root",
+          "password": "abc123",
+          "database": "sayyara",
+          "host": "127.0.0.1",
+          "dialect": "mysql"
+        }
+      ```
+
+    - Remote database might look something like this
+
+      ```json
+      "development": {
+          "username": "admin",
+          "password": "abc123",
+          "database": "sayyara",
+          "port": 12345,
+          "host": "sayyara-database.dbhost.com",
+          "dialect": "mysql",
+          "dialectOptions": {
+            "ssl": {
+              "require": true,
+              "rejectUnauthorized": false
+            }
+          }
+        }
+      ```
+
+  - Then `cd ./server/app` and run the following command in a terminal: `sequelize db:migrate`
+
+    - This will setup all the tables in your database
+
+- **Running server**
+
+  - Go to the `./server/` directory and run `node server.js`
+
+- **Running client**
+
+  - Go to the `./client` directory and run `npm start`
+  - If the server is not hosted on localhost, go to `./client/src/services/config/config.json` and update `API_URL` accordingly
+
  ## Deployment and Github Workflow
 
 Describe your Git / GitHub workflow. Essentially, we want to understand how your team members shares a codebase, avoid conflicts and deploys the application.
