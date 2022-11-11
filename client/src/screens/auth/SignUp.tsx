@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
@@ -7,15 +8,37 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import logo from './sayyara_logo_transparent.png';
+import { Checkbox, FormControlLabel } from '@mui/material';
+import { useAuthService } from '../../services/useAuthService';
+import { User } from '../../interfaces';
+import { PATHS, ROLES } from '../../constants';
+import ErrorMessages from '../../shared/ErrorMessages';
 
 const SignUp = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const authService = useAuthService();
+  const navigate = useNavigate();
+
+  const [errorMessages, setErrorMessages] = useState([] as Array<string>);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const user: User = {
+      username: data.get('username') as string,
+      name: data.get('name') as string,
+      email: data.get('email') as string,
+      phone: data.get('phone') as string,
+      roleId: data.get('shopOwner') ? ROLES.SHOP_OWNER : ROLES.VEHICLE_OWNER,
+      userId: ""
+    };
+
+    const success = await authService.signUp(user, data.get('password') as string).then((success) => success, 
+      (error: Error) => setErrorMessages([...errorMessages, error.message]));
+
+    if (success) {
+      navigate(PATHS.LOGIN);
+    }
   };
 
   return (
@@ -39,6 +62,7 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        {errorMessages.length > 0 && (<ErrorMessages errorMessages={errorMessages} width={0} onDismiss={() => setErrorMessages([])} />)}
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -51,25 +75,15 @@ const SignUp = () => {
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="given-name"
-                name="firstName"
+                name="name"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="name"
+                label="Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
               />
             </Grid>
             <Grid item xs={12}>
@@ -111,6 +125,14 @@ const SignUp = () => {
                 label="Confirm Password"
                 type="confirm_password"
                 id="confirm_password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel 
+                control={<Checkbox />}
+                label="I am a Shop Owner"
+                name="shopOwner"
+                id="shopOwner"
               />
             </Grid>
           </Grid>

@@ -41,3 +41,8 @@ export interface Service {
   description: string,
   price: number
 }
+
+export interface RequestResult {
+  success: boolean,
+  data: Record<string, unknown>
+}
