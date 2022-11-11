@@ -22,6 +22,8 @@ List **process-related** (i.e. team organization and how you work) decisions tha
  * Ordered from most to least important.
  * Explain why (i.e. give a supporting argument) you consider a decision to be successful.
  * Feel free to refer/link to process artifact(s).
+ * The first important decision that turned out well was to seperate our group into back-end and font-end teams. This decision turned out well because every member was able to work efficiently and provide value, since we seperated work into clear-cut, independent components. For example, while the back-end was creating models, migrations, and the first batch of APIs, the front-end team was able to work on and design the UX with mock data, allowing all members of the team to be of use.
+ * Another important decision that turned out well was to categorize sections/features of the product. This decision turned out well because it allowed us to highlight our milestone and better make note of the work we finished and the work we still had to do. Furthermore, it allowed the back-end to create batches of APIs for the front-end to integrate with, helping us work more efficiently.
 
 #### Q2. Decisions that did not turn out as well as we hoped
 
