@@ -21,12 +21,12 @@ const LogIn = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-      const success = await authService.signIn(data.get('username') as string, data.get('password') as string).then((success) => success,
-          (error: Error) => setErrorMessages([...errorMessages, error.message]));
+    const success = await authService.signIn(data.get('username') as string, data.get('password') as string).then((success) => success,
+        (error: Error) => setErrorMessages([...errorMessages, error.message]));
 
-      if (success) {
-          navigate(PATHS.LANDING);
-      }
+    if (success) {
+        navigate(PATHS.LANDING);
+    }
   };
 
   return (

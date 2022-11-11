@@ -36,7 +36,7 @@ export const useAuthService = () => {
 
     if (!result.success) {
       const msg = result.data.message || "Unexpected Error";
-      return Promise.reject<boolean>(new Error(`Failed to sign-up: ${msg}`));
+      return Promise.reject<boolean>(new Error(`Failed to log in: ${msg}`));
     }
 
     // stores the token in the session storage under the key "x-access-token"
