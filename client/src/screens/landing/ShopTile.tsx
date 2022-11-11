@@ -18,7 +18,6 @@ export const ShopTile = () => {
             component="img"
             height="auto"
             image={shop}
-            
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div"
