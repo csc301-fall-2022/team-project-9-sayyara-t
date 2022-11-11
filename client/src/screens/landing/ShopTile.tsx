@@ -7,7 +7,7 @@ import { CardActionArea } from '@mui/material';
 import shop from '../../assets/images/shop.jpeg';
 
 
-export const Shop = () => {
+export const ShopTile = () => {
   return (
     <Card sx={{ width: '100%' }}>
       <CardActionArea>
