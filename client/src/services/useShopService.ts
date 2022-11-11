@@ -42,7 +42,7 @@ export const useShopService = () => {
 
     return shopsData.map((shop) => {
       return {
-        shopId: shop.shop_id,
+        shopId: shop.id,
         name: shop.name,
         address: shop.address,
         phone: shop.phone,

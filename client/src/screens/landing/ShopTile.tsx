@@ -8,8 +8,11 @@ import { Link } from 'react-router-dom';
 import { PATHS } from '../../constants';
 import shop from '../../assets/images/shop.jpeg';
 
+interface ShopTileProps {
+  name: string
+}
 
-export const ShopTile = () => {
+export const ShopTile = ({ name }: ShopTileProps) => {
   return (
     <Link to={PATHS.SHOP_PROFILE}>
       <Card sx={{ width: '100%' }}>
@@ -25,7 +28,7 @@ export const ShopTile = () => {
               fontWeight: 'bold'
             }}
             >
-              Silicon Valley Auto Repairs
+              {name}
             </Typography>
             <Typography variant="body2" color="text.secondary" gutterBottom>
               2,4 km away
