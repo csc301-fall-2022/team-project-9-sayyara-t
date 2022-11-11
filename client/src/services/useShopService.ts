@@ -1,5 +1,4 @@
-import shopsData from '../assets/mock/shopData.json';
-import { Service, Shop, Time, RequestResult, User } from '../interfaces';
+import { Shop, Time, RequestResult } from '../interfaces';
 import { useAPIService } from './useAPIService';
 
 // wrapper hook for all Shop related API services
@@ -8,7 +7,7 @@ export const useShopService = () => {
   const apiService = useAPIService();
 
   // TODO: test that effectively replaced mock API call
-  const getShopsForUser = async (userId: string): Promise<boolean> => {
+  const getShopsForUser = async (userId: string): Promise<Array<Shop>> => {
     const data = {
       userId: userId
     };
@@ -17,10 +16,20 @@ export const useShopService = () => {
 
     if (!result.success) {
       const msg = result.data.message || "Unexpected Error";
-      return Promise.reject<boolean>(new Error(`Failed to get shops for this user: ${msg}`));
+      return Promise.reject(new Error(`Failed to get shops for this user: ${msg}`));
     }
 
-    return result.success;
+    return result.data.map((shop) => {
+      return {
+        shopId: shop.shop_id,
+        name: shop.name,
+        address: shop.address,
+        phone: shop.phone,
+        email: shop.email,
+        description: shop.description,
+        time: shop.time as Time
+      } as Shop;
+    });
 
     // return shopsData.map((shop) => {
     //   return {
@@ -76,7 +85,7 @@ export const useShopService = () => {
   };
 
   // TODO: test
-  const createShop = async (shop: Shop): Promise<boolean> => {
+  const createShop = async (shop: Shop): Promise<string> => {
     const data = {
       shopId: shop.shopId,
       ownerIds: shop.ownerIds,
@@ -100,10 +109,10 @@ export const useShopService = () => {
 
       if (!result.success) {
         const msg = result.data.message || "Unexpected Error";
-        return Promise.reject<boolean>(new Error(`Failed to create the requested shop: ${msg}`));
+        return Promise.reject(new Error(`Failed to create the requested shop: ${msg}`));
       }
 
-      return result.success;
+      return result.data.id;
   };
   
   // TODO: replace mock API call to real API call
