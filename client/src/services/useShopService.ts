@@ -8,18 +8,21 @@ export const useShopService = () => {
 
   // TODO: test that effectively replaced mock API call
   const getShopsForUser = async (userId: string): Promise<Array<Shop>> => {
-    const data = {
-      userId: userId
-    };
+    // const data = {
+      // userId: userId
+    // };
 
-    const result: RequestResult = await apiService.apiRequest(`${API_PATH}/user/:${userId}`, 'GET', data);
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH}/user/:${userId}`, 'GET', {});
+
+    const data = result.data as Record<string, unknown>;
+    const responseData = result.data as Array<Record<string, unknown>>;
 
     if (!result.success) {
-      const msg = result.data.message || "Unexpected Error";
+      const msg = data.message || "Unexpected Error";
       return Promise.reject(new Error(`Failed to get shops for this user: ${msg}`));
     }
 
-    return result.data.map((shop) => {
+    return responseData.map((shop) => {
       return {
         shopId: shop.shop_id,
         name: shop.name,
@@ -76,8 +79,10 @@ export const useShopService = () => {
     
       const result: RequestResult = await apiService.apiRequest(`${API_PATH}/${shop.shopId}`, 'PUT', data);
 
+      const responseData = result.data as Record<string, unknown>;
+
       if (!result.success) {
-        const msg = result.data.message || "Unexpected Error";
+        const msg = responseData.message || "Unexpected Error";
         return Promise.reject<boolean>(new Error(`Failed to update the shop with id: ${msg}`));
       }
 
@@ -86,7 +91,7 @@ export const useShopService = () => {
 
   // TODO: test
   const createShop = async (shop: Shop): Promise<string> => {
-    const data = {
+    const inputData = {
       shopId: shop.shopId,
       ownerIds: shop.ownerIds,
       name: shop.name,
@@ -105,14 +110,16 @@ export const useShopService = () => {
 
     // return success ? shopId.toString() : Promise.reject<string>(new Error("Failed to create shop"));
 
-    const result: RequestResult = await apiService.apiRequest(`${API_PATH}/`, 'POST', data);
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH}/`, 'POST', inputData);
+
+      const responseData = result.data as Record<string, unknown>;
 
       if (!result.success) {
-        const msg = result.data.message || "Unexpected Error";
+        const msg = responseData.message || "Unexpected Error";
         return Promise.reject(new Error(`Failed to create the requested shop: ${msg}`));
       }
 
-      return result.data.id;
+      return responseData.id as string;
   };
   
   // TODO: replace mock API call to real API call
@@ -137,8 +144,10 @@ export const useShopService = () => {
     
     const result: RequestResult = await apiService.apiRequest(`${API_PATH}/${shop.shopId}`, 'DELETE', data);
 
+    const responseData = result.data as Record<string, unknown>;
+
       if (!result.success) {
-        const msg = result.data.message || "Unexpected Error";
+        const msg = responseData.message || "Unexpected Error";
         return Promise.reject<boolean>(new Error(`Failed to delete the requested shop: ${msg}`));
       }
 
