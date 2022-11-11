@@ -7,8 +7,8 @@
 
 ## Iteration XX - Review & Retrospect
 
- * When: FILL IN THE DATE WHEN YOU ACTUALLY HAD YOUR REVIEW MEETING
- * Where: PHYSICAL LOCATION AND/OR ONLINE
+ * When: November 11th, 2022
+ * Where: Online
 
 ## Process - Reflection
 
@@ -39,6 +39,7 @@ List any **process-related** (i.e. team organization and how you work) changes y
 
  * Ordered from most to least important.
  * Explain why you are making a change.
+ * The most important change we need to make as a group is to meet more frequently to plan out our workflow, and then commit to working on the project. One big issue we faced as a group for Deliverable 2 was how infrequent we met as a complete group and also our tardiness in starting and working on the project. In the future, we plan not to do an entire Deliverable within a couple of days, but to do small, manageable pieces weekly. 
 
 
 ## Product - Review
