@@ -9,12 +9,13 @@ import { PATHS } from '../../constants';
 import shop from '../../assets/images/shop.jpeg';
 
 interface ShopTileProps {
-  name: string
+  name: string,
+  id: string
 }
 
-export const ShopTile = ({ name }: ShopTileProps) => {
+export const ShopTile = ({ name, id }: ShopTileProps) => {
   return (
-    <Link to={PATHS.SHOP_PROFILE}>
+    <Link to={`shop-profile/${id}`}>
       <Card sx={{ width: '100%' }}>
         <CardActionArea>
           <CardMedia

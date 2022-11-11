@@ -188,7 +188,7 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
                 >
                     {shops.map((shop) => (
                         <Grid item width={350} key={shop.shopId}>
-                            <ShopTile name={shop.name}></ShopTile>
+                            <ShopTile name={shop.name} id={shop.shopId}></ShopTile>
                         </Grid>
                     ))}
                 </Grid>
