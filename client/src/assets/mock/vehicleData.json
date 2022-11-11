@@ -1,0 +1,20 @@
+{
+  "1": {
+    "vehicle_id": "1",
+    "user_id": "2",
+    "plate": "CDFJ 356",
+    "model": "Lexus",
+    "vin": "123456789",
+    "mileage": "80000",
+    "type": "SUV"
+  },
+  "2": {
+    "vehicle_id": "2",
+    "user_id": "2",
+    "plate": "BYTX 068",
+    "model": "Toyota",
+    "vin": "987654321",
+    "mileage": "120000",
+    "type": "Minivan"
+  }
+}
