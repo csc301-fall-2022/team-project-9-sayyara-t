@@ -40,10 +40,8 @@
 
 - **Dependency installation**
 
-  - At the root level, run `npm install` to Jest, a testing framework
-  - `cd ./server` and run `npm install` to install server dependencies
-  - `cd ./client` and run `npm install` to install client dependencies
-
+  - At the root level, run `npm install:all` to install the dependencies used in the project
+  
 - **Database setup**
 
   - Go to the the config file located at `./server/app/config/config.json`
@@ -87,11 +85,11 @@
 
 - **Running server**
 
-  - Go to the `./server/` directory and run `node server.js`
+  - At the root level, run `npm run start:server`
 
 - **Running client**
 
-  - Go to the `./client` directory and run `npm start`
+  - At the root level, run `npm run start:client`
   - If the server is not hosted on localhost, go to `./client/src/services/config/config.json` and update `API_URL` accordingly
 
  ## Deployment and Github Workflow
