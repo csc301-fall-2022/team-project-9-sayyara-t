@@ -15,10 +15,10 @@ const PrivateRoute = ({ child }: PrivateRouteProps) => {
     }
   });
 
-  // TODO: implement check for authentication status
-  // If user is not logged in, redirect to login page
   const validateLogIn = () => {
-    return true;
+    return (sessionStorage.getItem('x-access-token') !== null &&
+            sessionStorage.getItem('userId') !== null &&
+            sessionStorage.getItem('roleId') !== null);
   };
 
   return (

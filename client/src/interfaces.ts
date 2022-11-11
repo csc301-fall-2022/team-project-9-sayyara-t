@@ -44,5 +44,5 @@ export interface Service {
 
 export interface RequestResult {
   success: boolean,
-  data: Record<string, unknown>
+  data: unknown
 }
