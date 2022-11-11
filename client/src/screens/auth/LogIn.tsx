@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
@@ -6,15 +6,27 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import logo from './sayyara_logo_transparent.png';
+import { useAuthService } from '../../services/useAuthService';
+import { PATHS } from '../../constants';
+import ErrorMessages from '../../shared/ErrorMessages';
+import {useNavigate} from "react-router-dom";
 
 const LogIn = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const authService = useAuthService();
+    const navigate = useNavigate();
+
+    const [errorMessages, setErrorMessages] = useState([] as Array<string>);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('username'),
-      password: data.get('password'),
-    });
+
+      const success = await authService.signIn(data.get('username') as string, data.get('password') as string).then((success) => success,
+          (error: Error) => setErrorMessages([...errorMessages, error.message]));
+
+      if (success) {
+          navigate(PATHS.LANDING);
+      }
   };
 
   return (

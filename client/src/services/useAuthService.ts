@@ -26,7 +26,27 @@ export const useAuthService = () => {
     return result.success;
   };
 
+  const signIn = async (username: string, password: string): Promise<boolean> => {
+    const data = {
+      username: username,
+      password: password
+    };
+
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH}signin`, 'POST', data);
+
+    if (!result.success) {
+      const msg = result.data.message || "Unexpected Error";
+      return Promise.reject<boolean>(new Error(`Failed to sign-up: ${msg}`));
+    }
+
+    // stores the token in the session storage under the key "x-access-token"
+    sessionStorage.setItem("x-access-token", <string>result.data.accessToken);
+
+    return result.success;
+  };
+
   return {
-    signUp
+    signUp,
+    signIn
   };
 };
