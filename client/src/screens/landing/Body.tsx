@@ -113,8 +113,7 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
                         onChange={handleChange}
                     >
                         <FormControlLabel control={<Radio />} label='Price' value='price'/>
-                        <FormControlLabel control={<Radio />} label='Distance' value='distance'/>
-                        <FormControlLabel control={<Radio />} label='Ratings' value='start'/>
+                        <FormControlLabel control={<Radio />} label='Ratings' value='star'/>
                     </RadioGroup>
                 </FormControl>
                 <FormControl
