@@ -43,5 +43,8 @@ Describe your Git / GitHub workflow. Essentially, we want to understand how your
  Keep this section as brief as possible. You may read this [Github article](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository) for a start.
 
  * What type of license will you apply to your codebase?
+   * We agreed with our partner to apply an open source license on the project, as our partner aims to build off of our work in the future as he continues working with the product. 
  * What affect does it have on the development and use of your codebase?
+   * Applying an open source license on our project has kept us aware that our partner and perhaps other parties in the future may want to build off of our code, which has only affected our development by driving the team to keep the code base organized.
  * Why did you or your partner make this choice?
+   * Our partner and I made this choice because our team wanted to be recognized for the work we have done on the application while our partner can also freely use the code to build a more finalized product in the future.
