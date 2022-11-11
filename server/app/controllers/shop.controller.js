@@ -26,9 +26,8 @@ exports.create = (req, res)=>{
 }
 
 exports.findAll = async (req, res)=>{ 
-  search = req.body.search == null ? "" : req.body.search;
-  sort = req.body.sort == null ? "price" : req.body.sort
-
+  search = req.params.search == "null" ? "" : req.params.search;
+  sort = req.params.sort
   // List shops in order of their average price, based on their price
   const totalAmount = await Rating.findAll({
     attributes: [
