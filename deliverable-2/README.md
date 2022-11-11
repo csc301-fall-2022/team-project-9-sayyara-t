@@ -23,13 +23,14 @@
 
 ## Instructions
  * Parts of our application can be accessed without creating an account. Searching for shops and viewing detailed information about each shop can be done by anyone without an account. 
-   * The landing page should show a page where users can search for shops using the search bar at the top of the page. 
-   * Clicking on each of the shops will take the user to a shop profile, where they are able to view more details about the shop they selected.
- * Other parts of the application are only accessible to registered users. Setting user profile information, creating vehicles under the user profile, or in the case of a shop owner, creating and managing shops can only be done by users with an account.
+   * The landing page is a page where users can see all the available shops display on the screen alongside the option to search for shops using the search bar at the top of the page. Moreover, user can also filter and sort displayed shops based on price, distance or ratings
+   * Clicking on each of the shops will take the user to a shop profile, where they are able to view more details about the shop they selected. In detail, they will be directed to a shop information page where the average rating, price range, open hours as well as offered services list for a given shop are displayed
+ * Other parts of the application are only accessible to registered users. Setting user profile information, creating vehicles under the user profile, or in the case of a shop owner, creating and managing shops can only be done by registered users.
    *  To register as a user, either navigate to the /signup route or click the log-in button at the top right of the landing page and navigate to the sign-up page from there. Fill out the necessary information on the form and click the bottom button to create a user. To create an account for a shop owner, make sure to check the checkbox at the bottom of the form to indicate that the account will belong to a shop owner. This will take the user to the log-in page where they can use the account they just created to log-in to the application.
  * From there, users can navigate to their profile page by clicking the user icon on the top right of the landing page. 
  * All types of users will have the basic information fields, where they are able to edit their name, phone number, and email. Users must save the changes after updating the information.
- * For Vehicle
+ * For Vehicle, the user can fill in a few essential information for their vehicle that get stored in the user's profile such as license plate, model, VIN, mileage and type of the vehicle.
+ * For shop owners, they would have access to the shop management page where they can edit the basic information for a given shop such as open hours, services list or shop's managers
  
  ## Development requirements
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
