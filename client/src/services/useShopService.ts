@@ -8,9 +8,30 @@ export const useShopService = () => {
   const API_PATH = "shops/";
   const apiService = useAPIService();
 
+  const getShop = async (shopId: string): Promise<Shop> => {
+    const result: RequestResult = await apiService.privateApiRequest(`${API_PATH}${shopId}`, 'GET', {});
+
+    const data = result.data as Record<string, unknown>;
+
+    if (!result.success) {
+      const msg = data.message || "Unexpected Error";
+      return Promise.reject(new Error(`Failed to get shops for this user: ${msg}`));
+    }
+
+    return {
+      shopId: data.id,
+      name: data.name,
+      address: data.address,
+      phone: data.phone,
+      email: data.email,
+      description: data.description,
+      time: data.time as Time
+    } as Shop;
+  };
+
   // TODO: test that effectively replaced mock API call
   const getShopsForUser = async (userId: string): Promise<Array<Shop>> => {
-    const result: RequestResult = await apiService.privateApiRequest(`${API_PATH}/user/getBy/${userId}`, 'GET', {});
+    const result: RequestResult = await apiService.privateApiRequest(`${API_PATH}user/getBy/${userId}`, 'GET', {});
 
     const data = result.data as Record<string, unknown>;
 
@@ -149,6 +170,7 @@ export const useShopService = () => {
   };
 
   return {
+    getShop,
     getShopsForUser,
     getAllShops,
     updateShop,
