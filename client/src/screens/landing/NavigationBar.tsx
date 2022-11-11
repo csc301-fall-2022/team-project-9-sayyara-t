@@ -51,7 +51,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export const NavigationBar = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
         <Toolbar>
             <Typography
               variant="h3"

@@ -76,7 +76,6 @@ export const ShopInfo = () => {
                 <ServiceInfo></ServiceInfo>
                 <ServiceInfo></ServiceInfo>
                 <ServiceInfo></ServiceInfo>
-                <ServiceInfo></ServiceInfo>
             </Stack>
         </Box>
     </Box>
