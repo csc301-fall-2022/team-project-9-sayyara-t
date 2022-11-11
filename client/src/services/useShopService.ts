@@ -1,9 +1,12 @@
-import { Shop, Time, RequestResult } from '../interfaces';
+import { Service, Shop, Time, RequestResult } from '../interfaces';
+import { ResultType } from '@remix-run/router/dist/utils';
+import shopsData from '../assets/mock/shopData.json';
 import { useAPIService } from './useAPIService';
 
 // wrapper hook for all Shop related API services
 export const useShopService = () => {
   const API_PATH = "/shopadmins"; //TODO: double check this is right
+  const API_PATH_SHOPS = "shops/";
   const apiService = useAPIService();
 
   // TODO: test that effectively replaced mock API call
@@ -12,7 +15,7 @@ export const useShopService = () => {
       // userId: userId
     // };
 
-    const result: RequestResult = await apiService.apiRequest(`${API_PATH}/user/:${userId}`, 'GET', {});
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH_SHOPS}/user/:${userId}`, 'GET', {});
 
     const data = result.data as Record<string, unknown>;
     const responseData = result.data as Array<Record<string, unknown>>;
@@ -58,6 +61,28 @@ export const useShopService = () => {
 
 
   // TODO: test that effectively replaced mock API call
+  // This API call is to get all the shops for when a client has not logged in
+  const getAllShops = async (sort = "price", search = "null"): Promise<Array<Shop>> => {
+    const data = null;
+
+    const shops: RequestResult = await apiService.apiRequest(`${API_PATH_SHOPS}${sort}/${search}/`, 'GET', data);
+
+    const shopsData = shops.data as Array<Record<string, unknown>>;
+
+    return shopsData.map((shop) => {
+      return {
+        shopId: shop.id,
+        name: shop.name,
+        address: shop.address,
+        phone: shop.phone,
+        email: shop.email,
+        description: shop.description,
+        time: shop.time as Time
+      } as Shop;
+    });
+  };
+
+  // TODO: replace mock API call to real API call
   const updateShop = async (shop: Shop): Promise<boolean> => {
     const data = {
       shopId: shop.shopId,
@@ -157,6 +182,7 @@ export const useShopService = () => {
 
   return {
     getShopsForUser,
+    getAllShops,
     updateShop,
     createShop,
     deleteShop
