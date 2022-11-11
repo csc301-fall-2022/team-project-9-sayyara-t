@@ -7,7 +7,7 @@ import { ShopInfo } from './ShopInfo';
 import TopNav from '../profile/TopNav';
 
 const ShopProfile = () => {
-  const UI_WIDTH = 1300;
+  const UI_WIDTH = 1600;
 
   return (
     <>
