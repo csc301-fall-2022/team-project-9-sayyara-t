@@ -7,7 +7,12 @@ const palette = {
     contrastText: '#ffffff'
   },
   secondary: {
+    light: '#f7f7f7',
     main: '#eeeeee'
+  },
+  error: {
+    light: "#ffcccc",
+    main: "#f44336"
   }
 };
 
