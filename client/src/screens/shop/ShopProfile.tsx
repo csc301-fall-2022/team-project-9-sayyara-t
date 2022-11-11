@@ -3,13 +3,11 @@ import { useParams } from 'react-router-dom';
 import {
   Typography
 } from '@mui/material';
-import { NavigationBar } from '../landing/NavigationBar';
 import { ShopInfo } from './ShopInfo';
 import TopNav from '../profile/TopNav';
 
 const ShopProfile = () => {
-  const params = useParams();
-  const UI_WIDTH = 1300;
+  const UI_WIDTH = 1600;
 
   return (
     <>

@@ -12,7 +12,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import { useState } from 'react';
 import { Stack } from '@mui/system';
 import Slider from '@mui/material/Slider';
-import { Shop } from './Shop';
+import { ShopTile } from './ShopTile';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -182,31 +182,31 @@ export const Body = () => {
                     }}
                 >
                     <Grid item xs={12} sm={6} md={4}>
-                        <Shop></Shop>
+                        <ShopTile></ShopTile>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Shop></Shop>
+                        <ShopTile></ShopTile>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Shop></Shop>
+                        <ShopTile></ShopTile>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Shop></Shop>
+                        <ShopTile></ShopTile>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Shop></Shop>
+                        <ShopTile></ShopTile>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Shop></Shop>
+                        <ShopTile></ShopTile>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Shop></Shop>
+                        <ShopTile></ShopTile>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Shop></Shop>
+                        <ShopTile></ShopTile>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Shop></Shop>
+                        <ShopTile></ShopTile>
                     </Grid>
                 </Grid>
             </Grid>
