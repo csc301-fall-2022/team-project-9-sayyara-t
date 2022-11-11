@@ -9,3 +9,15 @@ export const PATHS = {
   USER: "/user/:userId",
   MANAGEMENT: "/management"
 };
+
+export const ROLES = {
+  ADMIN: 1,
+  VEHICLE_OWNER: 2,
+  SHOP_OWNER:3
+};
+
+export const PROFILE_TABS = {
+  PROFILE: "Profile",
+  QUOTES: "Quotes/Chats",
+  SHOP_MANAGEMENT: "Shop Management"
+};
