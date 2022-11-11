@@ -5,6 +5,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LoginIcon from '@mui/icons-material/Login';
+import { Link } from 'react-router-dom';
+import { PATHS } from '../../constants';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -46,7 +48,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       },
     },
 }));
-
 
 
 export const NavigationBar = () => {
@@ -92,6 +93,7 @@ export const NavigationBar = () => {
                     borderRadius: 8,
                     color : '#eeeeee'
                 }}
+                component={Link} to={PATHS.LOGIN}
                 >
                     Login
                 </Button>
