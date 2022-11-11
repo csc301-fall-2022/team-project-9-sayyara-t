@@ -1,60 +1,103 @@
 import vehiclesData from '../assets/mock/vehicleData.json';
 import { Vehicle } from '../interfaces';
+import { useAPIService } from './useAPIService';
 
 // wrapper hook for all Vehicle related API services
 export const useVehicleService = () => {
+  const apiService = useAPIService();
+  const API_PATH = "vehicles/";
 
   // TODO: replace mock API call to real API call
   const getVehiclesByUser = async (userId: string): Promise<Array<Vehicle>> => {
-    const vehicles = Object.values(vehiclesData);
-    const userVehicles: Array<Vehicle> = [];
 
-    vehicles.forEach((vehicle) => {
-      if (vehicle.user_id == userId) {
-        userVehicles.push({
-          vehicleId: vehicle.vehicle_id,
-          ownerId: vehicle.user_id,
-          plate: vehicle.plate,
-          model: vehicle.model,
-          vin: vehicle.vin,
-          mileage: vehicle.mileage,
-          type: vehicle.type
-        } as Vehicle);
-      }
+    const result = await apiService.privateApiRequest(`${API_PATH}user/${userId}`, "GET", {});
+
+    const data = result.data as Record<string, unknown>;
+
+    if (!result.success) {
+      const msg = data.message || "Unexpected Error";
+      return Promise.reject<Array<Vehicle>>(new Error(`Failed to fetch vehicles: ${msg}`));
+    }
+
+    const vehicleData = result.data as Array<Record<string, unknown>>;
+
+    const vehicles = vehicleData.map((v) => {
+      const vehicle: Vehicle = {
+        vehicleId: v.id as string,
+        ownerId: v.user_id as string,
+        plate: v.plate as string,
+        model: v.model as string,
+        vin: v.vin as string,
+        mileage: v.mileage as string,
+        type: v.type as string
+      };
+
+      return vehicle;
     });
 
-    return userVehicles;
+    return vehicles;
   };
 
-  // TODO: replace mock API call to real API call
   const createVehicle = async (vehicle: Vehicle): Promise<string> => {
-    console.log(`Created Vehicle`);
-    console.log(vehicle);
 
-    const success = true;
-    const vehicleId = Math.floor(Math.random() * 1000);
+    const data = {
+      id: vehicle.vehicleId,
+      user_id: vehicle.ownerId,
+      plate: vehicle.plate,
+      model: vehicle.model,
+      vin: vehicle.vin,
+      mileage: vehicle.mileage,
+      type: vehicle.type
+    };
 
-    return success ? vehicleId.toString() : Promise.reject<string>(new Error("Failed to create vehicle."));
+    const result = await apiService.privateApiRequest(`${API_PATH}`, "POST", data);
+
+    const responseData = result.data as Record<string, unknown>;
+
+    if (!result.success) {
+      const msg = responseData.message || "Unexpected Error";
+      return Promise.reject<string>(new Error(`Failed to create vehicle: ${msg}`));
+    }
+
+    return responseData.id as string;
   };
 
-  // TODO: replace mock API call to real API call
   const updateVehicle = async (vehicle: Vehicle): Promise<boolean> => {
-    console.log(`Updated Vehicle`);
-    console.log(vehicle);
+    
+    const data = {
+      id: vehicle.vehicleId,
+      user_id: vehicle.ownerId,
+      plate: vehicle.plate,
+      model: vehicle.model,
+      vin: vehicle.vin,
+      mileage: vehicle.mileage,
+      type: vehicle.type
+    };
 
-    const success = true;
+    const result = await apiService.privateApiRequest(`${API_PATH}${vehicle.vehicleId}`, "PUT", data);
 
-    return success ? success : Promise.reject<boolean>(new Error("Failed to update vehicle."));
+    const responseData = result.data as Record<string, unknown>;
+
+    if (!result.success) {
+      const msg = responseData.message || "Unexpected Error";
+      return Promise.reject<boolean>(new Error(`Failed to create vehicle: ${msg}`));
+    }
+
+    return result.success;
   };
 
-  // TODO: replace mock API call to real API call
   const deleteVehicle = async (vehicle: Vehicle): Promise<boolean> => {
-    console.log(`Deleted Vehicle`);
-    console.log(vehicle);
 
-    const success = true;
+    const result = await apiService.privateApiRequest(`${API_PATH}${vehicle.vehicleId}`, "DELETE", {});
 
-    return success ? success : Promise.reject<boolean>(new Error("Failed to delete vehicle."));
+    const responseData = result.data as Record<string, unknown>;
+
+    if (!result.success) {
+      const msg = responseData.message || "Unexpected Error";
+      return Promise.reject<boolean>(new Error(`Failed to create vehicle: ${msg}`));
+    }
+
+    return result.success;
   };
 
   return {
