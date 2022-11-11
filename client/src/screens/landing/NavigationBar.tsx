@@ -7,6 +7,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LoginIcon from '@mui/icons-material/Login';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../constants';
+import { useState } from 'react';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -47,10 +48,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         width: '80ch',
       },
     },
-}));
-
+})); 
 
 export const NavigationBar = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+};
+
   return (
     <AppBar position="sticky">
         <Toolbar>
@@ -85,6 +91,7 @@ export const NavigationBar = () => {
                 <StyledInputBase
                     placeholder="Search for shop"
                     inputProps={{ 'aria-label': 'search' }}
+                    onChange={handleSearch}
                 />
                 </Search>
                 <Button variant="contained"

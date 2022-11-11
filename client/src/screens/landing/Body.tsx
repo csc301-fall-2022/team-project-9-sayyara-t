@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { Stack } from '@mui/system';
 import Slider from '@mui/material/Slider';
 import { ShopTile } from './ShopTile';
+import Shop from '../interfaces';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -23,8 +24,12 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
+interface BodyProps {
+    allShops: Array<Shop>
+}
 
-export const Body = () => {
+
+export const Body = ({ allShops }: BodyProps) => {
     const [value, setValue] = useState('Price');
     const [price, setPrice] = useState(1);
 

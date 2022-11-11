@@ -1,23 +1,23 @@
-import React from 'react';
-import { useTheme } from '@mui/material/styles';
+import React, { useState } from 'react';
 import {
   Checkbox,
   Typography
 } from '@mui/material';
 import { NavigationBar } from './NavigationBar';
 import { Body } from './Body';
+import { useShopService } from '../../services/useShopService';
 
 const LandingPage = () => {
-  // Access material UI theme using this hook
-  const theme = useTheme();
+  const [sort, handleSort] = useState("price");
+  const [search, handleSearch] = useState("null");
+  const displayShops = useShopService();
+  // const allShops = displayShops.getAllShops(sort, search);
+  
 
-  // Material UI themes default components according the ThemeProvider, like the below Checkbox
   return (
     <>
       <NavigationBar></NavigationBar>
-      {/* <Checkbox defaultChecked/>
-      <Typography>Filter</Typography> */}
-      <Body></Body>
+      <Body allShops={allShops}></Body>
     </>
   );
 };
