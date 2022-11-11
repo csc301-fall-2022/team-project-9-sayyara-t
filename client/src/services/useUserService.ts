@@ -50,7 +50,6 @@ export const useUserService = () => {
     return user;
   };
 
-  // TODO: change to API call from mock
   const updateUser = async (user: User): Promise<boolean> => {
 
     const data = {

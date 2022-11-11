@@ -38,7 +38,6 @@ export const useVehicleService = () => {
     return vehicles;
   };
 
-  // TODO: replace mock API call to real API call
   const createVehicle = async (vehicle: Vehicle): Promise<string> => {
 
     const data = {
@@ -63,7 +62,6 @@ export const useVehicleService = () => {
     return responseData.id as string;
   };
 
-  // TODO: replace mock API call to real API call
   const updateVehicle = async (vehicle: Vehicle): Promise<boolean> => {
     
     const data = {
@@ -88,7 +86,6 @@ export const useVehicleService = () => {
     return result.success;
   };
 
-  // TODO: replace mock API call to real API call
   const deleteVehicle = async (vehicle: Vehicle): Promise<boolean> => {
 
     const result = await apiService.privateApiRequest(`${API_PATH}${vehicle.vehicleId}`, "DELETE", {});
