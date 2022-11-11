@@ -24,7 +24,10 @@ const ShopManagement = ({ user }: ShopManagementProps) => {
     const loadData = async () => {
       await shopService.getShopsForUser(user.userId).then((_shops: Array<Shop>) => {
         setShops(_shops);
-      }, (error: Error) => setErrorMessages([...errorMessages, error.message]));
+      }, (error: Error) => {
+        setErrorMessages([...errorMessages, error.message]);
+        console.log(error.message);
+      });
     };
 
     loadData();
@@ -73,13 +76,8 @@ const ShopManagement = ({ user }: ShopManagementProps) => {
         <Box marginTop={theme.spacing(4)}>
           {errorMessages.length > 0 && <ErrorMessages errorMessages={errorMessages} width={0} onDismiss={() => setErrorMessages([])}/>}
           {shops.length > 0 && <ShopInfo 
+            user={user}
             shop={shops[selectedShop]} 
-            services={shops[selectedShop].services}
-            setServices={(services: Array<Service>) => {
-              const _shops = [...shops];
-              _shops[selectedShop].services = services;
-              setShops(_shops);
-            }}
             index={selectedShop}
             setShop={(_shop, index) => {
               const _shops = [...shops];
