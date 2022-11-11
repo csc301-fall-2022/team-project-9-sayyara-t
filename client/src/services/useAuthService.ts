@@ -41,6 +41,8 @@ export const useAuthService = () => {
 
     // stores the token in the session storage under the key "x-access-token"
     sessionStorage.setItem("x-access-token", <string>result.data.accessToken);
+    sessionStorage.setItem("userId", <string>result.data.id);
+    sessionStorage.setItem("roleId", <string>result.data.role_id);
 
     return result.success;
   };

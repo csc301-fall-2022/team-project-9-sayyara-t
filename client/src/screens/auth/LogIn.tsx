@@ -68,6 +68,7 @@ const LogIn = () => {
             id="password"
             autoComplete="current-password"
           />
+            {errorMessages.length > 0 && (<ErrorMessages errorMessages={errorMessages} width={0} onDismiss={() => setErrorMessages([])} />)}
           <Button
             type="submit"
             fullWidth
