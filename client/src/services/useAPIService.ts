@@ -60,7 +60,7 @@ export const useAPIService = () => {
     }
     
     headers.set('x-access-token', token);
-
+    try {
     const response = await fetch(`${API_URL}${path}`, {
       method: method,
       headers: headers,
@@ -74,6 +74,10 @@ export const useAPIService = () => {
     }
 
     return result;
+    } catch (e) {
+      console.log(e);
+      return result;
+    }
   };
 
   return {

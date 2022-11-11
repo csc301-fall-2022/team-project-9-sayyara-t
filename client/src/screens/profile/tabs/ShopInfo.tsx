@@ -1,28 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Grid, TextField, Typography, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { useTheme } from '@mui/material/styles';
 import { useShopService } from '../../../services/useShopService';
 
-import { Service, Shop } from '../../../interfaces';
+import { Service, Shop, User } from '../../../interfaces';
 import ServiceCard from './ServiceCard';
+import { useServiceService } from '../../../services/useServiceService';
+import { useShopAdminServices } from '../../../services/useShopAdminServices';
 
 interface ShopInfoProps {
+  user: User,
   shop: Shop,
-  services: Array<Service>,
-  setServices: (services: Array<Service>) => void,
   index: number,
   setShop: (_shop: Shop, index: number) => void,
   errorMessages: Array<string>,
   setErrorMessages: (_errorMessages: Array<string>) => void
 }
 
-const ShopInfo = ({ shop, services, setServices, index, setShop, errorMessages, setErrorMessages }: ShopInfoProps) => {
+const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages }: ShopInfoProps) => {
   const theme = useTheme();
   const shopService = useShopService();
+  const serviceService = useServiceService();
+  const shopAdminService = useShopAdminServices();
 
+  const [services, setServices] = useState([] as Array<Service>);
   const [isShopChanged, setIsShopChanged] = useState(false);
+
+  useEffect(() => {
+    const loadData = async () => {
+      if (shop.shopId.length == 0) {
+        setServices([]);
+        return;
+      }
+      await serviceService.getServicesForShop(shop.shopId).then((services) => setServices(services), 
+        (error: Error) => setErrorMessages([...errorMessages, error.message]));
+    };
+
+    loadData();
+  }, []);
 
   const onServiceAdd = () => {
     const _services = [...services];
@@ -55,8 +72,9 @@ const ShopInfo = ({ shop, services, setServices, index, setShop, errorMessages, 
   };
 
   const createShop = async () => {
-    await shopService.createShop(shop).then((_shopId: string) => {
-      setShop({...shop, shopId: _shopId}, index);
+    await shopService.createShop(shop).then(async (_shopId: string) => {
+      await shopAdminService.createShopAdmin(user.userId, _shopId).then(() => setShop({...shop, shopId: _shopId}, index),
+        (error: Error) => setErrorMessages([...errorMessages, error.message]));
     }, (error: Error) => setErrorMessages([...errorMessages, error.message]));
     setIsShopChanged(false);
   };
@@ -173,7 +191,7 @@ const ShopInfo = ({ shop, services, setServices, index, setShop, errorMessages, 
           {<Typography fontWeight="bold" sx={{ color: "white" }}>Save</Typography>}
         </Button>
       </Grid>
-      {(services.length > 0) && (
+      {(
         <Box
           marginTop={theme.spacing(16)}
         >
@@ -198,7 +216,7 @@ const ShopInfo = ({ shop, services, setServices, index, setShop, errorMessages, 
               <AddIcon sx={{ color: "white", margin: 0, padding: 0 }}/>
             </Button>
           </Box>
-          {services.map((service, index) => (
+          {(services.length > 0) && (services.map((service, index) => (
             <ServiceCard 
               key={`${service.serviceId}`} // TODO: replace key with a better option
               service={service} 
@@ -206,7 +224,7 @@ const ShopInfo = ({ shop, services, setServices, index, setShop, errorMessages, 
               removeService={onServiceRemove}
               index={index}
             />
-          ))}
+          )))}
         </Box>
       )}
     </Box>

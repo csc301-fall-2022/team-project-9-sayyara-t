@@ -5,29 +5,25 @@ import { useAPIService } from './useAPIService';
 
 // wrapper hook for all Shop related API services
 export const useShopService = () => {
-  const API_PATH = "/shopadmins"; //TODO: double check this is right
-  const API_PATH_SHOPS = "shops/";
+  const API_PATH = "shops/";
   const apiService = useAPIService();
 
   // TODO: test that effectively replaced mock API call
   const getShopsForUser = async (userId: string): Promise<Array<Shop>> => {
-    // const data = {
-      // userId: userId
-    // };
-
-    const result: RequestResult = await apiService.apiRequest(`${API_PATH_SHOPS}/user/:${userId}`, 'GET', {});
+    const result: RequestResult = await apiService.privateApiRequest(`${API_PATH}/user/getBy/${userId}`, 'GET', {});
 
     const data = result.data as Record<string, unknown>;
-    const responseData = result.data as Array<Record<string, unknown>>;
 
     if (!result.success) {
       const msg = data.message || "Unexpected Error";
       return Promise.reject(new Error(`Failed to get shops for this user: ${msg}`));
     }
 
+    const responseData = result.data as Array<Record<string, unknown>>;
+
     return responseData.map((shop) => {
       return {
-        shopId: shop.shop_id,
+        shopId: shop.id,
         name: shop.name,
         address: shop.address,
         phone: shop.phone,
@@ -36,27 +32,6 @@ export const useShopService = () => {
         time: shop.time as Time
       } as Shop;
     });
-
-    // return shopsData.map((shop) => {
-    //   return {
-    //     shopId: shop.shop_id,
-    //     name: shop.name,
-    //     address: shop.address,
-    //     phone: shop.phone,
-    //     email: shop.email,
-    //     description: shop.description,
-    //     time: shop.time as Time,
-    //     services: shop.services.map((service) => {
-    //       return {
-    //         serviceId: service.service_id,
-    //         shopId: service.shop_id,
-    //         name: service.name,
-    //         description: service.description,
-    //         price: service.price
-    //       } as Service;
-    //     })
-    //   } as Shop;
-    // });
   };
 
 
@@ -65,7 +40,7 @@ export const useShopService = () => {
   const getAllShops = async (sort = "price", search = "null"): Promise<Array<Shop>> => {
     const data = null;
 
-    const shops: RequestResult = await apiService.apiRequest(`${API_PATH_SHOPS}${sort}/${search}/`, 'GET', data);
+    const shops: RequestResult = await apiService.apiRequest(`${API_PATH}${sort}/${search}/`, 'GET', data);
 
     const shopsData = shops.data as Array<Record<string, unknown>>;
 
@@ -92,26 +67,23 @@ export const useShopService = () => {
       phone: shop.phone,
       email: shop.email,
       services: shop.services,
-      description: shop.description
+      description: shop.description,
+      time: shop.time
     };
 
-      console.log("Updating Shop");
-      console.log(shop);
-
-      //const success = true;
-
-      //return success ? success : Promise.reject<boolean>(new Error("Failed to updated shop"));
+    console.log("Updating Shop");
+    console.log(shop);
     
-      const result: RequestResult = await apiService.apiRequest(`${API_PATH}/${shop.shopId}`, 'PUT', data);
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH}/${shop.shopId}`, 'PUT', data);
 
-      const responseData = result.data as Record<string, unknown>;
+    const responseData = result.data as Record<string, unknown>;
 
-      if (!result.success) {
-        const msg = responseData.message || "Unexpected Error";
-        return Promise.reject<boolean>(new Error(`Failed to update the shop with id: ${msg}`));
-      }
+    if (!result.success) {
+      const msg = responseData.message || "Unexpected Error";
+      return Promise.reject<boolean>(new Error(`Failed to update the shop with id: ${msg}`));
+    }
 
-      return result.success;
+    return result.success;
   };
 
   // TODO: test
@@ -124,27 +96,23 @@ export const useShopService = () => {
       phone: shop.phone,
       email: shop.email,
       services: shop.services,
-      description: shop.description
+      description: shop.description,
+      time: shop.time
     };
 
     console.log("Creating Shop");
     console.log(shop);
 
-    // const success = true;
-    // const shopId = Math.floor(Math.random() * 1000);
-
-    // return success ? shopId.toString() : Promise.reject<string>(new Error("Failed to create shop"));
-
     const result: RequestResult = await apiService.apiRequest(`${API_PATH}/`, 'POST', inputData);
 
-      const responseData = result.data as Record<string, unknown>;
+    const responseData = result.data as Record<string, unknown>;
 
-      if (!result.success) {
-        const msg = responseData.message || "Unexpected Error";
-        return Promise.reject(new Error(`Failed to create the requested shop: ${msg}`));
-      }
+    if (!result.success) {
+      const msg = responseData.message || "Unexpected Error";
+      return Promise.reject(new Error(`Failed to create the requested shop: ${msg}`));
+    }
 
-      return responseData.id as string;
+    return responseData.id as string;
   };
   
   // TODO: replace mock API call to real API call
