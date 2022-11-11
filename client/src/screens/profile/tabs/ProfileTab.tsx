@@ -121,7 +121,7 @@ const ProfileTab = ({ user, setUser, vehicles, setVehicles, errorMessages, setEr
           {<Typography fontWeight="bold" sx={{ color: "white" }}>Save</Typography>}
         </Button>
       </Grid>
-      {(user.roleId === ROLES.VEHICLE_OWNER && vehicles.length > 0) && (
+      {(user.roleId === ROLES.VEHICLE_OWNER) && (
         <Box
           marginTop={theme.spacing(16)}
         >
@@ -146,7 +146,7 @@ const ProfileTab = ({ user, setUser, vehicles, setVehicles, errorMessages, setEr
               <AddIcon sx={{ color: "white", margin: 0, padding: 0 }}/>
             </Button>
           </Box>
-          {vehicles.map((vehicle, index) => (
+          {vehicles.length > 0 && (vehicles.map((vehicle, index) => (
             <VehicleCard 
               key={`${vehicle.vehicleId}`} // TODO: replace key with a better option
               vehicle={vehicle} 
@@ -154,7 +154,7 @@ const ProfileTab = ({ user, setUser, vehicles, setVehicles, errorMessages, setEr
               removeVehicle={onVehicleRemove}
               index={index}
             />
-          ))}
+          )))}
         </Box>
       )}
     </>

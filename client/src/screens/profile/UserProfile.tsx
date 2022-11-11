@@ -9,9 +9,10 @@ import { useUserService } from '../../services/useUserService';
 import { useVehicleService } from '../../services/useVehicleService';
 import { useParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 import { User, Vehicle } from '../../interfaces';
-import { ROLES, PROFILE_TABS } from '../../constants';
+import { ROLES, PROFILE_TABS, PATHS } from '../../constants';
 import ErrorMessages from '../../shared/ErrorMessages';
 import ShopManagement from './tabs/ShopManagement';
 import ProfileTab from './tabs/ProfileTab';
@@ -21,6 +22,7 @@ const UserProfile = () => {
   const theme = useTheme();
   const userService = useUserService();
   const vehicleService = useVehicleService();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({} as User);
   const [vehicles, setVehicles] = useState([] as Array<Vehicle>);
@@ -34,20 +36,34 @@ const UserProfile = () => {
   useEffect(() => {
     const loadData = async () => {
       const userId: string = params.userId as string;
-      const _user = await userService.getUser(userId).then(
-        (_user: User) => {
-          const _menuItems = [...menuItems];
-          if (_user.roleId === ROLES.VEHICLE_OWNER) {
-            _menuItems.push(PROFILE_TABS.QUOTES);
-          } else if (_user.roleId === ROLES.SHOP_OWNER) {
-            _menuItems.push(PROFILE_TABS.SHOP_MANAGEMENT);
-          }
-          setMenuItems(_menuItems);
+      const currentUserId = sessionStorage.getItem('userId');
+      const roleId = sessionStorage.getItem('roleId');
+      const _menuItems = [...menuItems];
 
-          return _user;
-        }, (error: Error) => {
-        const _errorMessages = [...errorMessages, error.message];
-        setErrorMessages(_errorMessages);
+      if (currentUserId === null) {
+        navigate(PATHS.LOGIN);
+        return;
+      }
+
+      if (currentUserId !== userId) {
+        navigate(PATHS.LANDING);
+        return;
+      }
+
+      if (roleId === String(ROLES.VEHICLE_OWNER)) {
+        _menuItems.push(PROFILE_TABS.QUOTES);
+      }
+
+      if (roleId === String(ROLES.SHOP_OWNER)) {
+        _menuItems.push(PROFILE_TABS.SHOP_MANAGEMENT);
+      }
+
+      const _user = await userService.getCurrentUser().then((_user: User) => {
+        setUser(_user);
+
+        return _user;
+      }, (error: Error) => {
+        setErrorMessages([...errorMessages, error.message]);
 
         return null;
       });
@@ -66,6 +82,7 @@ const UserProfile = () => {
         
         setVehicles(_vehicles);
         setUser(_user);
+        setMenuItems(_menuItems);
       }
     };
     
