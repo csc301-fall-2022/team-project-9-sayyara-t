@@ -1,40 +1,94 @@
-import { Service } from "../interfaces";
+import { RequestResult, Service } from "../interfaces";
+import { useAPIService } from "./useAPIService";
 
 // wrapper hook for all Service related API services
 export const useServiceService = () => {
+  const apiService = useAPIService();
+  const API_PATH = "services/";
 
-  // TODO: replace mock API call to real API call
+  const getServicesForShop = async (shopId: string): Promise<Array<Service>> => {
+
+    const result = await apiService.apiRequest(`${API_PATH}shop/${shopId}`, "GET", {});
+
+    const data = result.data as Record<string, unknown>;
+
+    if (!result.success) {
+      const msg = data.message || "Unexpected Error";
+      return Promise.reject<Array<Service>>(new Error(`Failed to fetch services: ${msg}`));
+    }
+
+    const servicesData = result.data as Array<Record<string, unknown>>;
+
+    const services = servicesData.map((s) => {
+      const service: Service = {
+        serviceId: s.id as string,
+        shopId: s.shop_id as string,
+        name: s.name as string,
+        description: s.description as string,
+        price: s.price as number
+      };
+      return service;
+    });
+
+    return services;
+  };
+
   const createService = async (service: Service): Promise<string> => {
-    console.log(`Created Service`);
-    console.log(service);
+    const data = {
+      shop_id: service.shopId,
+      name: service.name,
+      description: service.description,
+      price: service.price
+    };
 
-    const success = true;
-    const serviceId = Math.floor(Math.random() * 1000);
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH}`, 'POST', data);
+    const responseData = result.data as Record<string, unknown>;
 
-    return success ? serviceId.toString() : Promise.reject<string>(new Error("Failed to create service."));
+    if (!result.success) {
+      const msg = responseData.message || "Unexpected Error";
+      return Promise.reject<string>(new Error(`Failed to create new service: ${msg}`));
+    }
+    return responseData.id as string;
   };
 
-  // TODO: replace mock API call to real API call
   const updateService = async (service: Service): Promise<boolean> => {
-    console.log(`Updated Service`);
-    console.log(service);
+    const data = {
+      shop_id: service.shopId,
+      name: service.name,
+      description: service.description,
+      price: service.price
+    };
 
-    const success = true;
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH}${service.serviceId}`, 'PUT', data);
+    const responseData = result.data as Record<string, unknown>;
 
-    return success ? success : Promise.reject<boolean>(new Error("Failed to update service."));
+    if (!result.success) {
+      const msg = responseData.message || "Unexpected Error";
+      return Promise.reject<boolean>(new Error(`Failed to update service: ${msg}`));
+    }
+    return result.success;
   };
 
-  // TODO: replace mock API call to real API call
   const deleteService = async (service: Service): Promise<boolean> => {
-    console.log(`Deleted Service`);
-    console.log(service);
+    const data = {
+      shop_id: service.shopId,
+      name: service.name,
+      description: service.description,
+      price: service.price
+    };
 
-    const success = true;
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH}${service.serviceId}`, 'DELETE', data);
+    const responseData = result.data as Record<string, unknown>;
 
-    return success ? success : Promise.reject<boolean>(new Error("Failed to delete service."));
+    if (!result.success) {
+      const msg = responseData.message || "Unexpected Error";
+      return Promise.reject<boolean>(new Error(`Failed to delete service: ${msg}`));
+    }
+    return result.success;
   };
 
   return {
+    getServicesForShop,
     createService,
     updateService,
     deleteService

@@ -18,6 +18,19 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
 
   const IMG_HEIGHT = height - 25;
 
+  const isLoggedIn = () => {
+    return sessionStorage.getItem('x-access-token') !== null && 
+          sessionStorage.getItem('userId') !== null &&
+          sessionStorage.getItem('roleId') !== null;
+  };
+
+  const getLink = () => {
+    if (isLoggedIn()) {
+      return `/user/${sessionStorage.getItem('userId')}`;
+    }
+    return PATHS.LANDING;
+  };
+
   return (
     <Box height={height} bgcolor={theme.palette.primary.main}>
       <Box 
@@ -42,9 +55,11 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
             </Box>
           </Link>
           <Box marginRight={theme.spacing(2)}>
-            <Avatar sizes="20" sx={{ bgcolor: "secondary.main", padding: 0 }}>
-              <Person sx={{ color: "primary.main" }}/>
-            </Avatar>
+            <Link to={getLink()}>
+              <Avatar sizes="20" sx={{ bgcolor: "secondary.main", padding: 0 }}>
+                <Person sx={{ color: "primary.main" }}/>
+              </Avatar>
+            </Link>
           </Box>
         </Box>
       </Box>

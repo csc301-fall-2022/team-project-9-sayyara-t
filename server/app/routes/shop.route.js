@@ -4,8 +4,8 @@ module.exports = app =>{
     var router = require("express").Router();
 
     router.post("/", shops.create);
-    router.get("/", shops.findAll);
-    router.get("/user/:user_id", shops.findAllByUserID);
+    router.get("/:sort/:search", shops.findAll);
+    router.get("/user/getBy/:user_id", shops.findAllByUserID);
     router.get("/:id", shops.findOne);
     router.put("/:id", shops.update);
     router.delete("/:id", shops.delete);
