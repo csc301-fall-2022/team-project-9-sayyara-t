@@ -11,26 +11,33 @@ The deployed app can be accessed here: https://sayyara-client.herokuapp.com/
     * The application directly solves this problem by streamlining the process in which vehicle owners can contact, connect to, and communicate with automobile shops.  
 
 ## Key Features
+ * Described the key features in the application that the user can access
+ * Provide a breakdown or detail for each feature that is most appropriate for your application
+ * This section will be used to assess the value of the features built
  * There are multiple models representing core pieces of the application that users can interact with, all with built in CRUD functionality and more. We have models for Users, Shops, Services, Ratings, Vehicles, and ShopAdmins that act as the core foundation of our application. 
-   * **User**
-     * User has CRUD functionality. A user can register and create a new User, delete their own User, edit their User information, and retrieve their own User information. Furthermore, Users can also login and be authenticated for a session. User's that register as a vehicle owner will have a role_id of 2 in their User model, while shop owners that register will have a role_id of 3 in their User model. A role_id of 1 in a User model is to represent an admin, which has authentication for everything in the application.
-   * **Shop** 
-     * Shop has CRUD functionality. A Shop Owner (User model with a role_id of 3) that is logged in and with the correct role_id is allowed to create, edit, and delete shops that they are administrators of. Every shop will have a profile page, displaying all the information stored in respective Shop model relevant to vehicle owners, the services the shop provides, and the ratings the shop have been given. We store all data concern shop administration in the ShopAdmin model, which has two foreign keys to user_id and shop_id. If a user_id is matched to a shop_id in ShopAdmin, then that User is allowed to edit the Shop model, all the Services model that Shop model is linked to, and assign other User models to be administrators of that Shop. <br> <br/>
-       Furthermore, it is publically available to view all Shops through a GET request, meaning that vehicle owners (User model with a role_id of 2) can view all the shops on the landing page for vehicle owners. Furthermore, our GET request is customized to take in a search key and a sort key, meaning users can search for Shop models by their name, and also sort them by their average price and star ratings. Average price and star ratings for each Shop model is calculated through the Ratings model, where each data point contains a price and star rating left by a User model for a specific Shop model. 
-   * **Services** 
-     * Services have CRUD functionality. User models that are administrators of a Shop Model can create Service models for shops. Furthermore, they are allowed to edit and delete these models as they see fit. The homepage for a shop will be able to make an API call to get all the Service models that have the Shop model's ID as a foreign key.
-   * **Ratings** 
-     * Ratings have CRUD functionality. A vehicle owner (User model with a role_id of 2) can create, edit, and delete a Rating model for a Shop model. Users will be able to leave a price (integer from 1-4) and star value (integer from 1-5) to indicate their opinion of the shop. These Rating models will be used to sort the Shop models in the Shop models GET request by averaging a Shop model's price and star ratings, as stated beforehand.
-   * **Vehicles**
-     *  Vehicles have CRUD functionality. A vehicle owner (User model with a role_id of 2) can create, edit, and delete a Vehicle model to represent the vehicle they need to be attended. A user can view all the vehicles they have created on the application as the Vehicle model has a foreign key to a User model.
-   * **ShopAdmin** 
-     * ShopAdmins have CRUD functionality. When a shop owner (User model with a role_id of 3) creates a new shop/Shop model, a new ShopAdmin model is automatically created with user_id set to the User model's id and a shop_id set to the new Shop model's id. Furthermore, every shop admin of a shop can assign other shop owners to be a shop admin of said shop, creating a new ShopAdmin model, and also remove a shop owner from being a shop admin of said shop, deleting a ShopAdmin model.
+   * General: 
+      * User signin/ signup: A user can register and create an new account within our system. Furthermore, they can also login and be authenticated for a session which would allow them to access more feature within the application. There are two main types of user, general users and shop owners.  General users are vehicles owners who go on to Sayyara looking for autoshops. Shop owners are managers of one or more shops who can login to edit their shops’ information (services list, open hours, …).
+      * Landing page - shop search dashboard: One place where you can see it all. The landing page allows those using Sayyara app to view, search for, and sort through shops in order to find the auto repair shop which best suits their needs. The landing page also provides access to signin or signup, a navigation bar with menu options to access all other webpages of Sayyara.
+      * Search for shops: Users can search for an automotive repair shop based on its name using the search bar in the landing page
+      * Sort shops for view: Users can filer through or organize the list of existing repair shops based on criteria such as average price range for service, or proximity of store, stores ratings
+   * Vehicle owner:
+      * User profile: Vehicle owners can keep track of and update their information, both pertaining to themselves and their vehicles. These features become especially important when quote features will be released and users will want to communicate their information for repairs
+   * Shop owner:
+      * User profile: The user profile for a shop owner, in addition to containing basic information about the user, is tied to the shop managed for that user (see shop profile and shop management to understand more)
+      * Shop profile: This is a page representing the shop to users on the app so that they can learn more about the shop, and hopefully proceed into business with it. The shop owner can specify hours of operation, services offered, or other features, which are simplified into the shop tile on the landing page
+      * Shop management: This feature enables the shop owner to update the information stored in the app about the store. This information can either be customer facing (e.g. change the hours of operation for a store) or internal (e.g. allow another user to manage shop details)
 
 ## Instructions
- * Clear instructions for how to use the application from the end-user's perspective
- * How do you access it? Are accounts pre-created or does a user register? Where do you start? etc. 
- * Provide clear steps for using each feature described above
- * This section is critical to testing your application and must be done carefully and thoughtfully
+ * Parts of our application can be accessed without creating an account. Searching for shops and viewing detailed information about each shop can be done by anyone without an account. 
+   * The landing page is a page where users can see all the available shops display on the screen alongside the option to search for shops using the search bar at the top of the page.
+   * Clicking on each of the shops will take the user to a shop profile, where they are able to view more details about the shop they selected. In detail, they will be directed to a shop information page where the average rating, price range, open hours as well as offered services list for a given shop are displayed
+   * One of the key feature is that the user can also easily search for a specific automobile shop by its name using the search bar. Moreover, it is also possible to sort all displayed shops based on their average price or average rating.
+ * Other parts of the application are only accessible to registered users. Setting user profile information, creating vehicles under the user profile, or in the case of a shop owner, creating and managing shops can only be done by registered users.
+   *  To register as a user, either navigate to the /signup route or click the log-in button at the top right of the landing page and navigate to the sign-up page from there. Fill out the necessary information on the form and click the bottom button to create a user. To create an account for a shop owner, make sure to check the checkbox at the bottom of the form to indicate that the account will belong to a shop owner. This will take the user to the log-in page where they can use the account they just created to log-in to the application.
+   * From there, users can navigate to their profile page by clicking the user icon on the top right of the landing page. 
+   * All types of users will have the basic information fields, where they are able to edit their name, phone number, and email. Users must save the changes after updating the information.
+   * For Vehicle, the user can fill in a few essential information for their vehicle that get stored in the user's profile such as license plate, model, VIN, mileage and type of the vehicle. This can be easily access in the profile page of each user when logged in.
+   * For shop owners, they would have access to the shop management page where they can edit the basic information for a given shop such as open hours, services list or shop's managers. This is accessible in the shop management page which would be made visible for users who are also shop owners
 
  ## Development requirements
 
