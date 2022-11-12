@@ -39,7 +39,7 @@ const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages 
     };
 
     loadData();
-  }, []);
+  }, [shop]);
 
   const onServiceAdd = () => {
     const _services = [...services];
