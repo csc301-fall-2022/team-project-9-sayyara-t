@@ -1,23 +1,16 @@
 {
   "development": {
-    "username": "root",
-    "password": "Yourpasswordhere",
-    "database": "sayarra",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "doadmin",
+    "password": "AVNS_0iQEJIRcg6wXhOD-O3W",
+    "database": "sayyara",
+    "port": 25060,
+    "host": "mysql-db-csc311-do-user-12762219-0.b.db.ondigitalocean.com",
+    "dialect": "mysql",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   }
 }

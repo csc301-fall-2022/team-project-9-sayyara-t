@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { Stack } from '@mui/system';
 import Slider from '@mui/material/Slider';
 import { ShopTile } from './ShopTile';
+import { Shop } from '../../interfaces';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -23,9 +24,13 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
+interface BodyProps {
+    shops: Array<Shop>,
+    sort: string
+    setSort: (_price: string) => void
+}
 
-export const Body = () => {
-    const [value, setValue] = useState('Price');
+export const Body = ({ shops, sort, setSort }: BodyProps) => {
     const [price, setPrice] = useState(1);
 
     const marks = [
@@ -52,7 +57,7 @@ export const Body = () => {
     ];
     
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value);
+        setSort(event.target.value);
     };
 
     const handleClick = (price: number) => {
@@ -104,12 +109,11 @@ export const Body = () => {
                     <RadioGroup 
                         name='filter'
                         aria-labelledby='filter-label'
-                        value={value}
+                        value={sort}
                         onChange={handleChange}
                     >
-                        <FormControlLabel control={<Radio />} label='Price' value='Price'/>
-                        <FormControlLabel control={<Radio />} label='Distance' value='Distance'/>
-                        <FormControlLabel control={<Radio />} label='Ratings' value='Ratings'/>
+                        <FormControlLabel control={<Radio />} label='Price' value='price'/>
+                        <FormControlLabel control={<Radio />} label='Ratings' value='star'/>
                     </RadioGroup>
                 </FormControl>
                 <FormControl
@@ -181,33 +185,11 @@ export const Body = () => {
                         p: 10
                     }}
                 >
-                    <Grid item xs={12} sm={6} md={4}>
-                        <ShopTile></ShopTile>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <ShopTile></ShopTile>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <ShopTile></ShopTile>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <ShopTile></ShopTile>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <ShopTile></ShopTile>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <ShopTile></ShopTile>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <ShopTile></ShopTile>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <ShopTile></ShopTile>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <ShopTile></ShopTile>
-                    </Grid>
+                    {shops.map((shop) => (
+                        <Grid item width={350} key={shop.shopId}>
+                            <ShopTile name={shop.name} id={shop.shopId}></ShopTile>
+                        </Grid>
+                    ))}
                 </Grid>
             </Grid>
         </Grid>

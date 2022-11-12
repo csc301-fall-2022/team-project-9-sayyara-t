@@ -8,17 +8,20 @@ import { Link } from 'react-router-dom';
 import { PATHS } from '../../constants';
 import shop from '../../assets/images/shop.jpeg';
 
+interface ShopTileProps {
+  name: string,
+  id: string
+}
 
-export const ShopTile = () => {
+export const ShopTile = ({ name, id }: ShopTileProps) => {
   return (
-    <Link to={PATHS.SHOP_PROFILE}>
+    <Link to={`shop-profile/${id}`}>
       <Card sx={{ width: '100%' }}>
         <CardActionArea>
           <CardMedia
             component="img"
             height="auto"
             image={shop}
-            
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div"
@@ -26,7 +29,7 @@ export const ShopTile = () => {
               fontWeight: 'bold'
             }}
             >
-              Silicon Valley Auto Repairs
+              {name}
             </Typography>
             <Typography variant="body2" color="text.secondary" gutterBottom>
               2,4 km away

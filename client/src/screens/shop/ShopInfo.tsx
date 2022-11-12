@@ -8,6 +8,7 @@ import {
     Typography
 } from '@mui/material';
 import { ServiceInfo } from './ServiceInfo';
+import { Service, Shop } from '../../interfaces';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -16,9 +17,14 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
+interface ShopInfoProps {
+    shop: Shop,
+    services: Array<Service>
+}
+
 // TODO: Finish this tomorrow using the layout in Auto-layout section of Grid
 // in combination with 
-export const ShopInfo = () => {
+export const ShopInfo = ({ shop, services }: ShopInfoProps) => {
   return (
     <Box>
         <Box 
@@ -38,18 +44,18 @@ export const ShopInfo = () => {
                             fontWeight: "bold"
                         }}
                     >
-                        Shop name
+                        {shop.name}
                     </Typography>
                 </Item>
             </Grid>
             <Grid item xs>
-                <Item>Ratings</Item>
+                <Item>Rating: N/A</Item>
             </Grid>
             <Grid item xs>
-                <Item>Price Range</Item>
+                <Item>Price Range: </Item>
             </Grid>
             <Grid item xs>
-                <Item>Open Hours</Item>
+                <Item>{`Open Hours: ${shop.time ? shop.time.start : ""}-${shop.time ? shop.time.end : ""}`}</Item>
             </Grid>
         </Grid>
         </Box>
@@ -73,9 +79,12 @@ export const ShopInfo = () => {
             }}
         >
             <Stack spacing={5} direction="column">
-                <ServiceInfo></ServiceInfo>
-                <ServiceInfo></ServiceInfo>
-                <ServiceInfo></ServiceInfo>
+                {services.length > 0 && services.map((service) => (
+                    <ServiceInfo 
+                        key={service.serviceId}
+                        service={service}
+                    />
+                ))}
             </Stack>
         </Box>
     </Box>

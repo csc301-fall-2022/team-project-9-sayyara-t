@@ -5,7 +5,7 @@ module.exports = app =>{
 
     router.post("/", shops.create);
     router.get("/:sort/:search", shops.findAll);
-    router.get("/user/:user_id", shops.findAllByUserID);
+    router.get("/user/getBy/:user_id", shops.findAllByUserID);
     router.get("/:id", shops.findOne);
     router.put("/:id", shops.update);
     router.delete("/:id", shops.delete);
