@@ -57,3 +57,9 @@ List any **process-related** (i.e. team organization and how you work) changes y
  * Were there change requests?
  * What did you learn from the demo from either a process or product perspective?
  * *This section will be marked very leniently so keep it brief and just make sure the points are addressed*
+
+ We prepared our demo by setting up the hosting of our production version. This allowed us to let our partner use the application without one of us having to host it. We were able to demo our signup, and login features, as well as all the management features for the users, vehicles, shops and services. We were also able to demo our search functionality on our landing page.
+
+ Our partner accepted these features, and was very happy with the UI/UX cleanliness and ease of use. There was one main change request given, which was to change the landing page for the shop owners so that they could see their current quotes / chats instead of the search functionality, as they would not usually need to be searching. Our partner was also interested in the implementation of the chat and quotes feature for the future, which will be done by D3. 
+
+ We learned a lot about our client’s goals and mindset through the demo, as we know now to emphasize the ease of use and cleanliness of the features that we build rather than create a more modular but detailed feature.
