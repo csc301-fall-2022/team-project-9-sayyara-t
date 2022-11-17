@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Box } from '@mui/material';
+import { Avatar, Box, Button, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import { PATHS } from '../../constants';
 
 import logo from '../../assets/images/logo-white.png';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
 
 interface TopNavProps {
@@ -54,12 +55,33 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
                 <img height={IMG_HEIGHT} src={logo}/>
             </Box>
           </Link>
-          <Box marginRight={theme.spacing(2)}>
-            <Link to={getLink()}>
-              <Avatar sizes="20" sx={{ bgcolor: "secondary.main", padding: 0 }}>
-                <Person sx={{ color: "primary.main" }}/>
-              </Avatar>
-            </Link>
+          <Box 
+            display="flex"
+            marginRight={theme.spacing(2)}
+            justifyContent="space-between"
+            flexDirection="row"
+          >
+            <Grid container spacing={8}>
+              <Grid item>
+                <Button variant="contained"
+                  startIcon={<LogoutIcon />}
+                  sx={ {
+                      borderRadius: 8,
+                      color : '#eeeeee'
+                  }}
+                  // onClick={handleLogout}
+                    >
+                      {"Log out"}
+                </Button>
+              </Grid>
+              <Grid item>
+                <Link to={getLink()}>
+                  <Avatar sizes="20" sx={{ bgcolor: "secondary.main", padding: 0 }}>
+                    <Person sx={{ color: "primary.main" }}/>
+                  </Avatar>
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
       </Box>
