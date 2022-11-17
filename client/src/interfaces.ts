@@ -48,6 +48,7 @@ export interface RequestResult {
 }
 
 export interface Quote {
+  quoteId: string
   userId: string
   total: number
   note: string

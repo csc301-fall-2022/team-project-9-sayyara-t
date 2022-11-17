@@ -1,14 +1,12 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions, Grid } from '@mui/material';
+import { Button, CardActions, Grid } from '@mui/material';
 
 export const QuoteTile = () => {
   return (
     <Card sx={{ minWidth: 275 }}>
-      <CardActionArea>
         <CardContent>
           <Grid container>
             <Grid item xs={10}>
@@ -29,12 +27,11 @@ export const QuoteTile = () => {
             </Grid>
           </Grid>  
         </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Change Estimation
-        </Button>
-      </CardActions>
+        <CardActions>
+            <Button size="small" color="primary">
+            Change Estimation
+            </Button>
+        </CardActions>
     </Card>
   );
 };

@@ -10,7 +10,8 @@ export const ShopQuotesList = () => {
             sx={{ 
                 flexGrow: 1,
                 py: 5,
-                px: 20
+                px: 20,
+                pt: 10
             }}
         >
             <Stack spacing={5} direction="column">
