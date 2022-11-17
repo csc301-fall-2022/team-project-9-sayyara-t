@@ -195,14 +195,15 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
-    "start": "node server.js",
-    "test": "npx cross-env NODE_ENV=test jest",
+    "start": "node index.js",
+    "test": "npx cross-env NODE_ENV=test jest --detectOpenHandles --no-cache --silent ",
     "test:setup": "npx cross-env NODE_ENV=test npm run test:db:reset",
     "test:db:reset": "cd app && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^29.3.1",
     "sequelize-cli": "^6.5.2"
   }
