@@ -1,10 +1,12 @@
-require('iconv-lite').encodingExists('foo')
 const { expect } = require('chai');
 const supertest = require('supertest');
 const app = require('../../server');
 
+afterAll(async () => {
+    await new Promise(res => setTimeout(res, 500));
+});
 
-describe('GET /api/shop with id=10', () => {
+describe('GET /api/shops with id=10', () => {
     it('responds with the appropriate JSON', async () => {
         response = await supertest(app)
                             .get('/api/shops/10')
@@ -21,7 +23,7 @@ describe('GET /api/shop with id=10', () => {
     });
   });
 
-  describe('POST /api/shop with shop data', () => {
+  describe('POST /api/shops with shop data', () => {
     it('responds with the appropriate JSON', async () => {
         const shop_data = {
             name: 'Peters Planes',
