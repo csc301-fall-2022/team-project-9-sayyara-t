@@ -23,7 +23,7 @@ describe('GET /api/vehicles with id=10000', () => {
     });
   });
 
-  describe('POST /api/shops with shop data', () => {
+  describe('POST /api/shops with vehicle data', () => {
     it('responds with the appropriate JSON', async () => {
         const vehicle_data = {
             user_id: '3',

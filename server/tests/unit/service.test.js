@@ -21,7 +21,7 @@ describe('GET /api/services with id=1000', () => {
     });
   });
 
-  describe('POST /api/services with shop data', () => {
+  describe('POST /api/services with service data', () => {
     it('responds with the appropriate JSON', async () => {
         const service_data = {
             shop_id: '10',

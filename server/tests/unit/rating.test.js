@@ -22,7 +22,7 @@ describe('GET /api/ratings with id=100', () => {
     });
   });
 
-  describe('POST /api/ratings with shop data', () => {
+  describe('POST /api/ratings with rating data', () => {
     it('responds with the appropriate JSON', async () => {
         const rating_data = {
             user_id: '2',
