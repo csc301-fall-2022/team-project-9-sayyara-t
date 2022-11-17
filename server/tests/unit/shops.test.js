@@ -8,7 +8,8 @@ describe('GET /api/shop with id=10', () => {
     it('responds with the appropriate JSON', async () => {
         response = await supertest(app)
                             .get('/api/shops/10')
-                            .expect('Content-Type', /json/).expect(200);
+                            .expect('Content-Type', /json/)
+                            .expect(200);
 
         expect(response.body.id).to.equal('10');
         expect(response.body.name).to.equal('Bobs Trucks');
@@ -35,7 +36,9 @@ describe('GET /api/shop with id=10', () => {
                         .post('/api/shops')
                         .send(shop_data)
                         .set('Content-Type', 'application/json')
-                        .set('Accept', 'application/json');
+                        .set('Accept', 'application/json')
+                        .expect('Content-Type', /json/)
+                        .expect(200);
 
         expect(response.body).to.haveOwnProperty('createdAt');
         expect(response.body).to.haveOwnProperty('updatedAt');       
