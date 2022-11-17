@@ -117,14 +117,14 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
                 />
                 </Search>
                 <Button variant="contained"
-                startIcon={isLoggedIn() ? <Person /> : <LoginIcon />}
+                startIcon={isLoggedIn() ? "" : <LoginIcon />}
                 sx={ {
                     borderRadius: 8,
                     color : '#eeeeee'
                 }}
                 onClick={handleNaviagte}
                 >
-                    {isLoggedIn() ? "" : "Login"}
+                    {isLoggedIn() ? <Person /> : "Login"}
                 </Button>
             </Stack>
         </Toolbar>
