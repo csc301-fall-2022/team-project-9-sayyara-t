@@ -9,6 +9,7 @@ import SignUp from './screens/auth/SignUp';
 import LandingPage from './screens/landing/LandingPage';
 import ShopProfile from './screens/shop/ShopProfile';
 import UserProfile from './screens/profile/UserProfile';
+import ShopLanding from './screens/shop-landing/ShopLanding';
 
 const AppRoutes = () => {
   return (
@@ -18,7 +19,7 @@ const AppRoutes = () => {
       <Route path={PATHS.LOGIN} element={<LogIn />} />
       <Route path={PATHS.RESET} element={<Reset />} />
       <Route path={PATHS.SIGNUP} element={<SignUp />} />
-
+      <Route path={PATHS.MANAGEMENT} element={<ShopLanding />}/>
       <Route path={PATHS.USER} element={<PrivateRoute child={<UserProfile />}/>} />
     </Routes>
   );

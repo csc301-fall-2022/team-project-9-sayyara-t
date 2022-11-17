@@ -46,3 +46,9 @@ export interface RequestResult {
   success: boolean,
   data: unknown
 }
+
+export interface Quote {
+  userId: string
+  total: number
+  note: string
+}

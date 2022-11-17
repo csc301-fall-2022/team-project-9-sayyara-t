@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  Typography
-} from '@mui/material';
 import { ShopInfo } from './ShopInfo';
 import TopNav from '../profile/TopNav';
 import { Service, Shop } from '../../interfaces';
@@ -35,8 +32,6 @@ const ShopProfile = () => {
 
   return (
     <>
-      {/* <Typography>This is the Shop Profile for Shop {params.shopId}</Typography> */}
-      {/* <NavigationBar></NavigationBar> */}
       <TopNav height={60} uiWidth={UI_WIDTH}></TopNav>
       <ShopInfo shop={shop} services={services}></ShopInfo>
     </>
