@@ -24,5 +24,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Upgrade NPM
         run: npm install -g npm
-      - run: npm run ci:all
-      - run: npm run test:all
+      - run: npm run install
+      - run: npm run test
