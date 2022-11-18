@@ -27,5 +27,12 @@
         "rejectUnauthorized": false
       }
     }
+  },
+  "local": {
+    "username": "root",
+    "password": "your passwordd",
+    "database": "sayyara",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }
