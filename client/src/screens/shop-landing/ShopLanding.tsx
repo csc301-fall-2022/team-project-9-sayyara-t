@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import TopNav from '../profile/TopNav';
 import { ShopQuotesList } from './ShopQuotesList';
 
-const LandingPage = () => {
+const ShopLandingPage = () => {
   const UI_WIDTH = window.innerWidth - 50;
   const [sort, setSort] = useState("date");
   const [search, setSearch] = useState("null");
@@ -23,4 +23,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default ShopLandingPage;
