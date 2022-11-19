@@ -79,9 +79,10 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
                       borderRadius: 8,
                       color : '#eeeeee'
                   }}
+                  style={{ display: isLoggedIn() ? "" : "none" }}
                   onClick={handleLogout}
                   >
-                      {isLoggedIn() ? "Log out" : "Back"}
+                      {"Log out"}
                 </Button>
               </Grid>
               <Grid item>
