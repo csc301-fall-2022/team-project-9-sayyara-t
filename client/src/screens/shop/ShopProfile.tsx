@@ -7,7 +7,7 @@ import { useShopService } from '../../services/useShopService';
 import { useServiceService } from '../../services/useServiceService';
 
 const ShopProfile = () => {
-  const UI_WIDTH = 1600;
+  const UI_WIDTH = window.innerWidth - 50;
   const params = useParams();
   const shopService = useShopService();
   const serviceService = useServiceService();
