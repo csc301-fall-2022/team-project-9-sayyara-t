@@ -130,8 +130,7 @@ export const ShopQuotesList = ({ search, setSearch, sort, setSort }: ShopQuotesL
                 <Box 
                 sx={{ 
                     flexGrow: 1,
-                    py: 5,
-                    px: 20,
+                    px: 10,
                     pt: 10
                 }}
                 >

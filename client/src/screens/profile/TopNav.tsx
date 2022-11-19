@@ -8,6 +8,7 @@ import { PATHS } from '../../constants';
 import logo from '../../assets/images/logo-white.png';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
+import {useNavigate} from "react-router-dom";
 
 interface TopNavProps {
   height: number,
@@ -16,8 +17,16 @@ interface TopNavProps {
 
 const TopNav = ({ height, uiWidth }: TopNavProps) => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const IMG_HEIGHT = height - 25;
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('x-access-token');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('roleId');
+    navigate(PATHS.LANDING);
+  };
 
   const isLoggedIn = () => {
     return sessionStorage.getItem('x-access-token') !== null && 
@@ -63,15 +72,16 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
           >
             <Grid container spacing={8}>
               <Grid item>
-                <Button variant="contained"
+                <Button 
+                  variant="contained"
                   startIcon={<LogoutIcon />}
                   sx={ {
                       borderRadius: 8,
                       color : '#eeeeee'
                   }}
-                  // onClick={handleLogout}
-                    >
-                      {"Log out"}
+                  onClick={handleLogout}
+                  >
+                      {isLoggedIn() ? "Log out" : "Back"}
                 </Button>
               </Grid>
               <Grid item>
