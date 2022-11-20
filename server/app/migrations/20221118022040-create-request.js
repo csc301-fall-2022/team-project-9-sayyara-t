@@ -35,6 +35,24 @@ module.exports = {
           key: 'id',
         }
       },
+      quote_id: {
+        allowNull: true,
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'Quotes',
+          key: 'id',
+        }
+      },
+      rework_id: {
+        allowNull: true,
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'Requests',
+          key: 'id',
+        }
+      },
       services: {
         type: Sequelize.JSON,
         allowNull: false
@@ -46,6 +64,10 @@ module.exports = {
       },
       description: {
         type: Sequelize.STRING,
+        allowNull: false
+      },
+      odometer: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       new_used: {
