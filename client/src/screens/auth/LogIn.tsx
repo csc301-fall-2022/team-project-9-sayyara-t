@@ -25,7 +25,11 @@ const LogIn = () => {
         (error: Error) => setErrorMessages([...errorMessages, error.message]));
 
     if (success) {
-        navigate(PATHS.LANDING);
+        if (sessionStorage.getItem('roleId') == '3') {
+            navigate(PATHS.MANAGEMENT);
+        } else {
+            navigate(PATHS.LANDING); 
+        }
     }
   };
 
