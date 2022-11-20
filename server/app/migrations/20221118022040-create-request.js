@@ -44,7 +44,7 @@ module.exports = {
           key: 'id',
         }
       },
-      rework_id: {
+      linked_request_id: {
         allowNull: true,
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
@@ -64,10 +64,6 @@ module.exports = {
       },
       description: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      odometer: {
-        type: Sequelize.INTEGER,
         allowNull: false
       },
       new_used: {

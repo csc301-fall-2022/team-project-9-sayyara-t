@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'quote',
         key: 'id'
       }},
-    rework_id: {type: DataTypes.UUID, allowNull: true,
+    linked_request_id: {type: DataTypes.UUID, allowNull: true,
       references:{
         model: 'request',
         key: 'id'
@@ -48,7 +48,6 @@ module.exports = (sequelize, DataTypes) => {
     services: {type: DataTypes.JSON, allowNull: false},
     state: {type: DataTypes.INTEGER, defaultValue: 0},
     description: {type:DataTypes.STRING, allowNull: false},
-    odometer: {type:DataTypes.INTEGER, allowNull: false},
     new_used: {type: DataTypes.INTEGER, allowNull:false, defaultValue: 3},
     oem_after: {type: DataTypes.INTEGER, allowNull:false, defaultValue: 3}
   }, {

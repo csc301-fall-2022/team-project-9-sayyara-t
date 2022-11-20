@@ -4,19 +4,20 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res)=>{
     const newRequest = {
-      id: req.body.id,
       user_id: req.body.user_id,
       shop_id: req.body.shop_id,
       vehicle_id: req.body.vehicle_id,
+      quote_id: req.body.quote_id,
+      linked_request_id: req.body.linked_request_id,
       services: req.body.services,
       state: req.body.state,
       description: req.body.description,
       new_used: req.body.new_used,
       oem_after: req.body.oem_after
-      }
+    }
     console.log(newRequest);
 
-    Vehicle.create(newRequest).then(data=>{res.send(data)})
+    Request.create(newRequest).then(data=>{res.send(data)})
       .catch(err => {
         res.status(500).send({
           message:
@@ -25,12 +26,11 @@ exports.create = (req, res)=>{
       });
 }
 
-// this is where findAll would go. need to figure out sorting
-
 exports.findOne = (req, res) => {
     const id = req.params.id; 
   
-    Request.findByPk(id, {attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'services', 'state', 'description', 'new_used', 'oem_after']})
+    Request.findByPk(id, {attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id', 
+    'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt']})
       .then(data => {
         if (data) {
           res.send(data);

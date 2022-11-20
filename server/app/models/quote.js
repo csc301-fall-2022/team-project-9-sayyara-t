@@ -14,12 +14,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Quote.init({
-    labour: DataTypes.FLOAT,
-    parts: DataTypes.JSON,
-    fees: DataTypes.JSON,
-    discount: DataTypes.FLOAT,
-    total: DataTypes.FLOAT,
-    note: DataTypes.STRING
+    id: {
+      type:DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      unique: true 
+    },
+    labour: {type: DataTypes.FLOAT, allowNull: false},
+    parts: {type: DataTypes.JSON, allowNull: false},
+    fees: {type: DataTypes.JSON, allowNull: false},
+    discount: {type: DataTypes.FLOAT, allowNull: false},
+    total: {type: DataTypes.FLOAT, allowNull: false},
+    note: {type: DataTypes.STRING, allowNull: true}
   }, {
     sequelize,
     modelName: 'Quote',
