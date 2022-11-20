@@ -19,7 +19,7 @@ const AppRoutes = () => {
       <Route path={PATHS.LOGIN} element={<LogIn />} />
       <Route path={PATHS.RESET} element={<Reset />} />
       <Route path={PATHS.SIGNUP} element={<SignUp />} />
-      <Route path={PATHS.MANAGEMENT} element={<ShopLanding />}/>
+      <Route path={PATHS.MANAGEMENT} element={<PrivateRoute child={<ShopLanding />} />}/>
       <Route path={PATHS.USER} element={<PrivateRoute child={<UserProfile />}/>} />
     </Routes>
   );

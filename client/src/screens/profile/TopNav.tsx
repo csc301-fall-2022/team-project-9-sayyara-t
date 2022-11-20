@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Avatar, Box, Button, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
 
 import { PATHS } from '../../constants';
 
 import logo from '../../assets/images/logo-white.png';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
-import {useNavigate} from "react-router-dom";
+import { useAuthService } from '../../services/useAuthService';
 
 interface TopNavProps {
   height: number,
@@ -17,21 +18,23 @@ interface TopNavProps {
 
 const TopNav = ({ height, uiWidth }: TopNavProps) => {
   const theme = useTheme();
+  const authService = useAuthService();
   const navigate = useNavigate();
+  const [errorMessages, setErrorMessages] = useState([] as Array<string>);
 
   const IMG_HEIGHT = height - 25;
-
-  const handleLogout = () => {
-    sessionStorage.removeItem('x-access-token');
-    sessionStorage.removeItem('userId');
-    sessionStorage.removeItem('roleId');
-    navigate(PATHS.LANDING);
-  };
 
   const isLoggedIn = () => {
     return sessionStorage.getItem('x-access-token') !== null && 
           sessionStorage.getItem('userId') !== null &&
           sessionStorage.getItem('roleId') !== null;
+  };
+
+  const handleSignOut = async () => {
+    const success = await authService.signOut();
+    if (success) {
+        navigate(PATHS.LANDING);
+    }
   };
 
   const getLink = () => {
@@ -80,7 +83,7 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
                       color : '#eeeeee'
                   }}
                   style={{ display: isLoggedIn() ? "" : "none" }}
-                  onClick={handleLogout}
+                  onClick={handleSignOut}
                   >
                       {"Log out"}
                 </Button>
