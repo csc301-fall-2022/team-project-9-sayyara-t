@@ -26,8 +26,10 @@ const LogIn = () => {
 
     if (success) {
         if (sessionStorage.getItem('roleId') == '3') {
+            // Redirect to the shop owners' landing page
             navigate(PATHS.MANAGEMENT);
         } else {
+            // Redirect to the general users' landing page
             navigate(PATHS.LANDING); 
         }
     }
