@@ -44,6 +44,14 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
     return PATHS.LANDING;
   };
 
+  const checkOwners = () => {
+    if (sessionStorage.getItem('roleId') == '3') {
+      return PATHS.MANAGEMENT;
+    } else {
+      return PATHS.LANDING;
+    }
+  };
+
   return (
     <Box height={height} bgcolor={theme.palette.primary.main}>
       <Box 
@@ -57,7 +65,7 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
           justifyContent="space-between"
           height={height}
         >
-          <Link to={PATHS.LANDING}>
+          <Link to={checkOwners()}>
             <Box
               marginLeft={theme.spacing(2)}
               height={height}
