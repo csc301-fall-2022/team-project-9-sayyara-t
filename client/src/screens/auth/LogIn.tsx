@@ -17,16 +17,22 @@ const LogIn = () => {
 
     const [errorMessages, setErrorMessages] = useState([] as Array<string>);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
 
-    const success = await authService.signIn(data.get('username') as string, data.get('password') as string).then((success) => success,
-        (error: Error) => setErrorMessages([...errorMessages, error.message]));
+      const success = await authService.signIn(data.get('username') as string, data.get('password') as string).then((success) => success,
+          (error: Error) => setErrorMessages([...errorMessages, error.message]));
 
-    if (success) {
-        navigate(PATHS.LANDING);
-    }
+      if (success) {
+          if (sessionStorage.getItem('roleId') == '3') {
+              // Redirect to the shop owners' landing page
+              navigate(PATHS.MANAGEMENT);
+          } else {
+              // Redirect to the general users' landing page
+              navigate(PATHS.LANDING); 
+          }
+      }
   };
 
   return (

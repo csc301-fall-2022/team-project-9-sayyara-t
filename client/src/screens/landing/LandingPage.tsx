@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Checkbox,
-  Typography
-} from '@mui/material';
 import { NavigationBar } from './NavigationBar';
 import { Body } from './Body';
 import { useShopService } from '../../services/useShopService';

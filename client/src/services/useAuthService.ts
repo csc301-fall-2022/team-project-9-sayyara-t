@@ -1,5 +1,6 @@
 import { RequestResult, User } from '../interfaces';
 import { useAPIService } from './useAPIService';
+import { PATHS } from '../constants';
 
 // wrapper hook for all Authentication related API services
 export const useAuthService = () => {
@@ -51,8 +52,17 @@ export const useAuthService = () => {
     return result.success;
   };
 
+  const signOut = async (): Promise<boolean> => {
+    sessionStorage.removeItem('x-access-token');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('roleId');
+    const success = true;
+    return success;
+  };
+
   return {
     signUp,
-    signIn
+    signIn,
+    signOut
   };
 };

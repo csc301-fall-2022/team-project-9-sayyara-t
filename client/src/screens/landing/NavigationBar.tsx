@@ -5,9 +5,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LoginIcon from '@mui/icons-material/Login';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PATHS } from '../../constants';
-import { useState } from 'react';
 import { Person } from '@mui/icons-material';
 
 
@@ -117,14 +116,14 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
                 />
                 </Search>
                 <Button variant="contained"
-                startIcon={isLoggedIn() ? <Person /> : <LoginIcon />}
+                startIcon={isLoggedIn() ? "" : <LoginIcon />}
                 sx={ {
                     borderRadius: 8,
                     color : '#eeeeee'
                 }}
                 onClick={handleNaviagte}
                 >
-                    {isLoggedIn() ? "" : "Login"}
+                    {isLoggedIn() ? <Person /> : "Login"}
                 </Button>
             </Stack>
         </Toolbar>
