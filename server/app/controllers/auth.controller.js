@@ -68,3 +68,27 @@ exports.signin = (req, res) => {
             res.status(500).send({ message: err.message });
         });
 };
+
+// COMMENT THIS OUT ON
+exports.createTestAdmin = (req, res) => {
+    let test_user = User.create({
+        role_id: 1,
+        username: "testadmin",
+        email: "test@admin.com",
+        password: bcrypt.hashSync(TestAdminPassword, 8),
+        name: test,
+        phone: 123 - 456 - 7890
+    })
+        .then(() => {
+            const token = jwt.sign({id: test_user.id}, config.secret, {
+                expiresIn: 86400 // 24 hours
+            });
+
+            res.status(200).send({
+                accessToken: token
+            });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+};
