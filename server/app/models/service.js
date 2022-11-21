@@ -20,14 +20,14 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       unique: true 
     },
-    shop_id: {type: DataTypes.UUID, allowNull: false,
-      references:{
-        model: 'shop',
-        key: 'id'
-      }},
-    name: {type: DataTypes.STRING, allowNull: false},
-    description: {type: DataTypes.STRING, allowNull: false},
-    price: {type: DataTypes.FLOAT, allowNull: false}
+    type: {
+      type: DataTypes.STRING, 
+      allowNull: false
+    },
+    name: {
+      type: DataTypes.STRING, 
+      allowNull: false
+    },
   }, {
     sequelize,
     modelName: 'Service',

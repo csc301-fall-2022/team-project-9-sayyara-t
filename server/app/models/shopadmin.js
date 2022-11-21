@@ -20,16 +20,21 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       unique: true 
     },
-    user_id: {type: DataTypes.UUID, allowNull: false,
+    user_id: {
+      type: DataTypes.UUID, 
+      allowNull: false,
       references:{
-        model: 'user',
+        model: 'User',
         key: 'id'
       }},
-    shop_id: {type: DataTypes.UUID, allowNull: false,
+    shop_id: {
+      type: DataTypes.UUID, 
+      allowNull: false,
       references:{
-        model: 'shop',
+        model: 'Shop',
         key: 'id'
-      }}
+      }
+    }
   }, {
     sequelize,
     modelName: 'ShopAdmin',

@@ -20,36 +20,68 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       unique: true 
     },
-    user_id: {type: DataTypes.UUID, allowNull: false,
+    user_id: {
+      type: DataTypes.UUID, 
+      allowNull: false,
       references:{
-        model: 'user',
+        model: 'User',
         key: 'id'
-      }},
-    shop_id: {type: DataTypes.UUID, allowNull: false,
+      }
+    },
+    shop_id: {
+      type: DataTypes.UUID, 
+      allowNull: false,
       references:{
-        model: 'shop',
+        model: 'Shop',
         key: 'id'
-      }},
-    vehicle_id: {type: DataTypes.UUID, allowNull: false,
+      }
+    },
+    vehicle_id: {
+      type: DataTypes.UUID, 
+      allowNull: false,
       references:{
-        model: 'vehicle',
+        model: 'Vehicle',
         key: 'id'
-      }},
-    quote_id: {type: DataTypes.UUID, allowNull: true,
+      }
+    },
+    quote_id: {
+      type: DataTypes.UUID, 
+      allowNull: true,
       references:{
-        model: 'quote',
+        model: 'Quote',
         key: 'id'
-      }},
-    linked_request_id: {type: DataTypes.UUID, allowNull: true,
+      }
+    },
+    linked_request_id: {
+      type: DataTypes.UUID, 
+      allowNull: true,
       references:{
-        model: 'request',
+        model: 'Request',
         key: 'id'
-      }},
-    services: {type: DataTypes.JSON, allowNull: false},
-    state: {type: DataTypes.INTEGER, defaultValue: 0},
-    description: {type:DataTypes.STRING, allowNull: false},
-    new_used: {type: DataTypes.INTEGER, allowNull:false, defaultValue: 3},
-    oem_after: {type: DataTypes.INTEGER, allowNull:false, defaultValue: 3}
+      }
+    },
+    services: {
+      type: DataTypes.JSON, 
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.INTEGER, 
+      defaultValue: 0
+    },
+    description: {
+      type:DataTypes.STRING, 
+      allowNull: false
+    },
+    new_used: {
+      type: DataTypes.INTEGER, 
+      allowNull:false, 
+      defaultValue: 3
+    },
+    oem_after: {
+      type: DataTypes.INTEGER, 
+      allowNull:false, 
+      defaultValue: 3
+    }
   }, {
     sequelize,
     modelName: 'Request',

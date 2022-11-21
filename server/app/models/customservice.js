@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Quote extends Model {
+  class CustomService extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,40 +13,20 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Quote.init({
+  CustomService.init({
     id: {
       type:DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       unique: true 
     },
-    labour: {
-      type: DataTypes.FLOAT, 
-      allowNull: false
-    },
-    parts: {
-      type: DataTypes.JSON, 
-      allowNull: false
-    },
-    fees: {
-      type: DataTypes.JSON, 
-      allowNull: false
-    },
-    discount: {
-      type: DataTypes.FLOAT, 
-      allowNull: false
-    },
-    total: {
-      type: DataTypes.FLOAT, 
-      allowNull: false
-    },
-    note: {
+    name: {
       type: DataTypes.STRING, 
-      allowNull: true
+      allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'Quote',
+    modelName: 'CustomService',
   });
-  return Quote;
+  return CustomService;
 };
