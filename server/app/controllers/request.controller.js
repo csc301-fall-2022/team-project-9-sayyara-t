@@ -96,7 +96,8 @@ exports.findAllFilter = async (req, res)=>{
       }
     }
     
-    const responseItems = await Request.findAll({where: where})
+    const responseItems = await Request.findAll({attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id', 
+    'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt'], where: where})
     res.send(responseItems)
   }
 }
