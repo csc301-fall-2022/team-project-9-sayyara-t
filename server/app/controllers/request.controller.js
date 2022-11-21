@@ -54,10 +54,10 @@ exports.findAllFilter = async (req, res)=>{
 
   if (user_ids.length != 0 || state_filter || rework_filter) {
     conditions[Op.and] = []
-    conditions[Op.or] = []
     other_cond = true
 
     if (user_ids != null) {
+      conditions[Op.or] = []
       for (var i = 0; i < user_ids.length; i++) {
         conditions[Op.or].push({
           user_id: {
@@ -89,21 +89,28 @@ exports.findAllFilter = async (req, res)=>{
       }
     }
   }
-    var responseItems = null
-    if (other_cond) {
-      responseItems = await Request.findAll({attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id', 
-    'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt'], where: conditions})
-    } else {
-      responseItems = await Request.findAll()
-    }
-    
+  var responseItems = null
+  if (other_cond) {
+    responseItems = await Request.findAll({attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id', 
+  'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt'], where: conditions})
+  } else {
+    responseItems = await Request.findAll()
+  }
+  
+  if (service_filter) {
     actualResponse = []
     for (var i = 0; i < responseItems.length; i++) {
-      if (responseItems[i]['dataValues']['services'].includes(services[i]['dataValues']['id'])) {
-        actualResponse.push(responseItems[i])
+      for (var j = 0; j < services.length; j++) {
+        if (responseItems[i]['dataValues']['services'].includes(services[i]['dataValues']['id'])) {
+          actualResponse.push(responseItems[i])
+          break;
+        }
       }
     }
     res.send(actualResponse)
+  } else {
+    res.send(responseItems)
+  }
 }
 
 exports.findOne = (req, res) => {
