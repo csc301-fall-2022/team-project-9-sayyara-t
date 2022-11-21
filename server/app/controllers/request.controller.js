@@ -102,17 +102,6 @@ exports.findAllFilter = async (req, res)=>{
   }
 }
 
-exports.findAll = (req, res)=>{
-  Request.findAll({attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id', 
-  'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt']}).then(data=>{res.send(data)})
-  .catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving Requests."
-    });
-  });
-}
-
 exports.findOne = (req, res) => {
     const id = req.params.id; 
   
