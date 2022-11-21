@@ -69,7 +69,7 @@ exports.signin = (req, res) => {
         });
 };
 
-// COMMENT THIS OUT ON
+// COMMENT THIS OUT ON PROD
 exports.createTestAdmin = (req, res) => {
     let test_user = User.create({
         role_id: 1,
