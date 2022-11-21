@@ -41,40 +41,33 @@ exports.findAll = (req, res)=>{
 
 exports.findAllFilter = async (req, res)=>{
   const name_filter = req.body.name; // name of user
-  const byName = await User.findAll({attributes: ['id'], where: {name : {[Op.like]: '%' + name_filter + '%'}}})
+  const user_ids = await User.findAll({attributes: ['id'], where: {name : {[Op.like]: '%' + name_filter + '%'}}})
 
   const service_filter = req.body.service // a service name
-  const byService = await Service.findAll({attributes: ['id'], where: {name : {[Op.like]: '%' + service_filter + '%'}}})
+  const services = await Service.findAll({attributes: ['id'], where: {name : {[Op.like]: '%' + service_filter + '%'}}})
 
   const state_filter = req.body.state; // state int
   const rework_filter = req.body.rework; // true/false
 
-  const where = {} // list of conditions to match
+  const conditions = {} // list of conditions to match
+  var other_cond = false
 
-  if (byName || byService || state_filter || rework_filter) {
-    where[Op.and] = []
-    where[Op.or] = []
+  if (user_ids.length != 0 || state_filter || rework_filter) {
+    conditions[Op.and] = []
+    conditions[Op.or] = []
+    other_cond = true
 
-    if (byName != null) {
-      for (var i = 0; i < byName.length; i++) {
-        where[Op.or].push({
+    if (user_ids != null) {
+      for (var i = 0; i < user_ids.length; i++) {
+        conditions[Op.or].push({
           user_id: {
-            [Op.eq]: byName[i]['id']
-          }
-        })
-      }
-    }
-    if (byService != null) {
-      for (var i = 0; i < byService.length; i++) {
-        where[Op.or].push({
-          service_id: {
-            [Op.eq]: byService[i]['id']
+            [Op.eq]: user_ids[i]['id']
           }
         })
       }
     }
     if (state_filter != null) {
-      where[Op.and].push({
+      conditions[Op.and].push({
         state: {
           [Op.eq]: state_filter
         }
@@ -82,24 +75,35 @@ exports.findAllFilter = async (req, res)=>{
     }
     if (rework_filter != null) {
       if (rework_filter) {
-        where[Op.and].push({
+        conditions[Op.and].push({
           state: {
             [Op.not]: null
           }
         })
       } else {
-        where[Op.and].push({
+        conditions[Op.and].push({
           state: {
             [Op.is]: null
           }
         })
       }
     }
-    
-    const responseItems = await Request.findAll({attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id', 
-    'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt'], where: where})
-    res.send(responseItems)
   }
+    var responseItems = null
+    if (other_cond) {
+      responseItems = await Request.findAll({attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id', 
+    'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt'], where: conditions})
+    } else {
+      responseItems = await Request.findAll()
+    }
+    
+    actualResponse = []
+    for (var i = 0; i < responseItems.length; i++) {
+      if (responseItems[i]['dataValues']['services'].includes(services[i]['dataValues']['id'])) {
+        actualResponse.push(responseItems[i])
+      }
+    }
+    res.send(actualResponse)
 }
 
 exports.findOne = (req, res) => {
