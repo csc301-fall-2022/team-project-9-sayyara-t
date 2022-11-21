@@ -71,7 +71,7 @@ exports.signin = (req, res) => {
 
 // COMMENT THIS OUT ON PROD
 exports.createTestAdmin = (req, res) => {
-    let test_user = User.create({
+    User.findOrCreate({
         role_id: 1,
         username: "testadmin",
         email: "test@admin.com",
@@ -79,8 +79,8 @@ exports.createTestAdmin = (req, res) => {
         name: test,
         phone: 123 - 456 - 7890
     })
-        .then(() => {
-            const token = jwt.sign({id: test_user.id}, config.secret, {
+        .then(([user, created]) => {
+            const token = jwt.sign({id: user.id}, config.secret, {
                 expiresIn: 86400 // 24 hours
             });
 
