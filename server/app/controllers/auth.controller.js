@@ -72,12 +72,14 @@ exports.signin = (req, res) => {
 // COMMENT THIS OUT ON PROD
 exports.createTestAdmin = (req, res) => {
     User.findOrCreate({
-        role_id: 1,
-        username: "testadmin",
-        email: "test@admin.com",
-        password: bcrypt.hashSync(TestAdminPassword, 8),
-        name: test,
-        phone: 123 - 456 - 7890
+        where: {
+            role_id: 1,
+            username: "testadmin",
+            email: "test@admin.com",
+            password: bcrypt.hashSync(TestAdminPassword, 8),
+            name: test,
+            phone: 123 - 456 - 7890
+        },
     })
         .then(([user, created]) => {
             const token = jwt.sign({id: user.id}, config.secret, {
