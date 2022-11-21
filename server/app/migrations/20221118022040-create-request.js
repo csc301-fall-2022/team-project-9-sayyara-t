@@ -35,6 +35,24 @@ module.exports = {
           key: 'id',
         }
       },
+      quote_id: {
+        allowNull: true,
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'Quotes',
+          key: 'id',
+        }
+      },
+      linked_request_id: {
+        allowNull: true,
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'Requests',
+          key: 'id',
+        }
+      },
       services: {
         type: Sequelize.JSON,
         allowNull: false

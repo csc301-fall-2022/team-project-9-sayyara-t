@@ -35,6 +35,16 @@ module.exports = (sequelize, DataTypes) => {
         model: 'vehicle',
         key: 'id'
       }},
+    quote_id: {type: DataTypes.UUID, allowNull: true,
+      references:{
+        model: 'quote',
+        key: 'id'
+      }},
+    linked_request_id: {type: DataTypes.UUID, allowNull: true,
+      references:{
+        model: 'request',
+        key: 'id'
+      }},
     services: {type: DataTypes.JSON, allowNull: false},
     state: {type: DataTypes.INTEGER, defaultValue: 0},
     description: {type:DataTypes.STRING, allowNull: false},

@@ -8,15 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      request_id: {
-        allowNull: false,
-        type: Sequelize.UUID,
-        onDelete: 'CASCADE',
-        references:{
-          model: 'Requests',
-          key: 'id',
-        }
-      },
       labour: {
         type: Sequelize.FLOAT,
         allowNull: false
@@ -39,7 +30,7 @@ module.exports = {
       },
       note: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       createdAt: {
         allowNull: false,
