@@ -11,7 +11,7 @@ module.exports = {
         vehicle_id: '10000',
         quote_id: '100000',
         linked_request_id: null,
-        services: [],
+        services: ['abc1'],
         state: 2,
         description: 'Liquid constantly dripping from car',
         new_used: 3,
