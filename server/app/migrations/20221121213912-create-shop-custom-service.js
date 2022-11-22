@@ -2,17 +2,35 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Services', {
+    await queryInterface.createTable('ShopCustomServices', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID
       },
-      type: {
+      shop_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'Shops',
+          key: 'id',
+        }
+      },
+      service_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references:{
+          model: 'CustomServices',
+          key: 'id',
+        }
+      },
+      description: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      name: {
+      price: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -27,6 +45,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Services');
+    await queryInterface.dropTable('ShopCustomServices');
   }
 };

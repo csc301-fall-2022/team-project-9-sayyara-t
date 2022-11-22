@@ -17,7 +17,6 @@ exports.create = (req, res)=>{
       new_used: req.body.new_used,
       oem_after: req.body.oem_after
     }
-    console.log(newRequest);
 
     Request.create(newRequest).then(data=>{res.send(data)})
       .catch(err => {
@@ -96,12 +95,12 @@ exports.findAllFilter = async (req, res)=>{
   } else {
     responseItems = await Request.findAll()
   }
-  
+
   if (service_filter) {
     actualResponse = []
     for (var i = 0; i < responseItems.length; i++) {
       for (var j = 0; j < services.length; j++) {
-        if (responseItems[i]['dataValues']['services'].includes(services[i]['dataValues']['id'])) {
+        if (responseItems[i]['dataValues']['services'].includes(services[j]['dataValues']['id'])) {
           actualResponse.push(responseItems[i])
           break;
         }

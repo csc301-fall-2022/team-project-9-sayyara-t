@@ -1,5 +1,5 @@
 {
-  "env": "development",
+  "env": "test",
   "development": {
     "username": "doadmin",
     "password": "AVNS_0iQEJIRcg6wXhOD-O3W",
