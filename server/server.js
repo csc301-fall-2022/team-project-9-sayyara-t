@@ -35,5 +35,6 @@ require("./app/routes/shopAdmin.route")(app);
 require("./app/routes/vehicle.route")(app);
 require("./app/routes/quote.route")(app);
 require("./app/routes/request.route")(app);
+require("./app/routes/shopService.route")(app);
 
 module.exports = app
