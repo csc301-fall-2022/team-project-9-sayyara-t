@@ -89,3 +89,17 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.findAll = (req, res) => {
+    Quote.findAll({
+        attributes: ['id', 'labour', 'parts', 'fees', 'discount', 'total', 'note', 'createdAt', 'updatedAt']
+    })
+        .then(data=>{res.send(data)})
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving Quotes."
+            });
+        });
+};
+
