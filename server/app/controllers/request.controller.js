@@ -1,4 +1,5 @@
 const db = require("../models");
+const {ShopService} = require("../models");
 const Request = require("../models").Request;
 const User = require("../models").User
 const Service = require("../models").Service
@@ -75,13 +76,13 @@ exports.findAllFilter = async (req, res)=>{
     if (rework_filter != null) {
       if (rework_filter) {
         conditions[Op.and].push({
-          state: {
+          linked_request_id: {
             [Op.not]: null
           }
         })
       } else {
         conditions[Op.and].push({
-          state: {
+          linked_request_id: {
             [Op.is]: null
           }
         })
@@ -179,4 +180,37 @@ exports.delete = (req, res) => {
         message: "Could not delete Request with id=" + id
       });
     });
+};
+
+exports.findAllByShopID = (req, res)=>{
+  const shop_id = req.params.shop_id;
+  Request.findAll({
+    attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id',
+      'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt'],
+    where: {shop_id: shop_id}
+  })
+      .then(data=>{res.send(data)})
+      .catch(err => {
+        res.status(500).send({
+          message:
+              err.message || "Some error occurred while retrieving Requests."
+        });
+      });
+};
+
+
+exports.findAllByUserID = (req, res)=>{
+  const user_id = req.params.user_id;
+  Request.findAll({
+    attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id',
+      'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt'],
+    where: {user_id: user_id}
+  })
+      .then(data=>{res.send(data)})
+      .catch(err => {
+        res.status(500).send({
+          message:
+              err.message || "Some error occurred while retrieving Requests."
+        });
+      });
 };
