@@ -106,9 +106,13 @@ exports.findAll = (req, res) => {
 
 exports.findAllByShopID = async (req, res) => {
     const shop_id = req.params.shop_id;
-    const quote_ids = await Request.findAll({
+    const quote_id_query = await Request.findAll({
         attributes: ['quote_id'],
         where: {shop_id: shop_id}
+    })
+    const quote_ids = []
+    quote_id_query.forEach((object) => {
+        quote_ids.push(object['quote_id'])
     })
     const data = await Quote.findAll({
         attributes: ['id', 'labour', 'parts', 'fees', 'discount', 'total', 'note', 'createdAt', 'updatedAt'],
@@ -119,9 +123,13 @@ exports.findAllByShopID = async (req, res) => {
 
 exports.findAllByUserID = async (req, res) => {
     const user_id = req.params.user_id;
-    const quote_ids = await Request.findAll({
+    const quote_id_query = await Request.findAll({
         attributes: ['quote_id'],
         where: {user_id: user_id}
+    })
+    const quote_ids = []
+    quote_id_query.forEach((object) => {
+        quote_ids.push(object['quote_id'])
     })
     const data = await Quote.findAll({
         attributes: ['id', 'labour', 'parts', 'fees', 'discount', 'total', 'note', 'createdAt', 'updatedAt'],
