@@ -98,3 +98,28 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.findAverage = async (req, res) => {
+  const shop_id = req.params.shop_id
+
+  allShopRatings = await Rating.findAll( {attributes: ['id', 'shop_id', 'star', 'price'], where: {shop_id: shop_id}})
+
+  average_price = 0
+  average_stars = 0
+
+  for (var i=0; i < allShopRatings.length; i++){
+    average_price = average_price + allShopRatings[i].price
+    average_stars = average_stars + allShopRatings[i].star
+  }
+
+  average_price = (average_price/allShopRatings.length)
+  average_stars = (average_stars/allShopRatings.length)
+  average_price = average_price.toFixed(2)
+  average_stars = average_stars.toFixed(2)
+
+  res.send({
+    "average_price": average_price,
+    "average_stars" : average_stars
+  })
+
+}
