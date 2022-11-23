@@ -1,5 +1,6 @@
 const db = require("../models");
 const Quote = require("../models").Quote;
+const Request = require("../models").Request;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res)=>{
@@ -103,3 +104,28 @@ exports.findAll = (req, res) => {
         });
 };
 
+exports.findAllByShopID = async (req, res) => {
+    const shop_id = req.params.shop_id;
+    const quote_ids = await Request.findAll({
+        attributes: ['quote_id'],
+        where: {shop_id: shop_id}
+    })
+    const data = await Quote.findAll({
+        attributes: ['id', 'labour', 'parts', 'fees', 'discount', 'total', 'note', 'createdAt', 'updatedAt'],
+        where: {id: quote_ids}
+    })
+    res.send(data)
+}
+
+exports.findAllByUserID = async (req, res) => {
+    const user_id = req.params.user_id;
+    const quote_ids = await Request.findAll({
+        attributes: ['quote_id'],
+        where: {user_id: user_id}
+    })
+    const data = await Quote.findAll({
+        attributes: ['id', 'labour', 'parts', 'fees', 'discount', 'total', 'note', 'createdAt', 'updatedAt'],
+        where: {id: quote_ids}
+    })
+    res.send(data)
+}
