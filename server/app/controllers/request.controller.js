@@ -76,13 +76,13 @@ exports.findAllFilter = async (req, res)=>{
     if (rework_filter != null) {
       if (rework_filter) {
         conditions[Op.and].push({
-          state: {
+          linked_request_id: {
             [Op.not]: null
           }
         })
       } else {
         conditions[Op.and].push({
-          state: {
+          linked_request_id: {
             [Op.is]: null
           }
         })
