@@ -2,6 +2,7 @@ import React from 'react';
 import { Quote } from '../../interfaces';
 import { RequestTile } from './RequestTile';
 import { styled, alpha } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
@@ -64,6 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export const ShopQuotesList = ({ search, setSearch, sort, setSort }: ShopQuotesListProps) => {
+    const theme = useTheme();
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value);
     };
@@ -134,7 +136,7 @@ export const ShopQuotesList = ({ search, setSearch, sort, setSort }: ShopQuotesL
                     pt: 10
                 }}
                 >
-                    <Stack spacing={5} direction="column">
+                    <Stack spacing={5} direction="column" marginBottom={theme.spacing(6)}>
                         <RequestTile></RequestTile>
                         <RequestTile></RequestTile>
                         <RequestTile></RequestTile>
