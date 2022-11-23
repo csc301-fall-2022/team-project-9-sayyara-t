@@ -1,6 +1,6 @@
 import React from 'react';
 import { Quote } from '../../interfaces';
-import { QuoteTile } from './QuoteTile';
+import { RequestTile } from './RequestTile';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -107,7 +107,7 @@ export const ShopQuotesList = ({ search, setSearch, sort, setSort }: ShopQuotesL
                                 fontWeight: 'bold'
                             }}
                             >
-                            Filters
+                            Sort
                         </Typography>
                         <RadioGroup 
                             name='filter'
@@ -135,10 +135,10 @@ export const ShopQuotesList = ({ search, setSearch, sort, setSort }: ShopQuotesL
                 }}
                 >
                     <Stack spacing={5} direction="column">
-                        <QuoteTile></QuoteTile>
-                        <QuoteTile></QuoteTile>
-                        <QuoteTile></QuoteTile>
-                        <QuoteTile></QuoteTile>
+                        <RequestTile></RequestTile>
+                        <RequestTile></RequestTile>
+                        <RequestTile></RequestTile>
+                        <RequestTile></RequestTile>
                     </Stack>
                 </Box>
             </Grid>
