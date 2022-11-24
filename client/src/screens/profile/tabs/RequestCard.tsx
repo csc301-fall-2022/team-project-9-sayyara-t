@@ -182,7 +182,7 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
               >
                 {editEnabled ? <SaveAsIcon/> : <EditIcon/>}
               </Button>
-              <Button
+              {/* <Button
                 onClick={() => onRequestDelete()}
                 disabled={isLoading}
                 sx={{
@@ -195,7 +195,7 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
                 }}
               >
                 <RemoveIcon/>
-              </Button>
+              </Button> */}
             </Box>
           </Box>
           <Box
@@ -272,13 +272,11 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
             marginTop={theme.spacing(3)}
             onClick={() => setExpanded(!expanded)}
           >
-            <Typography 
-              sx={{textDecoration: 'underline'}} 
-              display="inline" 
-              color="primary"
+            <Button
+              variant='text'
             >
               {expanded ? "Close Quote" : "Quote Available! Click to View"}
-            </Typography>
+            </Button>
           </Box>}
         </Box>}
       </AccordionSummary>

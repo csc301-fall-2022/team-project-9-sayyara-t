@@ -58,7 +58,7 @@ export interface Request {
   quoteId: string,
   linkedRequestId: string,
   userId: string,
-  shopId: "",
+  shopId: string,
   vehicleId: string,
   services: Array<string>,
   state: number,

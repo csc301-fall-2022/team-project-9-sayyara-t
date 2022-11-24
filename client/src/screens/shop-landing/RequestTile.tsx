@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Button, CardActions, CardHeader, Grid, Box, Paper, Stack, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Request, Service, Quote } from '../../interfaces';
+import { Request, Service, Quote, Shop } from '../../interfaces';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { styled } from '@mui/material/styles';
@@ -12,10 +12,12 @@ import { useQuoteService } from '../../services/useQuoteService';
 import { useServiceService } from '../../services/useServiceService';
 import { useRequestService } from '../../services/useRequestService';
 import { NEW_USED, OEM_AFTER } from '../../constants';
+import { useShopService } from '../../services/useShopService';
 
 interface RequestProps {
   request: Request,
   index: number,
+  shopId: string,
   setRequest: (_request: Request, index: number) => void
 }
 
@@ -27,13 +29,22 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export const RequestTile = ({ request, index, setRequest }: RequestProps) => {
+export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps) => {
   const theme = useTheme();
   const quoteService = useQuoteService();
   const serviceService = useServiceService();
   const requestService = useRequestService();
+  const shopService = useShopService();
   const [editEnabled, setEditEnabled] = useState(false);
   const [services, setServices] = useState([] as Service[]);
+  // const [shop, setShop] = useState({
+  //   shopId: "0",
+  //   name: "Unknown",
+  //   address: "Unknown",
+  //   phone: "Unknown",
+  //   email: "Unknown",
+  //   description: "Unknown"
+  // } as Shop);
   const [quote, setQuote] = useState({
     fees: 0,
     discount: 0,
@@ -50,6 +61,7 @@ export const RequestTile = ({ request, index, setRequest }: RequestProps) => {
 
       if (request.quoteId !== null) {
         await loadQuote();
+        // await loadShop();
       }
     };
     loadData();
@@ -64,6 +76,11 @@ export const RequestTile = ({ request, index, setRequest }: RequestProps) => {
     const results = await Promise.all(promises);
     setServices(results);
   };
+
+  // const loadShop = async () => {
+  //   console.log(shopId);
+  //   await shopService.getShop(shopId).then((_shop) => setShop(_shop));
+  // };
   
   const getState = (state: number): string => {
     switch(state) {

@@ -12,6 +12,7 @@ import { User } from '../../interfaces';
 import { useShopService } from '../../services/useShopService';
 import { useRequestService } from '../../services/useRequestService';
 import { STATE, UI_WIDTH, REWORK} from '../../constants';
+import { request } from 'http';
 
 interface ShopQuotesListProps {
     searchService: string
@@ -246,7 +247,7 @@ export const ShopQuotesList = ({ searchService,
                 }}
                 >
                     <Stack spacing={5} direction="column" marginBottom={theme.spacing(6)}>
-                        {requests.map((request, index) => (<RequestTile key={request.requestId} setRequest={setRequest} index={index} request={request}/>))}
+                        {requests.map((request, index) => (<RequestTile key={request.requestId} setRequest={setRequest} index={index} request={request} shopId={request.shopId}/>))}
                     </Stack>
                 </Box>
             </Grid>
