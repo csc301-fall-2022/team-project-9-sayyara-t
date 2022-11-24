@@ -21,3 +21,17 @@ export const PROFILE_TABS = {
   QUOTES: "Quotes/Chats",
   SHOP_MANAGEMENT: "Shop Management"
 };
+
+export const STATE = {
+  ALL: 0,
+  AWAITING: 1,
+  ACCEPTED: 2,
+  CANCELLED: 3,
+  EXPIRED: 4
+};
+
+export const REWORK = {
+  ALL: 0,
+  REWORK: 1,
+  NON_REWORK: 2
+};
