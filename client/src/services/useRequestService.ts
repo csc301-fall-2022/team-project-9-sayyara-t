@@ -1,12 +1,13 @@
 import { servicesVersion } from 'typescript';
-import { User, Request, RequestResult } from '../interfaces';
+import { Request, RequestResult } from '../interfaces';
 import { useAPIService } from './useAPIService';
+import { useUserService } from './useUserService';
 
 export const useRequestService = () => {
   const apiService = useAPIService();
+  const userService = useUserService();
   const API_PATH = "requests/";
 
-  // TODO: finish all required API calls
   const getRequestByShop = async (shopId: string) : Promise<Array<Request>> => {
     const data = null;
 
@@ -31,17 +32,11 @@ export const useRequestService = () => {
     });
   };
 
-  const getUserByRequest = async (quoteid: string) : Promise<User> => {
-    const userExample = {
-        userId: "asdf",
-        roleId: 1,
-        username: "asdf",
-        name: "asdf",
-        email: "asdf",
-        phone: "asdf"
-    };
-    console.log(quoteid);
-    return userExample;
+  const getUserByRequest = async (userId: string) : Promise<string> => {
+    const user = await userService.getUser(userId).then((_user) => {
+      return _user.name;
+    });
+    return user;
   };
 
   const getSelectedRequest = async (shopId: string, searchService: string, searchCustomer: string,
@@ -77,6 +72,7 @@ export const useRequestService = () => {
 
   return {
     getRequestByShop,
-    getUserByRequest
+    getUserByRequest,
+    getSelectedRequest
   };
 };
