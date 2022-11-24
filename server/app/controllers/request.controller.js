@@ -84,8 +84,6 @@ exports.findAllFilter = async (req, res)=>{
       }
     }
     if (shop_id != null) {
-      console.log('hoo')
-      console.log(shop_id)
       conditions[Op.and].push({
         shop_id: {
           [Op.eq]: shop_id
