@@ -76,17 +76,3 @@ export interface Quote {
   total: number,
   note: string
 }
-
-export interface Request {
-  requestId: string,
-  userId: string,
-  shopId: string,
-  vehicleId: string,
-  quoteId: string,
-  linkedRequestId: string,
-  services: Array<Service>,
-  state: number,
-  description: string,
-  new_used: number,
-  oem_after: number
-}

@@ -117,8 +117,8 @@ export const useRequestService = () => {
         services: request.services,
         state: request.state,
         description: request.description,
-        new_used: request.new_used,
-        oem_after: request.oem_after
+        newUsed: request.new_used,
+        oemAfter: request.oem_after
       } as Request;
     });
   };
@@ -155,8 +155,8 @@ export const useRequestService = () => {
         services: request.services,
         state: request.state,
         description: request.description,
-        new_used: request.new_used,
-        oem_after: request.oem_after
+        newUsed: request.new_used,
+        oemAfter: request.oem_after
       } as Request;
     });
   };
