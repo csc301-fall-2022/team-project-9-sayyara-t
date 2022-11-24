@@ -7,7 +7,7 @@ import { useShopService } from '../../services/useShopService';
 import { Box, Typography, Grid, Select, TextField, Button, MenuItem, OutlinedInput, Chip, CircularProgress } from '@mui/material';
 import TopNav from '../profile/TopNav';
 
-import { PATHS, UI_WIDTH } from '../../constants';
+import { PATHS, STATE, UI_WIDTH } from '../../constants';
 import { Shop, Vehicle, Request, Service, ShopService } from '../../interfaces';
 import ErrorMessages from '../../shared/ErrorMessages';
 import { useShopServiceService } from '../../services/useShopServiceService';
@@ -37,7 +37,7 @@ const RequestQuote = () => {
     shopId: "",
     vehicleId: "",
     services: [],
-    state: 0,
+    state: STATE.AWAITING,
     description: "",
     newUsed: 0,
     oemAfter: 0

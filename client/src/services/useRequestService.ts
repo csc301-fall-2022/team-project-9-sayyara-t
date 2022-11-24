@@ -42,7 +42,8 @@ export const useRequestService = () => {
       state: request.state,
       description: request.description,
       new_used: request.newUsed,
-      oem_after: request.oemAfter
+      oem_after: request.oemAfter,
+      quote_id: request.quoteId
     };
 
     const result: RequestResult = await apiService.privateApiRequest(`${API_PATH}${request.requestId}`, "PUT", data);
@@ -102,32 +103,25 @@ export const useRequestService = () => {
   const getRequestByShop = async (shopId: string) : Promise<Array<Request>> => {
     const data = null;
 
-    const requests: RequestResult =  await apiService.apiRequest(`${API_PATH}/shop/${shopId}`, 'GET', data);
+    const requests: RequestResult =  await apiService.apiRequest(`${API_PATH}shop/${shopId}`, 'GET', data);
 
     const requestsData = requests.data as Array<Record<string, unknown>>;
 
     return requestsData.map((request) => {
       return {
-        requestId: request.requestId,
-        userId: request.userId,
-        shopId: request.shopId,
-        vehicleId: request.vehicleId,
-        quoteId: request.quoteId,
-        linkedRequestId: request.linkedRequestId,
+        requestId: request.id,
+        userId: request.user_id,
+        shopId: request.shop_id,
+        vehicleId: request.vehicle_id,
+        linkedRequestId: request.linked_request_id,
         services: request.services,
         state: request.state,
         description: request.description,
         newUsed: request.new_used,
-        oemAfter: request.oem_after
+        oemAfter: request.oem_after,
+        quoteId: request.quote_id
       } as Request;
     });
-  };
-
-  const getUserByRequest = async (userId: string) : Promise<string> => {
-    const user = await userService.getUser(userId).then((_user) => {
-      return _user.name;
-    });
-    return user;
   };
 
   const getSelectedRequest = async (shopId: string, searchService: string, searchCustomer: string,
@@ -137,26 +131,26 @@ export const useRequestService = () => {
       name: (searchCustomer.length === 0) ? null : searchCustomer,
       service: (searchService.length === 0) ? null : searchService,
       state: state,
-      rework: (rework !== 0 && rework !== 1) ? null : rework
+      rework: (rework === 0) ? null : ((rework === 1) ? true : false)
     };
 
-    const requests: RequestResult = await apiService.apiRequest(`${API_PATH}`, 'POST', data);
+    const requests: RequestResult = await apiService.apiRequest(`${API_PATH}filter`, 'POST', data);
 
     const requestsData = requests.data as Array<Record<string, unknown>>;
 
     return requestsData.map((request) => {
       return {
-        requestId: request.requestId,
-        userId: request.userId,
-        shopId: request.shopId,
-        vehicleId: request.vehicleId,
-        quoteId: request.quoteId,
-        linkedRequestId: request.linkedRequestId,
+        requestId: request.id,
+        userId: request.user_id,
+        shopId: request.shop_id,
+        vehicleId: request.vehicle_id,
+        linkedRequestId: request.linked_request_id,
         services: request.services,
         state: request.state,
         description: request.description,
         newUsed: request.new_used,
-        oemAfter: request.oem_after
+        oemAfter: request.oem_after,
+        quoteId: request.quote_id
       } as Request;
     });
   };
@@ -167,7 +161,6 @@ export const useRequestService = () => {
     deleteRequest,
     getRequestsbyUserId,
     getRequestByShop,
-    getUserByRequest,
     getSelectedRequest
   };
 };

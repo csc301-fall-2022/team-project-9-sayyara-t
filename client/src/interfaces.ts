@@ -70,7 +70,7 @@ export interface Request {
 export interface Quote {
   quoteId: string,
   labour: number,
-  parts: Array<string>,
+  parts: number,
   fees: number,
   discount: number, 
   total: number,

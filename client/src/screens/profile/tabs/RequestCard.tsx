@@ -1,6 +1,6 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Chip, Grid, TextField, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Request, Service, Shop, Vehicle } from '../../../interfaces';
+import { Quote, Request, Service, Shop, Vehicle } from '../../../interfaces';
 import { useServiceService } from '../../../services/useServiceService';
 import { useShopService } from '../../../services/useShopService';
 import { NEW_USED, OEM_AFTER } from '../../../constants';
@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { useRequestService } from '../../../services/useRequestService';
 import ErrorMessages from '../../../shared/ErrorMessages';
+import { useQuoteService } from '../../../services/useQuoteService';
 
 
 interface RequestCardProps {
@@ -25,6 +26,7 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
   const shopService = useShopService();
   const serviceService = useServiceService();
   const requestService = useRequestService();
+  const quoteService = useQuoteService();
 
   const [vehicle, setVehicle] = useState({} as Vehicle);
   const [shop, setShop] = useState({} as Shop);
@@ -33,16 +35,26 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
   const [expanded, setExpanded] = useState(false);
   const [editEnabled, setEditEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [quote, setQuote] = useState({} as Quote);
 
   useEffect(() => {
     const loadData = async () => {
       loadVehicle();
       await loadShop();
       await loadServices();
+
+      if (request.quoteId !== null) {
+        await loadQuote();
+      }
     };
 
     loadData();
   }, [request]);
+
+  const loadQuote = async () => {
+    await quoteService.getQuoteById(request.quoteId).then((_quote) => setQuote(_quote), 
+      (error: Error) => setErrorMessages([...errorMessages, error.message]));
+  };
 
   const loadServices = async () => {
     const promises = request.services.map((sId) => serviceService.getServiceById(sId).catch((error: Error) => error));
@@ -103,9 +115,31 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
     setIsLoading(false);
   };
 
+  const updateStatus = async (status: number) => {
+    const _request = {...request, state: status} as Request;
+    await requestService.updateRequest(_request).then(() => setRequest(_request, index), 
+      (error: Error) => setErrorMessages([...errorMessages, error.message]));
+  };
+
+  const getState = (state: number): string => {
+    switch(state) {
+      case 1:
+        return "Awaiting Response";
+      case 2:
+        return "Accepted";
+      case 3:
+        return "Cancelled";
+      case 4:
+        return "Expired";
+      default:
+        return "";
+    }
+  };
+
   return (
     <Accordion
       expanded={expanded}
+      elevation={3}
     >
       <AccordionSummary>
         {errorMessages.length > 0 ? 
@@ -203,6 +237,15 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
               <Typography fontWeight="bold">Parts Preference</Typography>
               <Typography>{getPartsPreferenceString(request.newUsed, request.oemAfter)}</Typography>
             </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              height={50}
+            >
+              <Typography fontWeight="bold">Status</Typography>
+              <Typography>{getState(request.state)}</Typography>
+            </Box>
           </Box>
           <Box
             marginTop={theme.spacing(3)}
@@ -225,8 +268,113 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
                 disabled={!editEnabled}
               />
           </Box>
+          {request.quoteId && <Box
+            marginTop={theme.spacing(3)}
+            onClick={() => setExpanded(!expanded)}
+          >
+            <Typography 
+              sx={{textDecoration: 'underline'}} 
+              display="inline" 
+              color="primary"
+            >
+              {expanded ? "Close Quote" : "Quote Available! Click to View"}
+            </Typography>
+          </Box>}
         </Box>}
       </AccordionSummary>
+      <AccordionDetails>
+        <Box
+          paddingLeft={theme.spacing(3)}
+          paddingRight={theme.spacing(3)}
+        >
+          <Typography variant="h6">Quote</Typography>
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            width="100%"
+            marginTop={theme.spacing(3)}
+          >
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              height={50}
+            >
+              <Typography fontWeight="bold">Labour</Typography>
+              <Typography>{`$${quote.labour}`}</Typography>
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              height={50}
+            >
+              <Typography fontWeight="bold">Parts</Typography>
+              <Typography>{`$${quote.parts}`}</Typography>
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              height={50}
+            >
+              <Typography fontWeight="bold">Fees</Typography>
+              <Typography>{`$${quote.fees}`}</Typography>
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              height={50}
+            >
+              <Typography fontWeight="bold">Discount</Typography>
+              <Typography>{`$${quote.discount}`}</Typography>
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              height={50}
+            >
+              <Typography fontWeight="bold">Total</Typography>
+              <Typography>{`$${quote.total}`}</Typography>
+            </Box>
+          </Box>
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            height={50}
+            marginTop={theme.spacing(3)}
+          >
+            <Typography fontWeight="bold">Notes</Typography>
+            <Typography>{`${quote.note}`}</Typography>
+          </Box>
+          {request.state === 1 && <Grid container flexDirection="row" justifyContent="flex-end" marginTop={theme.spacing(6)}>
+            <Button
+              sx={{
+                marginRight: theme.spacing(2),
+                bgcolor: "secondary.main",
+                "&:hover": { bgcolor: "secondary.dark" }
+              }}
+              onClick={() => updateStatus(3)}
+            >
+              {<Typography fontWeight="bold" sx={{ color: "white" }}>Cancel Quote</Typography>}
+            </Button>
+            <Button
+              sx={{
+                bgcolor: "primary.main",
+                "&:hover": { bgcolor: "primary.dark" },
+                "&:disabled": { bgcolor: "secondary.main"}
+              }}
+              onClick={() => updateStatus(2)}
+            >
+              {<Typography fontWeight="bold" sx={{ color: "white" }}>Approve Quote</Typography>}
+            </Button>
+      </Grid>}
+        </Box>
+      </AccordionDetails>
     </Accordion>
   );
   

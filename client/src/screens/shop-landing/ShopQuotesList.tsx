@@ -7,11 +7,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { Box, Grid, Stack, Typography, Paper, InputBase } from '@mui/material';
+import { Box, Grid, Stack, Typography, Paper, InputBase, Button } from '@mui/material';
 import { User } from '../../interfaces';
 import { useShopService } from '../../services/useShopService';
 import { useRequestService } from '../../services/useRequestService';
-import { STATE, REWORK } from '../../constants';
+import { STATE, UI_WIDTH } from '../../constants';
 
 interface ShopQuotesListProps {
     searchService: string
@@ -98,22 +98,45 @@ export const ShopQuotesList = ({ searchService,
         setRework(Number(event.target.value));
     };
 
+    const applyFilters = async () => {
+        await shopService.getShopsForUser(user.userId).then( async (_shops: Array<Shop>) => {
+            setShops(_shops);
+            const results = await Promise.all(_shops.map((_shop) => requestService.getSelectedRequest(
+                _shop.shopId,
+                searchService,
+                searchCustomer,
+                state,
+                rework
+            )));
+            console.log(results);
+            setRequests(results.flat());
+          });
+    };
+
     useEffect(() => {
       const loadData = async () => {
         await shopService.getShopsForUser(user.userId).then( async (_shops: Array<Shop>) => {
           setShops(_shops);
           const results = await Promise.all(_shops.map((_shop) => requestService.getRequestByShop(_shop.shopId)));
-          setRequests(results.flat());
+          const _requests = results.flat();
+          const _filteredRequests = _requests.filter((_request) => _request.state === STATE.AWAITING || _request.state === STATE.ACCEPTED);
+          setRequests(_filteredRequests);
         });
       };
       
       loadData();
-    }, []);
+    }, [user]);
+
+    const setRequest = async (_request: Request, index: number) => {
+        const _requests = [...requests];
+        _requests[index] = _request;
+        setRequests(_requests);
+    };
 
   return (
     <Box>
-        <Grid container>
-            <Grid item xs={2}>
+        <Grid container width={UI_WIDTH} margin="auto">
+            {/* <Grid item xs={2}>
                 <Stack
                     spacing={3}
                     sx={{
@@ -202,9 +225,19 @@ export const ShopQuotesList = ({ searchService,
                             <FormControlLabel control={<Radio />} label='Non-rework' value={REWORK.NON_REWORK}/>
                         </RadioGroup>
                     </Item>
+                    <Button
+                        sx={{
+                        bgcolor: "primary.main",
+                        "&:hover": { bgcolor: "primary.dark" },
+                        "&:disabled": { bgcolor: "secondary.main"}
+                        }}
+                        onClick={applyFilters}
+                    >
+                        {<Typography fontWeight="bold" sx={{ color: "white" }}>Apply</Typography>}
+                    </Button>
                 </Stack>
-            </Grid>
-            <Grid item xs={10}>
+            </Grid> */}
+            <Grid item xs={12}>
                 <Box 
                 sx={{ 
                     flexGrow: 1,
@@ -213,11 +246,7 @@ export const ShopQuotesList = ({ searchService,
                 }}
                 >
                     <Stack spacing={5} direction="column" marginBottom={theme.spacing(6)}>
-                        {requests.map((request) => (<Typography key={request.requestId}>{request.description}</Typography>))}
-                        <RequestTile></RequestTile>
-                        <RequestTile></RequestTile>
-                        <RequestTile></RequestTile>
-                        <RequestTile></RequestTile>
+                        {requests.map((request, index) => (<RequestTile key={request.requestId} setRequest={setRequest} index={index} request={request}/>))}
                     </Stack>
                 </Box>
             </Grid>

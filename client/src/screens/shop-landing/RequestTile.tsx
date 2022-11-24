@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Button, CardActions, CardHeader, Grid, Box, Paper, Stack, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Request } from '../../interfaces';
+import { Request, Service, Quote } from '../../interfaces';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { styled } from '@mui/material/styles';
+import { useQuoteService } from '../../services/useQuoteService';
+import { useServiceService } from '../../services/useServiceService';
+import { useRequestService } from '../../services/useRequestService';
+import { NEW_USED, OEM_AFTER } from '../../constants';
 
-// interface RequestProps {
-//   request: Request
-// }
+interface RequestProps {
+  request: Request,
+  index: number,
+  setRequest: (_request: Request, index: number) => void
+}
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -21,15 +27,90 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export const RequestTile = () => {
+export const RequestTile = ({ request, index, setRequest }: RequestProps) => {
   const theme = useTheme();
-  // const [editEnabled, setEditEnabled] = useState(request.requestId.length === 0);
+  const quoteService = useQuoteService();
+  const serviceService = useServiceService();
+  const requestService = useRequestService();
+  const [editEnabled, setEditEnabled] = useState(false);
+  const [services, setServices] = useState([] as Service[]);
+  const [quote, setQuote] = useState({
+    fees: 0,
+    discount: 0,
+    total: 0,
+    labour: 0,
+    parts: 0,
+    note: ""
+  } as Quote);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const loadData = async () => {
+      await loadServices();
+
+      if (request.quoteId !== null) {
+        await loadQuote();
+      }
+    };
+    loadData();
+  }, [request]);
+
+  const loadQuote = async () => {
+    await quoteService.getQuoteById(request.quoteId).then((_quote) => setQuote(_quote));
+  };
+
+  const loadServices = async () => {
+    const promises = request.services.map((sId) => serviceService.getServiceById(sId));
+    const results = await Promise.all(promises);
+    setServices(results);
+  };
+  
+  const getState = (state: number): string => {
+    switch(state) {
+      case 1:
+        return "Awaiting Response";
+      case 2:
+        return "Accepted";
+      case 3:
+        return "Cancelled";
+      case 4:
+        return "Expired";
+      default:
+        return "";
+    }
+  };
+
+  const onQuoteSave = async (create: boolean) => {
+    setIsLoading(true);
+    if (create) {
+      await quoteService.createQuote(quote).then(async (quoteId) => {
+        await requestService.updateRequest({...request, quoteId: quoteId}).then(() => {
+          setRequest({...request, quoteId: quoteId} as Request, index);
+        });
+      });
+    } else {
+      await quoteService.updateQuote(quote);
+    }
+    setEditEnabled(false);
+    setIsLoading(false);
+  };
+
+  const getPartsPreferenceString = (new_used: number, oem_after: number) => {
+    const new_used_str = new_used === 3 ? null : NEW_USED[new_used];
+    const oem_after_str = oem_after === 3 ? null : OEM_AFTER[oem_after];
+
+    if (!new_used_str && !oem_after_str) {
+      return "No Preference";
+    } else {
+      return `${new_used_str ? new_used_str : ""}${oem_after_str ? ", " : ""}${oem_after_str ? oem_after_str : ""}`;
+    }
+  };
 
   return (
     <Box>
       <Card sx={{ minWidth: 250 }}>
           <CardHeader
-            title={'UserID'}
+            title={`Request ${index + 1}`}
             action={
               <Box>
                 <Button
@@ -42,64 +123,105 @@ export const RequestTile = () => {
                     "&:hover": { bgcolor: "secondary.dark" },
                     marginRight: theme.spacing(2)
                   }}
+                  onClick={() => {
+                    if (editEnabled) {
+                      onQuoteSave(request.quoteId === null);
+                    } else {
+                      setEditEnabled(true);
+                    }
+                  }}
+                  disabled={isLoading}
                 >
-                  {<EditIcon/>}
+                  {editEnabled ? <SaveAsIcon/> : <EditIcon/>}
                 </Button>
               </Box>
             }
           />
           <CardContent>
-            <Grid container marginBottom={theme.spacing(4)}>
-              <Grid item xs={4}>
-                <Typography fontWeight="bold">
-                  Description
-                </Typography>
-                <Typography>
-                  Given description from the user about the request
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
+            <Grid container marginBottom={theme.spacing(6)} rowSpacing={theme.spacing(5)}>
+              <Grid item xs={3}>
                 <Typography fontWeight="bold">
                     Services
                 </Typography>
                 <Typography>
                   <Stack direction="row" spacing={2}>
-                    <Item>Service 1</Item>
-                    <Item>Service 2</Item>
-                    <Item>Service 3</Item>
+                    {services.map((service) => (<Item key={service.serviceId}>{service.name}</Item>))}
                   </Stack>
                 </Typography>
               </Grid>
-                <Grid item xs={2} marginLeft={2}>
+              <Grid item xs={3}>
+              <Typography fontWeight="bold">Parts Preference</Typography>
+              <Typography>{getPartsPreferenceString(request.newUsed, request.oemAfter)}</Typography>
+              </Grid>
+                <Grid item xs={3}>
                     <Typography fontWeight="bold">
-                      Linked request
+                      Rework
                     </Typography>
                     <Typography>
-                      The previous linked request
+                      {request.linkedRequestId ? "Yes" : "No"}
                     </Typography>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={3}>
                   <Typography fontWeight="bold">
                       State
                   </Typography>
                   <Typography>
-                    Request status
+                    {getState(request.state)}
                   </Typography>
                 </Grid>
+                <Grid item xs={12}>
+                <Typography fontWeight="bold">
+                  Description
+                </Typography>
+                <Typography>
+                  {request.description}
+                </Typography>
               </Grid>
-            <Grid container spacing={theme.spacing(3)}>
+              </Grid>
+            <Typography variant='h5'>Quote</Typography>
+            <Grid container spacing={theme.spacing(3)} marginTop={theme.spacing(1)}>
               <Grid item xs={12}>
                 <Grid container spacing={theme.spacing(3)}>
-                  <Grid item xs={4}>
+                <Grid item xs={6}>
                     <Typography fontWeight="bold">
-                      Fee
+                      Labour
                     </Typography>
                     <TextField
+                      disabled={!editEnabled}
                       fullWidth
                       variant="filled"
                       size="small"
                       type="number"
-                      value={0}
+                      value={quote.labour}
+                      onChange={(event) => setQuote({...quote, labour: Number(event.target.value)})}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography fontWeight="bold">
+                      Parts
+                    </Typography>
+                    <TextField
+                      disabled={!editEnabled}
+                      fullWidth
+                      variant="filled"
+                      size="small"
+                      type="number"
+                      value={quote.parts}
+                      onChange={(event) => setQuote({...quote, parts: Number(event.target.value)})}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography fontWeight="bold">
+                      Fees
+                    </Typography>
+                    <TextField
+                      disabled={!editEnabled}
+                      fullWidth
+                      variant="filled"
+                      size="small"
+                      type="number"
+                      value={quote.fees}
+                      onChange={(event) => setQuote({...quote, fees: Number(event.target.value)})}
                     />
                   </Grid>
                   <Grid item xs={4}>
@@ -107,11 +229,13 @@ export const RequestTile = () => {
                       Discount
                     </Typography>
                     <TextField
+                      disabled={!editEnabled}
                       fullWidth
                       variant="filled"
                       size="small"
                       type="number"
-                      value={0}
+                      value={quote.discount}
+                      onChange={(event) => setQuote({...quote, discount: Number(event.target.value)})}
                     />
                   </Grid>
                   <Grid item xs={4}>
@@ -119,11 +243,13 @@ export const RequestTile = () => {
                       Total
                     </Typography>
                     <TextField
+                      disabled={!editEnabled}
                       fullWidth
                       variant="filled"
                       size="small"
                       type="number"
-                      value={0}
+                      value={quote.total}
+                      onChange={(event) => setQuote({...quote, total: Number(event.target.value)})}
                     />
                   </Grid>
                 </Grid>
@@ -133,9 +259,12 @@ export const RequestTile = () => {
                   Note for customer
                 </Typography>
                 <TextField
+                  disabled={!editEnabled}
                   fullWidth
                   variant="filled"
                   size="small"
+                  value={quote.note}
+                  onChange={(event) => setQuote({...quote, note: event.target.value})}
                 />
               </Grid>
             </Grid>

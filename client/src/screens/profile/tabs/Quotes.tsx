@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Request, User, Vehicle } from '../../../interfaces';
 import { useRequestService } from '../../../services/useRequestService';
@@ -11,6 +11,7 @@ interface QuotesProps {
 }
 
 const Quotes = ({ user, vehicles }: QuotesProps) => {
+  const theme = useTheme();
   const requestService = useRequestService();
 
   const [requests, setRequests] = useState([] as Request[]);
@@ -45,14 +46,19 @@ const Quotes = ({ user, vehicles }: QuotesProps) => {
           width={0} 
           onDismiss={() => setErrorMessages([])}
         /> : <Box>
-          {requests.map((request, index) => (<RequestCard 
-            key={request.requestId} 
-            request={request} 
-            vehicles={vehicles}
-            setRequest={setRequest}
-            onRequestRemove={onRequestRemove}
-            index={index}
-          />))}
+          {requests.map((request, index) => (
+          <Box 
+            marginBottom={theme.spacing(5)} 
+            key={request.requestId}
+          >
+            <RequestCard
+              request={request} 
+              vehicles={vehicles}
+              setRequest={setRequest}
+              onRequestRemove={onRequestRemove}
+              index={index}
+            />
+          </Box>))}
         </Box>}
     </Box>
   );

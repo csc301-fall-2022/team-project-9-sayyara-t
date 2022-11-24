@@ -30,26 +30,6 @@ export const useUserService = () => {
     return user;
   };
 
-  // TODO: change to API call from mock
-  const getUser = async (userId: string): Promise<User> => {
-    const userData = usersData[userId as keyof typeof usersData];
-
-    if (!userData) {
-      return Promise.reject<User>(new Error("User not found"));
-    }
-
-    const user: User = {
-      userId: userData.user_id,
-      roleId: userData.role_id,
-      username: userData.username,
-      name: userData.name,
-      email: userData.email,
-      phone: userData.phone
-    };
-
-    return user;
-  };
-
   const updateUser = async (user: User): Promise<boolean> => {
 
     const data = {
@@ -75,7 +55,6 @@ export const useUserService = () => {
 
   return {
     getCurrentUser,
-    getUser,
     updateUser
   };
 };
