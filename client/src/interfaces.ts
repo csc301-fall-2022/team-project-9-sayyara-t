@@ -68,8 +68,25 @@ export interface Request {
 }
 
 export interface Quote {
-  quoteId: string
-  userId: string
-  total: number
+  quoteId: string,
+  labour: number,
+  parts: Array<string>,
+  fees: number,
+  discount: number, 
+  total: number,
   note: string
+}
+
+export interface Request {
+  requestId: string,
+  userId: string,
+  shopId: string,
+  vehicleId: string,
+  quoteId: string,
+  linkedRequestId: string,
+  services: Array<Service>,
+  state: number,
+  description: string,
+  new_used: number,
+  oem_after: number
 }
