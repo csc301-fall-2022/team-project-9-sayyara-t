@@ -7,12 +7,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { Box, Grid, Stack, Typography, Paper, InputBase, Button } from '@mui/material';
+import { Box, Grid, Stack, Typography, Paper, InputBase, Button, Alert } from '@mui/material';
 import { User } from '../../interfaces';
 import { useShopService } from '../../services/useShopService';
 import { useRequestService } from '../../services/useRequestService';
-import { STATE, UI_WIDTH, REWORK} from '../../constants';
-import { request } from 'http';
+import { STATE, UI_WIDTH, REWORK, PATHS} from '../../constants';
+import { useNavigate } from 'react-router-dom';
 
 interface ShopQuotesListProps {
     searchService: string
@@ -77,11 +77,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const ShopQuotesList = ({ searchService, 
     setSearchService, searchCustomer, setSearchCustomer, state, setState, rework, setRework, user }: ShopQuotesListProps) => {
     const theme = useTheme();
+    const navigate = useNavigate();
     const shopService = useShopService();
     const requestService = useRequestService();
 
     const [shops, setShops] = useState([] as Array<Shop>);
     const [requests, setRequests] = useState([] as Array<Request>);
+    const [isEmpty, setIsEmpty] = useState(false);
 
     const handleSearchService = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchService(event.target.value);
@@ -99,6 +101,10 @@ export const ShopQuotesList = ({ searchService,
         setRework(Number(event.target.value));
     };
 
+    const handleCreate = () => {
+        navigate(`/user/${sessionStorage.getItem('userId')}`);
+    };
+
     const applyFilters = async () => {
         await shopService.getShopsForUser(user.userId).then( async (_shops: Array<Shop>) => {
             setShops(_shops);
@@ -113,10 +119,33 @@ export const ShopQuotesList = ({ searchService,
             setRequests(results.flat());
           });
     };
+    
+    const renderPopUp = () => {
+        if (!isEmpty) {
+            return<Grid container flexGrow={1} marginBottom={5}>
+                    <Alert
+                        severity='info'
+                        action={
+                        <Button color="inherit" size="small" onClick={handleCreate}>
+                            Create a shop
+                        </Button>
+                        }
+                        sx={{
+                            flexGrow: 1
+                        }}
+                    >
+                        You have not created a shop yet! Please do so in shop management
+                    </Alert>
+                </Grid>;
+        }
+    };
 
     useEffect(() => {
       const loadData = async () => {
         await shopService.getShopsForUser(user.userId).then( async (_shops: Array<Shop>) => {
+          if (_shops.length !== 0) {
+            setIsEmpty(true);
+          }
           setShops(_shops);
           const results = await Promise.all(_shops.map((_shop) => requestService.getRequestByShop(_shop.shopId)));
           const _requests = results.flat();
@@ -246,6 +275,9 @@ export const ShopQuotesList = ({ searchService,
                     pt: 10
                 }}
                 >
+                    <div>
+                        {renderPopUp()}
+                    </div>
                     <Stack spacing={5} direction="column" marginBottom={theme.spacing(6)}>
                         {requests.map((request, index) => (<RequestTile key={request.requestId} setRequest={setRequest} index={index} request={request} shopId={request.shopId}/>))}
                     </Stack>
