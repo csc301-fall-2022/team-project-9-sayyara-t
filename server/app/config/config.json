@@ -1,6 +1,6 @@
 {
   "env": "test",
-  "development": {
+  "prod": {
     "username": "doadmin",
     "password": "AVNS_0iQEJIRcg6wXhOD-O3W",
     "database": "sayyara",

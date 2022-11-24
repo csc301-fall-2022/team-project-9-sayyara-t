@@ -198,7 +198,9 @@
     "start": "node index.js",
     "test": "npx cross-env NODE_ENV=test jest --detectOpenHandles --no-cache --silent ",
     "test:setup": "npx cross-env NODE_ENV=test npm run test:db:reset",
-    "test:db:reset": "cd app && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --debug"
+    "test:db:reset": "cd app && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --debug",
+    "prod:setup": "npx cross-env NODE_ENV=prod npm run prod:db:setup",
+    "prod:db:setup": "cd app && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed --seed 20221116014151-demo-services.js"
   },
   "author": "",
   "license": "ISC",

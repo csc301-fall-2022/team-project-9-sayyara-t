@@ -459,14 +459,7 @@ module.exports = {
         name: 'Windshield Wiper Blades',
         createdAt: new Date(),
         updatedAt: new Date()
-      },
-      {
-        id: 'abc1',
-        type: 'test',
-        name: 'test service 1',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
+      }
     ]);
   },
 

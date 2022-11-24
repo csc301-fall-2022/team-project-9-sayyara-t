@@ -41,12 +41,9 @@ exports.findAll = (req, res)=>{
 }
 
 exports.findAllFilter = async (req, res)=>{
-  const shop_id = req.body.shop_id; // shop_id of the shop we're looking at. From the implementation described we assume that a shop_id is always passed
-
   const name_filter = req.body.name; // name of user
   var user_ids
   if (name_filter == null) {
-    console.log('funny')
     user_ids = []
   } else {
     user_ids = await User.findAll({attributes: ['id'], where: {name : {[Op.like]: '%' + name_filter + '%'}}})
@@ -60,9 +57,9 @@ exports.findAllFilter = async (req, res)=>{
     services = await Service.findAll({attributes: ['id'], where: {name : {[Op.like]: '%' + service_filter + '%'}}})
   }
 
-
   const state_filter = req.body.state; // state int
   const rework_filter = req.body.rework; // true/false
+  const shop_id = req.body.shop_id; // shop_id of the shop we're looking at. From the implementation described we assume that a shop_id is always passed
 
   const conditions = {} // list of conditions to match
   var other_cond = false
@@ -81,10 +78,14 @@ exports.findAllFilter = async (req, res)=>{
         })
       }
     } else {
-      res.send([])
+      if (name_filter != null) {
+        res.send([])
       return
+      }
     }
     if (shop_id != null) {
+      console.log('hoo')
+      console.log(shop_id)
       conditions[Op.and].push({
         shop_id: {
           [Op.eq]: shop_id
