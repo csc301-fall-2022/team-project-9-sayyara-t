@@ -128,9 +128,10 @@ export const useRequestService = () => {
    state: number, rework: number): Promise<Array<Request>> => {
     
     const data = {
+      shop_id: shopId,
       name: (searchCustomer.length === 0) ? null : searchCustomer,
       service: (searchService.length === 0) ? null : searchService,
-      state: state,
+      state: (state === 0) ? null : state,
       rework: (rework === 0) ? null : ((rework === 1) ? true : false)
     };
 

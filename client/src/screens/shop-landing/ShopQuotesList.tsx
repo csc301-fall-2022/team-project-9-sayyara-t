@@ -11,7 +11,7 @@ import { Box, Grid, Stack, Typography, Paper, InputBase, Button } from '@mui/mat
 import { User } from '../../interfaces';
 import { useShopService } from '../../services/useShopService';
 import { useRequestService } from '../../services/useRequestService';
-import { STATE, UI_WIDTH } from '../../constants';
+import { STATE, UI_WIDTH, REWORK} from '../../constants';
 
 interface ShopQuotesListProps {
     searchService: string
@@ -136,7 +136,7 @@ export const ShopQuotesList = ({ searchService,
   return (
     <Box>
         <Grid container width={UI_WIDTH} margin="auto">
-            {/* <Grid item xs={2}>
+            <Grid item xs={3}>
                 <Stack
                     spacing={3}
                     sx={{
@@ -153,7 +153,7 @@ export const ShopQuotesList = ({ searchService,
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder="Search by service"
+                            placeholder="Service"
                             inputProps={{ 'aria-label': 'search' }}
                             value={(searchService && searchService !== "null") ? searchService : ""}
                             onChange={handleSearchService}
@@ -166,7 +166,7 @@ export const ShopQuotesList = ({ searchService,
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder="Search by customer name"
+                            placeholder="Customer name"
                             inputProps={{ 'aria-label': 'search' }}
                             value={(searchCustomer && searchCustomer !== "null") ? searchCustomer : ""}
                             onChange={handleSearchCustomer}
@@ -236,8 +236,8 @@ export const ShopQuotesList = ({ searchService,
                         {<Typography fontWeight="bold" sx={{ color: "white" }}>Apply</Typography>}
                     </Button>
                 </Stack>
-            </Grid> */}
-            <Grid item xs={12}>
+            </Grid>
+            <Grid item xs={9}>
                 <Box 
                 sx={{ 
                     flexGrow: 1,

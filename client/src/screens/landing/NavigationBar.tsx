@@ -95,7 +95,7 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
               Sayyara.
             </Typography>
             <Stack direction="row" spacing={15}>
-                <Button variant="contained" 
+                {/* <Button variant="contained" 
                 startIcon={<LocationOnIcon />}
                 sx={ {
                     borderRadius: 8,
@@ -103,7 +103,7 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
                 }}
                 >
                     Location
-                </Button>
+                </Button> */}
                 <Search>
                 <SearchIconWrapper>
                     <SearchIcon />
