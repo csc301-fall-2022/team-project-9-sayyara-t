@@ -7,7 +7,8 @@ export const PATHS = {
   REQUEST_QUOTE: "/request-quote",
   QUOTES: "/quotes",
   USER: "/user/:userId",
-  MANAGEMENT: "/management"
+  MANAGEMENT: "/management",
+  REQUEST: "/create-request"
 };
 
 export const ROLES = {
@@ -16,8 +17,24 @@ export const ROLES = {
   SHOP_OWNER:3
 };
 
+export const NEW_USED = [
+  "",
+  "New",
+  "Used",
+  "No Preference"
+];
+
+export const OEM_AFTER = [
+  "",
+  "OEM",
+  "Aftermarket",
+  "No Preference"
+];
+
 export const PROFILE_TABS = {
   PROFILE: "Profile",
   QUOTES: "Quotes/Chats",
   SHOP_MANAGEMENT: "Shop Management"
 };
+
+export const UI_WIDTH = 1300;

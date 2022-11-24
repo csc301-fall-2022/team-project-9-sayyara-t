@@ -8,7 +8,7 @@ import {
     Typography
 } from '@mui/material';
 import { ServiceInfo } from './ServiceInfo';
-import { Service, Shop } from '../../interfaces';
+import { Service, Shop, ShopService } from '../../interfaces';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,12 +19,12 @@ const Item = styled(Paper)(({ theme }) => ({
 
 interface ShopInfoProps {
     shop: Shop,
-    services: Array<Service>
+    shopServices: Array<ShopService>
 }
 
 // TODO: Finish this tomorrow using the layout in Auto-layout section of Grid
 // in combination with 
-export const ShopInfo = ({ shop, services }: ShopInfoProps) => {
+export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
   return (
     <Box>
         <Box 
@@ -79,10 +79,10 @@ export const ShopInfo = ({ shop, services }: ShopInfoProps) => {
             }}
         >
             <Stack spacing={5} direction="column">
-                {services.length > 0 && services.map((service) => (
+                {shopServices.length > 0 && shopServices.map((shopService) => (
                     <ServiceInfo 
-                        key={service.serviceId}
-                        service={service}
+                        key={shopService.serviceId}
+                        shopService={shopService}
                     />
                 ))}
             </Stack>
