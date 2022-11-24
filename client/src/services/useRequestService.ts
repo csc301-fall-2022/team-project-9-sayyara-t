@@ -137,7 +137,7 @@ export const useRequestService = () => {
       name: (searchCustomer.length === 0) ? null : searchCustomer,
       service: (searchService.length === 0) ? null : searchService,
       state: state,
-      rework: (rework !== 0 && rework !== 1) ? null : rework
+      rework: (rework == 0) ? null : ((rework == 1) ? true : false)
     };
 
     const requests: RequestResult = await apiService.apiRequest(`${API_PATH}`, 'POST', data);
