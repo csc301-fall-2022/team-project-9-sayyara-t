@@ -2,29 +2,51 @@ import React, { useEffect, useState } from 'react';
 import TopNav from '../profile/TopNav';
 import { ShopQuotesList } from './ShopQuotesList';
 import {useNavigate} from "react-router-dom";
-import { PATHS } from '../../constants';
+import { useParams } from 'react-router-dom';
+import { PATHS, UI_WIDTH } from '../../constants';
+import { Request } from '../../interfaces';
+import { useUserService } from '../../services/useUserService';
+import { User } from '../../interfaces';
 
 const ShopLandingPage = () => {
-  const UI_WIDTH = window.innerWidth - 50;
-  const [sort, setSort] = useState("date");
-  const [search, setSearch] = useState("null");
+  const [state, setState] = useState(0);
+  const [rework, setRework] = useState(0);
+  const [searchService, setSearchService] = useState("");
+  const [searchCustomer, setSearchCustomer] = useState("");
+  // const [requests, setRequests] = useState([] as Array<Request>);
+  const [user, setUser] = useState({} as User);
   const navigate = useNavigate();
+  const params = useParams();
+  const userService = useUserService();
 
   useEffect(() => {
     if (sessionStorage.getItem('roleId') !== '3') {
       navigate(PATHS.LANDING);
     }
-    const loadData = async () => {
-      const searchTerm = search.length > 0 ? search : "null";
+
+    const loadUser = async () => {
+      await userService.getCurrentUser().then((_user: User) => {
+        setUser(_user);
+      });
     };
 
-    loadData();
-  }, [sort, search]);
+    loadUser();
+  }, []);
 
   return (
     <>
       <TopNav height={60} uiWidth={UI_WIDTH}></TopNav>
-      <ShopQuotesList search={search} setSearch={setSearch} sort={sort} setSort={setSort}></ShopQuotesList>
+      <ShopQuotesList 
+        searchService={searchService}
+        setSearchService={setSearchService}
+        searchCustomer={searchCustomer}
+        setSearchCustomer={setSearchCustomer}
+        state={state}
+        setState={setState}
+        rework={rework}
+        setRework={setRework}
+        user={user}
+      />
     </>
   );
 };

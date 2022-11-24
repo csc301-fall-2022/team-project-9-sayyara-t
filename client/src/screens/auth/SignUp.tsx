@@ -19,25 +19,30 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const [errorMessages, setErrorMessages] = useState([] as Array<string>);
-
+  const [isTextfieldValid, setIsTextfieldValid] = useState(false);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const user: User = {
-      username: data.get('username') as string,
-      name: data.get('name') as string,
-      email: data.get('email') as string,
-      phone: data.get('phone') as string,
-      roleId: data.get('shopOwner') ? ROLES.SHOP_OWNER : ROLES.VEHICLE_OWNER,
-      userId: ""
-    };
+    if (data.get('username') as string == "" || data.get('name') as string == "" || data.get('email') as string == ""
+      || data.get('phone') as string == "" || data.get('password') as string == "" || data.get('confirm_password') as string == "") {
+      setIsTextfieldValid(true);
+    } else {
+      const user: User = {
+        username: data.get('username') as string,
+        name: data.get('name') as string,
+        email: data.get('email') as string,
+        phone: data.get('phone') as string,
+        roleId: data.get('shopOwner') ? ROLES.SHOP_OWNER : ROLES.VEHICLE_OWNER,
+        userId: ""
+      };
 
-    const success = await authService.signUp(user, data.get('password') as string).then((success) => success, 
-      (error: Error) => setErrorMessages([...errorMessages, error.message]));
+      const success = await authService.signUp(user, data.get('password') as string).then((success) => success,
+        (error: Error) => setErrorMessages([...errorMessages, error.message]));
 
-    if (success) {
-      navigate(PATHS.LOGIN);
+      if (success) {
+        navigate(PATHS.LOGIN);
+      }
     }
   };
 
@@ -73,6 +78,7 @@ const SignUp = () => {
                 id="username"
                 label="Username"
                 autoFocus
+                error={isTextfieldValid}
               />
             </Grid>
             <Grid item xs={12}>
@@ -84,6 +90,7 @@ const SignUp = () => {
                 id="name"
                 label="Name"
                 autoFocus
+                error={isTextfieldValid}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,6 +101,7 @@ const SignUp = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                error={isTextfieldValid}
               />
             </Grid>
             <Grid item xs={12}>
@@ -104,6 +112,7 @@ const SignUp = () => {
                 label="Phone Number"
                 name="phone"
                 autoComplete="phone"
+                error={isTextfieldValid}
               />
             </Grid>
             <Grid item xs={12}>
@@ -115,6 +124,7 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                error={isTextfieldValid}
               />
             </Grid>
             <Grid item xs={12}>
@@ -123,12 +133,13 @@ const SignUp = () => {
                 fullWidth
                 name="confirm_password"
                 label="Confirm Password"
-                type="confirm_password"
+                type="password"
                 id="confirm_password"
+                error={isTextfieldValid}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel 
+              <FormControlLabel
                 control={<Checkbox />}
                 label="I am a Shop Owner"
                 name="shopOwner"

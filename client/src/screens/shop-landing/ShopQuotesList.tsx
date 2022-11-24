@@ -1,19 +1,29 @@
-import React from 'react';
-import { Quote } from '../../interfaces';
-import { QuoteTile } from './QuoteTile';
+import React, { useEffect, useState } from 'react';
+import { Shop, Request } from '../../interfaces';
+import { RequestTile } from './RequestTile';
 import { styled, alpha } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { Box, Grid, Stack, Typography, Paper, InputBase } from '@mui/material';
+import { Box, Grid, Stack, Typography, Paper, InputBase, Button } from '@mui/material';
+import { User } from '../../interfaces';
+import { useShopService } from '../../services/useShopService';
+import { useRequestService } from '../../services/useRequestService';
+import { STATE, UI_WIDTH } from '../../constants';
 
 interface ShopQuotesListProps {
-    search: string,
-    setSearch: (_search: string) => void
+    searchService: string
+    setSearchService: (_search: string) => void
+    searchCustomer: string
+    setSearchCustomer: (_search: string) => void
     // filter: date, state, service type, rework/non-rework
-    sort: string
-    setSort: (_price: string) => void
+    state: number
+    setState: (_state: number) => void
+    rework: number
+    setRework: (_rework: number) => void
+    user: User
 }
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -63,18 +73,70 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export const ShopQuotesList = ({ search, setSearch, sort, setSort }: ShopQuotesListProps) => {
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(event.target.value);
+export const ShopQuotesList = ({ searchService, 
+    setSearchService, searchCustomer, setSearchCustomer, state, setState, rework, setRework, user }: ShopQuotesListProps) => {
+    const theme = useTheme();
+    const shopService = useShopService();
+    const requestService = useRequestService();
+
+    const [shops, setShops] = useState([] as Array<Shop>);
+    const [requests, setRequests] = useState([] as Array<Request>);
+
+    const handleSearchService = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchService(event.target.value);
     };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSort(event.target.value);
+    const handleSearchCustomer = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchCustomer(event.target.value);
     };
+
+    const handleState = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setState(Number(event.target.value));
+    };
+
+    const handleRework = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRework(Number(event.target.value));
+    };
+
+    const applyFilters = async () => {
+        await shopService.getShopsForUser(user.userId).then( async (_shops: Array<Shop>) => {
+            setShops(_shops);
+            const results = await Promise.all(_shops.map((_shop) => requestService.getSelectedRequest(
+                _shop.shopId,
+                searchService,
+                searchCustomer,
+                state,
+                rework
+            )));
+            console.log(results);
+            setRequests(results.flat());
+          });
+    };
+
+    useEffect(() => {
+      const loadData = async () => {
+        await shopService.getShopsForUser(user.userId).then( async (_shops: Array<Shop>) => {
+          setShops(_shops);
+          const results = await Promise.all(_shops.map((_shop) => requestService.getRequestByShop(_shop.shopId)));
+          const _requests = results.flat();
+          const _filteredRequests = _requests.filter((_request) => _request.state === STATE.AWAITING || _request.state === STATE.ACCEPTED);
+          setRequests(_filteredRequests);
+        });
+      };
+      
+      loadData();
+    }, [user]);
+
+    const setRequest = async (_request: Request, index: number) => {
+        const _requests = [...requests];
+        _requests[index] = _request;
+        setRequests(_requests);
+    };
+
   return (
     <Box>
-        <Grid container>
-            <Grid item xs={2}>
+        <Grid container width={UI_WIDTH} margin="auto">
+            {/* <Grid item xs={2}>
                 <Stack
                     spacing={3}
                     sx={{
@@ -91,10 +153,23 @@ export const ShopQuotesList = ({ search, setSearch, sort, setSort }: ShopQuotesL
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder="Search for quotes"
+                            placeholder="Search by service"
                             inputProps={{ 'aria-label': 'search' }}
-                            value={(search && search !== "null") ? search : ""}
-                            onChange={handleSearch}
+                            value={(searchService && searchService !== "null") ? searchService : ""}
+                            onChange={handleSearchService}
+                        />
+                        </Search>
+                    </Item>
+                    <Item>
+                        <Search>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder="Search by customer name"
+                            inputProps={{ 'aria-label': 'search' }}
+                            value={(searchCustomer && searchCustomer !== "null") ? searchCustomer : ""}
+                            onChange={handleSearchCustomer}
                         />
                         </Search>
                     </Item>
@@ -107,26 +182,62 @@ export const ShopQuotesList = ({ search, setSearch, sort, setSort }: ShopQuotesL
                                 fontWeight: 'bold'
                             }}
                             >
-                            Filters
+                            State
                         </Typography>
                         <RadioGroup 
                             name='filter'
                             aria-labelledby='filter-label'
-                            value={sort}
+                            value={state}
                             sx={{
                                 px: 5
                             }}
-                            onChange={handleChange}
+                            onChange={handleState}
                         >
-                            <FormControlLabel control={<Radio />} label='Date' value='date'/>
-                            <FormControlLabel control={<Radio />} label='State' value='state'/>
-                            <FormControlLabel control={<Radio />} label='Service' value='service'/>
-                            <FormControlLabel control={<Radio />} label='Rework' value='rework'/>
+                            <FormControlLabel control={<Radio />} label='All' value={STATE.ALL}/>
+                            <FormControlLabel control={<Radio />} label='Awaiting response' value={STATE.AWAITING}/>
+                            <FormControlLabel control={<Radio />} label='Accepted' value={STATE.ACCEPTED}/>
+                            <FormControlLabel control={<Radio />} label='Cancelled' value={STATE.CANCELLED}/>
+                            <FormControlLabel control={<Radio />} label='Expired' value={STATE.EXPIRED}/>
                         </RadioGroup>
                     </Item>
+                    <Item>
+                        <Typography
+                            variant="h6"
+                            component="div"
+                            color="black"
+                            sx={{
+                                fontWeight: 'bold'
+                            }}
+                            >
+                            Rework
+                        </Typography>
+                        <RadioGroup 
+                            name='filter'
+                            aria-labelledby='filter-label'
+                            value={rework}
+                            sx={{
+                                px: 5
+                            }}
+                            onChange={handleRework}
+                        >
+                            <FormControlLabel control={<Radio />} label='All' value={REWORK.ALL}/>
+                            <FormControlLabel control={<Radio />} label='Rework' value={REWORK.REWORK}/>
+                            <FormControlLabel control={<Radio />} label='Non-rework' value={REWORK.NON_REWORK}/>
+                        </RadioGroup>
+                    </Item>
+                    <Button
+                        sx={{
+                        bgcolor: "primary.main",
+                        "&:hover": { bgcolor: "primary.dark" },
+                        "&:disabled": { bgcolor: "secondary.main"}
+                        }}
+                        onClick={applyFilters}
+                    >
+                        {<Typography fontWeight="bold" sx={{ color: "white" }}>Apply</Typography>}
+                    </Button>
                 </Stack>
-            </Grid>
-            <Grid item xs={10}>
+            </Grid> */}
+            <Grid item xs={12}>
                 <Box 
                 sx={{ 
                     flexGrow: 1,
@@ -134,11 +245,8 @@ export const ShopQuotesList = ({ search, setSearch, sort, setSort }: ShopQuotesL
                     pt: 10
                 }}
                 >
-                    <Stack spacing={5} direction="column">
-                        <QuoteTile></QuoteTile>
-                        <QuoteTile></QuoteTile>
-                        <QuoteTile></QuoteTile>
-                        <QuoteTile></QuoteTile>
+                    <Stack spacing={5} direction="column" marginBottom={theme.spacing(6)}>
+                        {requests.map((request, index) => (<RequestTile key={request.requestId} setRequest={setRequest} index={index} request={request}/>))}
                     </Stack>
                 </Box>
             </Grid>

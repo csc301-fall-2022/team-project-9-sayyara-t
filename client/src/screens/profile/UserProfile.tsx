@@ -12,10 +12,11 @@ import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 import { User, Vehicle } from '../../interfaces';
-import { ROLES, PROFILE_TABS, PATHS } from '../../constants';
+import { ROLES, PROFILE_TABS, PATHS, UI_WIDTH } from '../../constants';
 import ErrorMessages from '../../shared/ErrorMessages';
 import ShopManagement from './tabs/ShopManagement';
 import ProfileTab from './tabs/ProfileTab';
+import Quotes from './tabs/Quotes';
 
 const UserProfile = () => {
   const params = useParams();
@@ -28,8 +29,6 @@ const UserProfile = () => {
   const [vehicles, setVehicles] = useState([] as Array<Vehicle>);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [errorMessages, setErrorMessages] = useState([] as Array<string>);
-
-  const UI_WIDTH = 1300;
 
   const [menuItems, setMenuItems] = useState([PROFILE_TABS.PROFILE]);
 
@@ -103,7 +102,7 @@ const UserProfile = () => {
           setErrorMessages={setErrorMessages}
         />);
       case PROFILE_TABS.QUOTES:
-        return (<></>);
+        return (<Quotes user={user} vehicles={vehicles}/>);
       case PROFILE_TABS.SHOP_MANAGEMENT:
         return (<ShopManagement 
           user={user}  
