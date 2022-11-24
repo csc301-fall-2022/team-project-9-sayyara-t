@@ -3,6 +3,7 @@ const {ShopService} = require("../models");
 const Request = require("../models").Request;
 const User = require("../models").User
 const Service = require("../models").Service
+const Shop = require("../models").Shop
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res)=>{
@@ -40,6 +41,8 @@ exports.findAll = (req, res)=>{
 }
 
 exports.findAllFilter = async (req, res)=>{
+  const shop_id = req.body.shop_id; // shop_id of the shop we're looking at. From the implementation described we assume that a shop_id is always passed
+
   const name_filter = req.body.name; // name of user
   const user_ids = await User.findAll({attributes: ['id'], where: {name : {[Op.like]: '%' + name_filter + '%'}}})
 
@@ -52,11 +55,11 @@ exports.findAllFilter = async (req, res)=>{
   const conditions = {} // list of conditions to match
   var other_cond = false
 
-  if (user_ids.length != 0 || state_filter || rework_filter) {
+  if (user_ids.length != 0 || state_filter != null || rework_filter != null || shop_id != null) {
     conditions[Op.and] = []
     other_cond = true
 
-    if (user_ids != null) {
+    if (user_ids.length != 0) {
       conditions[Op.or] = []
       for (var i = 0; i < user_ids.length; i++) {
         conditions[Op.or].push({
@@ -65,6 +68,13 @@ exports.findAllFilter = async (req, res)=>{
           }
         })
       }
+    }
+    if (shop_id != null) {
+      conditions[Op.and].push({
+        shop_id: {
+          [Op.eq]: shop_id
+        }
+      })
     }
     if (state_filter != null) {
       conditions[Op.and].push({
