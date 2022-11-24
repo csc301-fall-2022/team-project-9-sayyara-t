@@ -5,6 +5,19 @@ const ShopAdmin = require("../models").ShopAdmin
 const Rating = require("../models").Rating
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/shops/
+ * Method: POST
+ * Fields: [
+ *  name: @var STRING
+ *  address: @var STRING
+ *  phone: @var STRING
+ *  email: @var STRING
+ *  time: @var JSON
+ *  description: @var STRING
+ * ]
+ * Description: Creates a Shop model instance with the inputted information
+ */
 exports.create = (req, res)=>{
     const newShop = {
       name: req.body.name,
