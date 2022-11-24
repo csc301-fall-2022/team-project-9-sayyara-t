@@ -6,11 +6,13 @@ import {
     Paper,
     Stack,
     Typography,
-    Rating
+    Rating,
+    Button
 } from '@mui/material';
 import { ServiceInfo } from './ServiceInfo';
 import { ShopService, Shop } from '../../interfaces';
 import { useRatingService } from '../../services/useRatingService';
+import {useNavigate} from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -29,6 +31,12 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
     const [rating, setRating] = useState<number | null>(0);
     const [price, setPrice] = useState<number | null>(0);
     const ratingService = useRatingService();
+    const navigate = useNavigate();
+
+    const handleQuote = async () => {
+      navigate(`/create-request?shopIds=${shop.shopId}`);
+    };
+
     useEffect(() => {
         const loadData = async () => {
             await ratingService.getShopRating(shop).then((_rating) => setRating(_rating));
@@ -75,18 +83,30 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
                     </Grid>
                 </Grid>
             </Box>
-            <Typography
-                variant="h4"
-                component="div"
-                sx={{
-                    textAlign: 'left',
-                    mx: 20,
-                    fontWeight: "bold",
-                    flexGrow: 1
-                }}
-            >
-                Service List
-            </Typography>
+            <Grid container>
+                <Grid item xs={10}>
+                    <Typography
+                        variant="h4"
+                        component="div"
+                        sx={{
+                            textAlign: 'left',
+                            mx: 20,
+                            fontWeight: "bold",
+                            flexGrow: 1
+                        }}
+                    >
+                        Service List
+                    </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                    <Button
+                        variant='contained'
+                        onClick={handleQuote}
+                        >
+                        Request a Quote
+                    </Button>
+                </Grid>
+            </Grid>
             <Box
                 sx={{
                     flexGrow: 1,

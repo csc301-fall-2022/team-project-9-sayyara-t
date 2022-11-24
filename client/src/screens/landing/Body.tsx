@@ -9,12 +9,12 @@ import FormLabel from '@mui/material/FormLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import { Stack } from '@mui/system';
 // import Slider from '@mui/material/Slider';
 import { ShopTile } from './ShopTile';
 import { Shop } from '../../interfaces';
-
+import {useNavigate} from "react-router-dom";
 
 // const Item = styled(Paper)(({ theme }) => ({
 //     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -31,6 +31,10 @@ interface BodyProps {
 }
 
 export const Body = ({ shops, sort, setSort }: BodyProps) => {
+    const navigate = useNavigate();
+
+    const [selectedShop, setSelectedShop] = useState([] as Array<string>);
+
     // const [price, setPrice] = useState(1);
 
     // const marks = [
@@ -68,54 +72,74 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
     //     return `${value} km`;
     // }
 
+    const handleQuote = async () => {
+      navigate(`/create-request?shopIds=${selectedShop.join(',')}`);
+    };
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={3}>
-                    <Typography
-                        variant="h4"
-                        component="div"
-                        color="black"
+                    <Grid 
+                        container
                         sx={{
-                            textAlign: 'left',
-                            mx: 8,
-                            p: 5,
-                            fontWeight: 'bold'
+                            mx: 4,
+                            pt: 10,
                         }}
+                        spacing={5}
                     >
-                        Filters
-                    </Typography>
-
-                    <FormControl
-                        sx={{
-                            textAlign: 'left',
-                            mx: 8,
-                            p: 5,
-                            fontWeight: 'bold'
-                        }}
-                    >
-                        <FormLabel id='filter-label'>
+                        <Grid item xs={12}>
                             <Typography
-                                variant="h5"
+                                variant="h4"
                                 component="div"
                                 color="black"
                                 sx={{
+                                    textAlign: 'left',
                                     fontWeight: 'bold'
                                 }}
                             >
-                                Sort
+                                Filters
                             </Typography>
-                        </FormLabel>
-                        <RadioGroup
-                            name='filter'
-                            aria-labelledby='filter-label'
-                            value={sort}
-                            onChange={handleChange}
-                        >
-                            <FormControlLabel control={<Radio />} label='Price' value='price' />
-                            <FormControlLabel control={<Radio />} label='Ratings' value='star' />
-                        </RadioGroup>
-                    </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControl
+                                sx={{
+                                    textAlign: 'left',
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                <FormLabel id='filter-label'>
+                                    <Typography
+                                        variant="h5"
+                                        component="div"
+                                        color="black"
+                                        sx={{
+                                            fontWeight: 'bold'
+                                        }}
+                                    >
+                                        Sort
+                                    </Typography>
+                                </FormLabel>
+                                <RadioGroup
+                                    name='filter'
+                                    aria-labelledby='filter-label'
+                                    value={sort}
+                                    onChange={handleChange}
+                                >
+                                    <FormControlLabel control={<Radio />} label='Price' value='price' />
+                                    <FormControlLabel control={<Radio />} label='Ratings' value='star' />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                variant='contained'
+                                onClick={handleQuote}
+                                >
+                                Request a Quote
+                            </Button>
+                        </Grid>
+                    </Grid>
                     {/* <FormControl
                 sx={{
                     textAlign: 'left',
@@ -187,7 +211,7 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
                     >
                         {shops.map((shop) => (
                             <Grid item width={350} key={shop.shopId}>
-                                <ShopTile name={shop.name} id={shop.shopId}></ShopTile>
+                                <ShopTile name={shop.name} id={shop.shopId} selectedShops={selectedShop} setSelectedShops={setSelectedShop}></ShopTile>
                             </Grid>
                         ))}
                     </Grid>

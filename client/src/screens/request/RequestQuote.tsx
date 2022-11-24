@@ -163,7 +163,7 @@ const RequestQuote = () => {
     });
 
     if (_errorMessages.length === 0) {
-      navigate(`${PATHS.USER}/${request.userId}`);
+      navigate(`/user/${request.userId}`);
     } else {
       setErrorMessages([...errorMessages, ..._errorMessages]);
     } 

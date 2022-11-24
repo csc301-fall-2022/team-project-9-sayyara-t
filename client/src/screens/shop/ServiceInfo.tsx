@@ -6,6 +6,7 @@ import { Service, ShopService } from '../../interfaces';
 import { useServiceService } from '../../services/useServiceService';
 import { LinearProgress } from '@mui/material';
 
+
 interface ServiceInfoProps {
   shopService: ShopService
 }
