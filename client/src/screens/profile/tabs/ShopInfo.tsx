@@ -27,7 +27,6 @@ const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages 
   const shopAdminService = useShopAdminServices();
   const serviceService = useServiceService();
 
-  const [loading, setLoading] = useState(false);
   const [shopServices, setShopServices] = useState([] as Array<ShopService>);
   const [isShopChanged, setIsShopChanged] = useState(false);
   const [servicesList, setServicesList] = useState([] as Array<Service>);
@@ -43,14 +42,12 @@ const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages 
 
   useEffect(() => {
     const loadData = async () => {
-      setLoading(true);
       if (shop.shopId.length == 0) {
         setShopServices([]);
         return;
       }
       await shopServiceService.getShopServicesForShop(shop.shopId).then((_shopServices) => setShopServices(_shopServices), 
         (error: Error) => setErrorMessages([...errorMessages, error.message]));
-      setLoading(false);
     };
 
     loadData();
@@ -98,7 +95,6 @@ const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages 
     <Box
       marginTop={theme.spacing(4)}
     >
-      {loading ? <CircularProgress /> : 
       <Box>
         <Grid container spacing={theme.spacing(8)}>
           <Grid item xs={6}>
@@ -246,7 +242,7 @@ const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages 
             )))}
           </Box>
         )}
-      </Box>}
+      </Box>
     </Box>
   );
 };
