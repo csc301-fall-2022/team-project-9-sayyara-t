@@ -5,9 +5,6 @@ const ShopAdmin = require("../models").ShopAdmin
 const Rating = require("../models").Rating
 const Op = db.Sequelize.Op;
 
-
-
-
 /**
  * Endpoint: /api/shops/
  * Method: POST
