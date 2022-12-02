@@ -7,12 +7,17 @@ import {
     Stack,
     Typography,
     Rating,
-    Button
+    Button,
+    Card,
+    CardContent,
+    CardMedia,
+    CardActionArea
 } from '@mui/material';
 import { ServiceInfo } from './ServiceInfo';
 import { ShopService, Shop } from '../../interfaces';
 import { useRatingService } from '../../services/useRatingService';
 import {useNavigate} from "react-router-dom";
+import background from '../../assets/images/background.png';
 
 const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -56,32 +61,74 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
                     px: 20
                 }}
             >
-                <Grid container spacing={3}>
-                    <Grid item xs>
-                        <Item>
-                            <Typography
-                                variant="h5"
-                                component="div"
-                                sx={{
-                                    fontWeight: "bold"
-                                }}
-                            >
-                                {shop.name}
-                            </Typography>
-                        </Item>
-                    </Grid>
-                    <Grid item xs>
-                        <Item>
-                            <Rating name="shop-rating" value={rating} precision={0.5} readOnly />
-                        </Item>
-                    </Grid>
-                    <Grid item xs>
-                        <Item>Price Range: ${price}</Item>
-                    </Grid>
-                    <Grid item xs>
-                        <Item>{`Open Hours: ${shop.time ? shop.time.start : ""}-${shop.time ? shop.time.end : ""}`}</Item>
-                    </Grid>
-                </Grid>
+                <Card>
+                    <CardMedia
+                    component="img"
+                    height="200"
+                    image={background}
+                    />
+                    <CardContent>
+                        <Grid container spacing={5}>
+                            <Grid item xs={11}>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    {shop.name}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {shop.description}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1}>
+                                <Box>
+                                    <Rating name="shop-rating" value={rating} precision={0.5} readOnly />
+                                </Box>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Item>{`Open Hours: ${shop.time ? shop.time.start : ""}-${shop.time ? shop.time.end : ""}`}</Item>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Item>Price Average: {isNaN(Number(price)) ? "Unknown" : `$${price}`}</Item>
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card>
+                {/* <Card>
+                    <CardMedia
+                    component="img"
+                    height="140"
+                    image={background}
+                    />
+                    <CardContent>
+                        <Grid container spacing={5}>
+                            <Grid item xs={10}>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    {shop.name}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {shop.description}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Grid container direction='column' spacing={2}>
+                                    <Grid item xs={6}>
+                                        <Item>
+                                            <Rating name="shop-rating" value={rating} precision={0.5} readOnly />
+                                        </Item>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Item>Average Price: {isNaN(Number(price)) ? "Unknown" : `$${price}`}</Item>
+                                    </Grid>
+                                </Grid>
+                                
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography>{`Open Hours: ${shop.time ? shop.time.start : ""}-${shop.time ? shop.time.end : ""}`}</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card> */}
             </Box>
             <Grid container>
                 <Grid item xs={10}>
