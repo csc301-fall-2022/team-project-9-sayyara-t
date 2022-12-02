@@ -3,7 +3,6 @@ import { AppBar, Toolbar, Typography, Stack, Button, Box } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '../../constants';
@@ -69,7 +68,7 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
     setSearch(event.target.value);
   };
   
-  const handleNaviagte = () => {
+  const handleNavigate = () => {
     if (isLoggedIn()) {
       navigate(`/user/${sessionStorage.getItem('userId')}`);
     } else {
@@ -95,15 +94,6 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
               Sayyara.
             </Typography>
             <Stack direction="row" spacing={15}>
-                {/* <Button variant="contained" 
-                startIcon={<LocationOnIcon />}
-                sx={ {
-                    borderRadius: 8,
-                    color : '#eeeeee'
-                }}
-                >
-                    Location
-                </Button> */}
                 <Search>
                 <SearchIconWrapper>
                     <SearchIcon />
@@ -121,7 +111,7 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
                     borderRadius: 8,
                     color : '#eeeeee'
                 }}
-                onClick={handleNaviagte}
+                onClick={handleNavigate}
                 >
                     {isLoggedIn() ? <Person /> : "Login"}
                 </Button>

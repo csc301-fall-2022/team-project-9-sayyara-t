@@ -35,31 +35,6 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
 
     const [selectedShop, setSelectedShop] = useState([] as Array<string>);
 
-    // const [price, setPrice] = useState(1);
-
-    // const marks = [
-    //     {
-    //         value: 6,
-    //         label: 'Min',
-    //     },
-    //     {
-    //         value: 7,
-    //         label: '7 km',
-    //     },
-    //     {
-    //         value: 8,
-    //         label: '8 km',
-    //     },
-    //     {
-    //         value: 9,
-    //         label: '9 km',
-    //     },
-    //     {
-    //         value: 10,
-    //         label: 'Max',
-    //     },
-    // ];
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSort(event.target.value);
     };
@@ -67,10 +42,6 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
     // const handleClick = (price: number) => {
     //     setPrice(price);
     // };
-
-    // function valuetext(value: number) {
-    //     return `${value} km`;
-    // }
 
     const handleQuote = async () => {
       navigate(`/create-request?shopIds=${selectedShop.join(',')}`);
@@ -140,65 +111,6 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
                             </Button>
                         </Grid>
                     </Grid>
-                    {/* <FormControl
-                sx={{
-                    textAlign: 'left',
-                    fontWeight: 'bold',
-                    mx: 13
-                }}
-                >
-                    <FormLabel id='filter-label'>
-                    <Typography
-                        variant="h5"
-                        component="div"
-                        color="black"
-                        sx={{
-                            fontWeight: 'bold'
-                        }}
-                    >
-                        Price Range
-                    </Typography>
-                    </FormLabel>
-                    <Stack direction='row' spacing={1}>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(1)}>$</Button>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(2)}>$$</Button>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(3)}>$$$</Button>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(4)}>$$$$</Button>
-                    </Stack>
-                </FormControl> */}
-
-                    {/* <FormControl
-                        sx={{
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                            mx: 8,
-                            p: 5
-                        }}
-                    >
-                        <FormLabel id='filter-label'>
-                            <Typography
-                                variant="h5"
-                                component="div"
-                                color="black"
-                                sx={{
-                                    fontWeight: 'bold'
-                                }}
-                            >
-                                Distance
-                            </Typography>
-                        </FormLabel>
-                        <Box sx={{ width: 300 }}>
-                            <Slider
-                                aria-label="distance-filter"
-                                defaultValue={6}
-                                getAriaValueText={valuetext}
-                                step={1}
-                                marks={marks}
-                                max={10}
-                                min={6}
-                            />
-                        </Box>
-                    </FormControl> */}
                 </Grid>
                 <Grid item xs={9}>
                     <Grid

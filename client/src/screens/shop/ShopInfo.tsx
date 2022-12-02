@@ -10,8 +10,7 @@ import {
     Button,
     Card,
     CardContent,
-    CardMedia,
-    CardActionArea
+    CardMedia
 } from '@mui/material';
 import { ServiceInfo } from './ServiceInfo';
 import { ShopService, Shop } from '../../interfaces';
