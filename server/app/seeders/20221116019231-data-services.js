@@ -288,14 +288,14 @@ module.exports = {
       {
         id: uuidv4(),
         type: 'tire',
-        name: 'Curb rash repair',
+        name: 'Curb Rash Repair',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         id: uuidv4(),
         type: 'tire',
-        name: 'Wheel refinishing/Rim Repair',
+        name: 'Wheel Refinishing/Rim Repair',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -393,21 +393,21 @@ module.exports = {
       {
         id: uuidv4(),
         type: 'brake',
-        name: 'Brake Calliper service',
+        name: 'Brake Calliper Service',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         id: uuidv4(),
         type: 'brake',
-        name: 'Brake fluid leak',
+        name: 'Brake Fluid Leak',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         id: uuidv4(),
         type: 'brake',
-        name: 'Disk rotor resurface',
+        name: 'Disk Rotor Resurface',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -421,7 +421,7 @@ module.exports = {
       {
         id: uuidv4(),
         type: 'maintenance',
-        name: 'Ball joint replacement',
+        name: 'Ball Joint replacement',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -442,7 +442,7 @@ module.exports = {
       {
         id: uuidv4(),
         type: 'maintenance',
-        name: '12 point Inspection',
+        name: '12 Point Inspection',
         createdAt: new Date(),
         updatedAt: new Date()
       },
