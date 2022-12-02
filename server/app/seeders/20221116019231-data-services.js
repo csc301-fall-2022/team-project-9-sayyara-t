@@ -421,7 +421,7 @@ module.exports = {
       {
         id: uuidv4(),
         type: 'maintenance',
-        name: 'Ball Joint replacement',
+        name: 'Ball Joint Replacement',
         createdAt: new Date(),
         updatedAt: new Date()
       },
