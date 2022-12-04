@@ -119,13 +119,20 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
                 }}
               >
                 <SearchIconWrapper>
-                  <SearchIcon></SearchIcon>
+                  <SearchIcon 
+                    sx={{
+                      color: '#eeeeee'
+                    }}
+                  ></SearchIcon>
                 </SearchIconWrapper>
               <StyledInputBase
                   placeholder="Search for shop"
                   inputProps={{ 'aria-label': 'search' }}
                   value={(search && search !== "null") ? search : ""}
                   onChange={handleSearch}
+                  sx={ {
+                    color : '#eeeeee'
+                }}
               />
               </Search>
               <Button variant="contained"
