@@ -42,7 +42,7 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
     const navigate = useNavigate();
 
     const handleQuote = async () => {
-      navigate(PATHS.LANDING);
+        navigate(`/create-request?shopIds=${shop.shopId}`);
     };
 
     useEffect(() => {
