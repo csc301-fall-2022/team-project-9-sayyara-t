@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { PATHS } from '../../constants';
 import shop from '../../assets/images/shop.jpeg';
 import Checkbox from '@mui/material/Checkbox';
-import { Button } from '@mui/material';
+import { Button, CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {useNavigate} from "react-router-dom";
 import { Shop } from '../../interfaces';
@@ -29,13 +29,13 @@ export const ShopTile = ({ name, id, selectedShops, setSelectedShops}: ShopTileP
       setSelected(true);
       const _selected = [...selectedShops];
       _selected.push(id);
-      console.log(_selected);
+      // console.log(_selected);
       setSelectedShops(_selected);
     } else {
       setSelected(false);
       const _selected = [...selectedShops];
       _selected.pop();
-      console.log(_selected);
+      // console.log(_selected);
       setSelectedShops(_selected);
     }
   };
@@ -46,31 +46,25 @@ export const ShopTile = ({ name, id, selectedShops, setSelectedShops}: ShopTileP
 
   return (
       <Card sx={{ width: '100%' }}>
-        <CardMedia
-          component="img"
-          height="auto"
-          image={shop}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div"
-            sx={{
-              fontWeight: 'bold'
-            }}
-          >
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
-            2,4 km away
-          </Typography>
-        </CardContent>
+        <CardActionArea onClick={handleInfo}>
+          <CardMedia
+            component="img"
+            height="auto"
+            image={shop}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div"
+              sx={{
+                fontWeight: 'bold'
+              }}
+            >
+              {name}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
         <CardActions>
           <Grid container>
             <Grid item xs={10}>
-              <Button
-                onClick={handleInfo}
-              >
-                Info
-              </Button>
             </Grid>
             <Grid item>
               <Checkbox onClick={handleSelect}/>

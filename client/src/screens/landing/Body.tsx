@@ -1,28 +1,17 @@
 import * as React from 'react';
-// import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-// import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Alert } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { useState, useEffect } from 'react';
-// import { Stack } from '@mui/system';
-// import Slider from '@mui/material/Slider';
+import { useState } from 'react';
 import { ShopTile } from './ShopTile';
 import { Shop } from '../../interfaces';
 import {useNavigate} from "react-router-dom";
 
-// const Item = styled(Paper)(({ theme }) => ({
-//     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-//     ...theme.typography.body2,
-//     padding: theme.spacing(1),
-//     textAlign: 'center',
-//     color: theme.palette.text.secondary,
-// }));
 
 interface BodyProps {
     shops: Array<Shop>,
@@ -34,49 +23,37 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
     const navigate = useNavigate();
 
     const [selectedShop, setSelectedShop] = useState([] as Array<string>);
-
-    // const [price, setPrice] = useState(1);
-
-    // const marks = [
-    //     {
-    //         value: 6,
-    //         label: 'Min',
-    //     },
-    //     {
-    //         value: 7,
-    //         label: '7 km',
-    //     },
-    //     {
-    //         value: 8,
-    //         label: '8 km',
-    //     },
-    //     {
-    //         value: 9,
-    //         label: '9 km',
-    //     },
-    //     {
-    //         value: 10,
-    //         label: 'Max',
-    //     },
-    // ];
+    const [isSelected, setIsSelected] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSort(event.target.value);
     };
 
-    // const handleClick = (price: number) => {
-    //     setPrice(price);
-    // };
-
-    // function valuetext(value: number) {
-    //     return `${value} km`;
-    // }
-
     const handleQuote = async () => {
-      navigate(`/create-request?shopIds=${selectedShop.join(',')}`);
+        if (selectedShop.length === 0) {
+            setIsSelected(true);
+        } else {
+            navigate(`/create-request?shopIds=${selectedShop.join(',')}`);
+        }
+    };
+
+    const renderPopUp = () => {
+        if (isSelected) {
+            return<Grid container flexGrow={1} marginBottom={5}>
+                    <Alert
+                        severity='error'
+                        sx={{
+                            flexGrow: 1
+                        }}
+                    >
+                        Please select a shop first
+                    </Alert>
+                </Grid>;
+        }
     };
 
     return (
+        // <Box sx={{ flexGrow: 1 }} maxWidth={UI_WIDTH} margin="0 auto">
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={3}>
@@ -98,7 +75,7 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
                                     fontWeight: 'bold'
                                 }}
                             >
-                                Filters
+                                Sort
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -109,16 +86,6 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
                                 }}
                             >
                                 <FormLabel id='filter-label'>
-                                    <Typography
-                                        variant="h5"
-                                        component="div"
-                                        color="black"
-                                        sx={{
-                                            fontWeight: 'bold'
-                                        }}
-                                    >
-                                        Sort
-                                    </Typography>
                                 </FormLabel>
                                 <RadioGroup
                                     name='filter'
@@ -132,74 +99,28 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
                             </FormControl>
                         </Grid>
                         <Grid item xs={12}>
-                            <Button
-                                variant='contained'
-                                onClick={handleQuote}
-                                >
-                                Request a Quote
-                            </Button>
+                            <Grid container>
+                                <Grid item xs={12}>
+                                    <Button
+                                        variant='contained'
+                                        onClick={handleQuote}
+                                        >
+                                        Request a Quote
+                                    </Button>
+                                <Grid item xs={6}>
+                                    <Box
+                                        sx={{
+                                            pt: 5
+                                        }}
+                                    >
+                                        {renderPopUp()}
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
-                    {/* <FormControl
-                sx={{
-                    textAlign: 'left',
-                    fontWeight: 'bold',
-                    mx: 13
-                }}
-                >
-                    <FormLabel id='filter-label'>
-                    <Typography
-                        variant="h5"
-                        component="div"
-                        color="black"
-                        sx={{
-                            fontWeight: 'bold'
-                        }}
-                    >
-                        Price Range
-                    </Typography>
-                    </FormLabel>
-                    <Stack direction='row' spacing={1}>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(1)}>$</Button>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(2)}>$$</Button>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(3)}>$$$</Button>
-                        <Button variant='contained' color='secondary' sx={{ borderRadius: 8 }} onClick={() => handleClick(4)}>$$$$</Button>
-                    </Stack>
-                </FormControl> */}
-
-                    {/* <FormControl
-                        sx={{
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                            mx: 8,
-                            p: 5
-                        }}
-                    >
-                        <FormLabel id='filter-label'>
-                            <Typography
-                                variant="h5"
-                                component="div"
-                                color="black"
-                                sx={{
-                                    fontWeight: 'bold'
-                                }}
-                            >
-                                Distance
-                            </Typography>
-                        </FormLabel>
-                        <Box sx={{ width: 300 }}>
-                            <Slider
-                                aria-label="distance-filter"
-                                defaultValue={6}
-                                getAriaValueText={valuetext}
-                                step={1}
-                                marks={marks}
-                                max={10}
-                                min={6}
-                            />
-                        </Box>
-                    </FormControl> */}
                 </Grid>
+            </Grid>
                 <Grid item xs={9}>
                     <Grid
                         container
