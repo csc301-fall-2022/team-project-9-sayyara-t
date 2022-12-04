@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, Stack, Button, Box } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import LoginIcon from '@mui/icons-material/Login';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PATHS } from '../../constants';
 import { Person } from '@mui/icons-material';
+import logo from '../../assets/images/logo-white.png';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -43,11 +45,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       paddingLeft: `calc(1em + ${theme.spacing(6)})`,
       transition: theme.transitions.create('width'),
       width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '80ch',
+      [theme.breakpoints.up('lg')]: {
+        width: '60ch',
       },
     },
 })); 
+
 
 interface NavigationBarProps {
   search: string,
@@ -55,7 +58,7 @@ interface NavigationBarProps {
 }
 
 export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
-
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const isLoggedIn = () => {
@@ -76,47 +79,67 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
     }
   };
 
+  const checkUsers = () => {
+    if (sessionStorage.getItem('roleId') === '3') {
+      return PATHS.MANAGEMENT;
+    } else {
+      return PATHS.LANDING;
+    }
+  };
+
   return (
-    <AppBar position="sticky">
-        <Toolbar>
-            <Typography
-              variant="h3"
-              noWrap
-              component="div"
-              color="secondary"
-              sx={{ 
-                display: { xs: 'none', sm: 'block' },
-                flexGrow: 1,
-                mx: 10,
-                fontWeight: 'bold' 
-            }}
-            >
-              Sayyara.
-            </Typography>
-            <Stack direction="row" spacing={15}>
-                <Search>
-                <SearchIconWrapper>
-                    <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                    placeholder="Search for shop"
-                    inputProps={{ 'aria-label': 'search' }}
-                    value={(search && search !== "null") ? search : ""}
-                    onChange={handleSearch}
-                />
-                </Search>
-                <Button variant="contained"
-                startIcon={isLoggedIn() ? "" : <LoginIcon />}
-                sx={ {
-                    borderRadius: 8,
-                    color : '#eeeeee'
+    <Box position="sticky" bgcolor={theme.palette.primary.main}
+      sx={{
+        height: 60,
+        alignItems: "center",
+        margin: "0 auto"
+      }}
+      >
+        <Toolbar
+          sx={{
+            justifyContent: "space-between"
+          }}
+        >
+          <Box>
+            <Link to={checkUsers()}>
+              <Box
+                marginLeft={theme.spacing(2)}
+                height={60}
+                display="flex"
+                alignItems="center"
+              >
+                  <img height={35} src={logo}/>
+              </Box>
+            </Link>
+          </Box>
+          <Stack direction="row" spacing={15}>
+              <Search
+                sx={{
+                  height: 42
                 }}
-                onClick={handleNavigate}
-                >
-                    {isLoggedIn() ? <Person /> : "Login"}
-                </Button>
-            </Stack>
+              >
+                <SearchIconWrapper>
+                  <SearchIcon></SearchIcon>
+                </SearchIconWrapper>
+              <StyledInputBase
+                  placeholder="Search for shop"
+                  inputProps={{ 'aria-label': 'search' }}
+                  value={(search && search !== "null") ? search : ""}
+                  onChange={handleSearch}
+              />
+              </Search>
+              <Button variant="contained"
+              startIcon={isLoggedIn() ? "" : <LoginIcon />}
+              sx={ {
+                  borderRadius: 12,
+                  color : '#eeeeee'
+              }}
+              onClick={handleNavigate}
+              >
+                  {isLoggedIn() ? <Person /> : "Login"}
+              </Button>
+          </Stack>
         </Toolbar>
-    </AppBar>
+    </Box>
   );
 };

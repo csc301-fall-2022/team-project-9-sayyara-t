@@ -10,13 +10,15 @@ import {
     Button,
     Card,
     CardContent,
-    CardMedia
+    CardMedia,
+    Alert
 } from '@mui/material';
 import { ServiceInfo } from './ServiceInfo';
 import { ShopService, Shop } from '../../interfaces';
 import { useRatingService } from '../../services/useRatingService';
 import {useNavigate} from "react-router-dom";
 import background from '../../assets/images/background.png';
+import { PATHS } from '../../constants';
 
 const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -34,22 +36,50 @@ interface ShopInfoProps {
 export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
     const [rating, setRating] = useState<number | null>(0);
     const [price, setPrice] = useState<number | null>(0);
+    const [isEmpty, setIsEmpty] = useState(false);
+
     const ratingService = useRatingService();
     const navigate = useNavigate();
 
     const handleQuote = async () => {
-      navigate(`/create-request?shopIds=${shop.shopId}`);
+      navigate(PATHS.LANDING);
     };
 
     useEffect(() => {
         const loadData = async () => {
             await ratingService.getShopRating(shop).then((_rating) => setRating(_rating));
             await ratingService.getShopPrice(shop).then((_price) => setPrice(_price));
+            if (shopServices.length !== 0) {
+                setIsEmpty(true);
+            }
         };
 
         loadData();
     }, [shop]);
 
+    const handleLanding = () => {
+        navigate(PATHS.LANDING);
+    };
+
+    const renderPopUp = () => {
+        if (!isEmpty) {
+            return<Grid container flexGrow={1} marginBottom={5}>
+                    <Alert
+                        severity='info'
+                        action={
+                        <Button color="inherit" size="small" onClick={handleLanding}>
+                            Back to main page
+                        </Button>
+                        }
+                        sx={{
+                            flexGrow: 1
+                        }}
+                    >
+                        This shop does not have any service
+                    </Alert>
+                </Grid>;
+        }
+    };
 
     return (
         <Box>
@@ -90,6 +120,7 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
                         </Grid>
                     </CardContent>
                 </Card>
+                {/* This is the second design for the top card */}
                 {/* <Card>
                     <CardMedia
                     component="img"
@@ -148,6 +179,7 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
                     <Button
                         variant='contained'
                         onClick={handleQuote}
+                        style={{ display: isEmpty ? "" : "none"}}
                         >
                         Request a Quote
                     </Button>
@@ -168,6 +200,9 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
                         />
                     ))}
                 </Stack>
+            <div>
+                {renderPopUp()}
+            </div>
             </Box>
         </Box>
     );
