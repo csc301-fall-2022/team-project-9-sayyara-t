@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
-import { Link } from 'react-router-dom';
-import { PATHS } from '../../constants';
 import shop from '../../assets/images/shop.jpeg';
 import Checkbox from '@mui/material/Checkbox';
 import { Button } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {useNavigate} from "react-router-dom";
-import { Shop } from '../../interfaces';
 
 interface ShopTileProps {
   name: string,

@@ -9,7 +9,7 @@ import FormLabel from '@mui/material/FormLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // import { Stack } from '@mui/system';
 // import Slider from '@mui/material/Slider';
 import { ShopTile } from './ShopTile';

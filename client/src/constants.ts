@@ -33,7 +33,7 @@ export const OEM_AFTER = [
 
 export const PROFILE_TABS = {
   PROFILE: "Profile",
-  QUOTES: "Quotes/Chats",
+  QUOTES: "Quotes",
   SHOP_MANAGEMENT: "Shop Management"
 };
 
