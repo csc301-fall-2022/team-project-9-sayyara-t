@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import {
-    Box,
-    Grid,
-    Paper,
-    Stack,
-    Typography,
-    Rating,
-    Button,
-    Card,
-    CardContent,
-    CardMedia,
-    Alert
-} from '@mui/material';
+import { Box, Grid, Paper, Stack, Typography, Rating, Button, Card, CardContent, CardMedia, Alert } from '@mui/material';
 import { ServiceInfo } from './ServiceInfo';
 import { ShopService, Shop } from '../../interfaces';
 import { useRatingService } from '../../services/useRatingService';
 import {useNavigate} from "react-router-dom";
-import background from '../../assets/images/background.png';
 import { PATHS } from '../../constants';
+import background from '../../assets/images/background.png';
+
+/* Component usage: This is the main body of shop profile page
+ * Contains:
+ * - A card to display all relevant information about this shop
+ * - A list of services that offered by this shop
+ * - A button to request quote from this shop
+ */
 
 const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -26,13 +21,12 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
+// Needed props for the component
 interface ShopInfoProps {
     shop: Shop,
     shopServices: Array<ShopService>
 }
 
-// TODO: Finish this tomorrow using the layout in Auto-layout section of Grid
-// in combination with 
 export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
     const [rating, setRating] = useState<number | null>(0);
     const [price, setPrice] = useState<number | null>(0);
@@ -46,6 +40,7 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
     };
 
     useEffect(() => {
+        // function that loads all necessary data for this page
         const loadData = async () => {
             await ratingService.getShopRating(shop).then((_rating) => setRating(_rating));
             await ratingService.getShopPrice(shop).then((_price) => setPrice(_price));
@@ -57,10 +52,12 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
         loadData();
     }, [shop]);
 
+    // function that handles navigation for the alert
     const handleLanding = () => {
         navigate(PATHS.LANDING);
     };
 
+    // function that renders the alert when a shop does not have any services
     const renderPopUp = () => {
         if (!isEmpty) {
             return<Grid container flexGrow={1} marginBottom={5}>
@@ -120,45 +117,6 @@ export const ShopInfo = ({ shop, shopServices }: ShopInfoProps) => {
                         </Grid>
                     </CardContent>
                 </Card>
-                {/* This is the second design for the top card */}
-                {/* <Card>
-                    <CardMedia
-                    component="img"
-                    height="140"
-                    image={background}
-                    />
-                    <CardContent>
-                        <Grid container spacing={5}>
-                            <Grid item xs={10}>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {shop.name}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {shop.description}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Grid container direction='column' spacing={2}>
-                                    <Grid item xs={6}>
-                                        <Item>
-                                            <Rating name="shop-rating" value={rating} precision={0.5} readOnly />
-                                        </Item>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Item>Average Price: {isNaN(Number(price)) ? "Unknown" : `$${price}`}</Item>
-                                    </Grid>
-                                </Grid>
-                                
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Typography>{`Open Hours: ${shop.time ? shop.time.start : ""}-${shop.time ? shop.time.end : ""}`}</Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                                
-                            </Grid>
-                        </Grid>
-                    </CardContent>
-                </Card> */}
             </Box>
             <Grid container>
                 <Grid item xs={10}>

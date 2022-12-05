@@ -11,9 +11,17 @@ import { Box, Grid, Stack, Typography, Paper, InputBase, Button, Alert } from '@
 import { User } from '../../interfaces';
 import { useShopService } from '../../services/useShopService';
 import { useRequestService } from '../../services/useRequestService';
-import { STATE, UI_WIDTH, REWORK, PATHS} from '../../constants';
+import { STATE, UI_WIDTH, REWORK} from '../../constants';
 import { useNavigate } from 'react-router-dom';
 
+/* Component usage: This is the body of the landing page for shop owners
+ * Contains:
+ * - All requests that were sent to shops in possession of this owner
+ * - 2 search bars (service and customer name) and a state of choice
+ * (All ,Awaiting Response, Accepted, Cancelled)
+ */
+
+// All needed props for the component
 interface ShopQuotesListProps {
     searchService: string
     setSearchService: (_search: string) => void
@@ -85,26 +93,32 @@ export const ShopQuotesList = ({ searchService,
     const [requests, setRequests] = useState([] as Array<Request>);
     const [isEmpty, setIsEmpty] = useState(false);
 
+    // function that handles the search by services
     const handleSearchService = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchService(event.target.value);
     };
 
+    // function that handles the search by customer name
     const handleSearchCustomer = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchCustomer(event.target.value);
     };
 
+    // handle the change in state of displayed requests (All, Awaiting Response, Accepted, Cancelled)
     const handleState = (event: React.ChangeEvent<HTMLInputElement>) => {
         setState(Number(event.target.value));
     };
 
-    const handleRework = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRework(Number(event.target.value));
-    };
+    // function that handles which types of requests the owner want to display
+    // const handleRework = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setRework(Number(event.target.value));
+    // };
 
+    // function that handles navigation for the alert
     const handleCreate = () => {
         navigate(`/user/${sessionStorage.getItem('userId')}`);
     };
 
+    // function that renders the alert when an owner does not have any requests
     const applyFilters = async () => {
         await shopService.getShopsForUser(user.userId).then( async (_shops: Array<Shop>) => {
             setShops(_shops);
@@ -115,7 +129,6 @@ export const ShopQuotesList = ({ searchService,
                 state,
                 rework
             )));
-            console.log(results);
             setRequests(results.flat());
           });
     };
@@ -227,10 +240,11 @@ export const ShopQuotesList = ({ searchService,
                             <FormControlLabel control={<Radio />} label='Awaiting response' value={STATE.AWAITING}/>
                             <FormControlLabel control={<Radio />} label='Accepted' value={STATE.ACCEPTED}/>
                             <FormControlLabel control={<Radio />} label='Cancelled' value={STATE.CANCELLED}/>
-                            <FormControlLabel control={<Radio />} label='Expired' value={STATE.EXPIRED}/>
+                            {/* <FormControlLabel control={<Radio />} label='Expired' value={STATE.EXPIRED}/> */}
                         </RadioGroup>
                     </Item>
-                    <Item>
+                    {/* This is the Radio group that handles which type of request the owner want to display */}
+                    {/* <Item>
                         <Typography
                             variant="h6"
                             component="div"
@@ -254,7 +268,7 @@ export const ShopQuotesList = ({ searchService,
                             <FormControlLabel control={<Radio />} label='Rework' value={REWORK.REWORK}/>
                             <FormControlLabel control={<Radio />} label='Non-rework' value={REWORK.NON_REWORK}/>
                         </RadioGroup>
-                    </Item>
+                    </Item> */}
                     <Button
                         sx={{
                         bgcolor: "primary.main",

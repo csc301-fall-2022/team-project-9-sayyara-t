@@ -1,7 +1,5 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import { Button, Typography, Alert } from '@mui/material';
+import { Button, Typography, Alert, Box, Grid } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,6 +10,13 @@ import { ShopTile } from './ShopTile';
 import { Shop } from '../../interfaces';
 import {useNavigate} from "react-router-dom";
 
+/* Component usage: This is the body of the main landing page for general users (vehicle owners)
+ * and unregistered users
+ * Contains:
+ * - Filters to sort the available shops in two main categories (price and ratings)
+ * - A button that allows logged in users to request quote from multiple shops
+ * - Display all available shops in the system in form of a single tile (card)
+ */
 
 interface BodyProps {
     shops: Array<Shop>,
@@ -25,10 +30,12 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
     const [selectedShop, setSelectedShop] = useState([] as Array<string>);
     const [isSelected, setIsSelected] = useState(false);
 
+    // function that changes the sorting categories (price and ratings)
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSort(event.target.value);
     };
 
+    // function that handles requesting quotes from multiple shops
     const handleQuote = async () => {
         if (selectedShop.length === 0) {
             setIsSelected(true);
@@ -37,6 +44,7 @@ export const Body = ({ shops, sort, setSort }: BodyProps) => {
         }
     };
 
+    // function that handles the error message when trying to request a quote without selecting a shop
     const renderPopUp = () => {
         if (isSelected) {
             return<Grid container flexGrow={1} marginBottom={5}>

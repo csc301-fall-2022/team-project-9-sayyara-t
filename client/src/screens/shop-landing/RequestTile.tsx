@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Button, CardActions, CardHeader, Grid, Box, Paper, Stack, TextField } from '@mui/material';
+import { Button, CardHeader, Grid, Box, Paper, Stack, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Request, Service, Quote, Shop } from '../../interfaces';
+import { Request, Service, Quote } from '../../interfaces';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { styled } from '@mui/material/styles';
@@ -14,6 +14,15 @@ import { useRequestService } from '../../services/useRequestService';
 import { NEW_USED, OEM_AFTER } from '../../constants';
 import { useShopService } from '../../services/useShopService';
 
+/* Component usage: This is a tile (card) that represents a request sent to this owner
+ * Contains:
+ * - All information about the given request (service type, service name, part preference
+ * state of the request)
+ * - A form for the owner to fill in their quote information (labour, parts, fees, discount, total
+ * and description)
+ */
+
+// All needed props for this component
 interface RequestProps {
   request: Request,
   index: number,
@@ -37,6 +46,7 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
   const shopService = useShopService();
   const [editEnabled, setEditEnabled] = useState(false);
   const [services, setServices] = useState([] as Service[]);
+
   // const [shop, setShop] = useState({
   //   shopId: "0",
   //   name: "Unknown",
@@ -45,6 +55,7 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
   //   email: "Unknown",
   //   description: "Unknown"
   // } as Shop);
+  
   const [quote, setQuote] = useState({
     fees: 0,
     discount: 0,
@@ -56,6 +67,7 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    // function that loads all necessary data for the page
     const loadData = async () => {
       await loadServices();
 
@@ -67,10 +79,12 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
     loadData();
   }, [request]);
 
+  // function that loads the data for quote
   const loadQuote = async () => {
     await quoteService.getQuoteById(request.quoteId).then((_quote) => setQuote(_quote));
   };
 
+  // function that loads the data for services (requests)
   const loadServices = async () => {
     const promises = request.services.map((sId) => serviceService.getServiceById(sId));
     const results = await Promise.all(promises);
@@ -82,6 +96,7 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
   //   await shopService.getShop(shopId).then((_shop) => setShop(_shop));
   // };
   
+  // function that handles the change of state in displayed requests
   const getState = (state: number): string => {
     switch(state) {
       case 1:
@@ -96,7 +111,8 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
         return "";
     }
   };
-
+  
+  // function that handles saving a filled in quote
   const onQuoteSave = async (create: boolean) => {
     setIsLoading(true);
     if (create) {
@@ -112,6 +128,7 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
     setIsLoading(false);
   };
 
+  // function that gets the part preferences
   const getPartsPreferenceString = (new_used: number, oem_after: number) => {
     const new_used_str = new_used === 3 ? null : NEW_USED[new_used];
     const oem_after_str = oem_after === 3 ? null : OEM_AFTER[oem_after];
