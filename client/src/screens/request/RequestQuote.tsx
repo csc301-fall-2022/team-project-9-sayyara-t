@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useVehicleService } from '../../services/useVehicleService';
 import { useShopService } from '../../services/useShopService';
 
-import { Box, Typography, Grid, Select, TextField, Button, MenuItem, OutlinedInput, Chip, CircularProgress } from '@mui/material';
+import { Box, Typography, Grid, Select, TextField, Button, MenuItem, Chip, CircularProgress } from '@mui/material';
 import TopNav from '../profile/TopNav';
 
 import { PATHS, STATE, UI_WIDTH } from '../../constants';

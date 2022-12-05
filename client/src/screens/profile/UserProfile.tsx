@@ -7,7 +7,7 @@ import SideNav from './SideNav';
 
 import { useUserService } from '../../services/useUserService';
 import { useVehicleService } from '../../services/useVehicleService';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,6 +20,7 @@ import Quotes from './tabs/Quotes';
 
 const UserProfile = () => {
   const params = useParams();
+  const [searchParams] = useSearchParams();
   const theme = useTheme();
   const userService = useUserService();
   const vehicleService = useVehicleService();
@@ -85,6 +86,11 @@ const UserProfile = () => {
       }
     };
     
+    const _selectedIndex = searchParams.get("menuIndex");
+
+    if (_selectedIndex) {
+      setSelectedIndex(Number(_selectedIndex));
+    }
     loadData();
   }, []);
 

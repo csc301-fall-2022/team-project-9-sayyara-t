@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Avatar, Box, Button, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,6 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
   const theme = useTheme();
   const authService = useAuthService();
   const navigate = useNavigate();
-  const [errorMessages, setErrorMessages] = useState([] as Array<string>);
 
   const IMG_HEIGHT = height - 25;
 
@@ -31,7 +30,7 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
   };
 
   const handleSignOut = async () => {
-    const success = await authService.signOut();
+    const success = authService.signOut();
     if (success) {
         navigate(PATHS.LANDING);
     }
