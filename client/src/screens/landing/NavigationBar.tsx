@@ -10,6 +10,7 @@ import { AccountBox, KeyboardArrowDown, Logout, Person, RequestQuote, Storefront
 import logo from '../../assets/images/logo-white.png';
 import { useAuthService } from '../../services/useAuthService';
 
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -43,11 +44,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       paddingLeft: `calc(1em + ${theme.spacing(6)})`,
       transition: theme.transitions.create('width'),
       width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '70vh',
+      [theme.breakpoints.up('lg')]: {
+        width: '60ch',
       },
     },
 })); 
+
 
 interface NavigationBarProps {
   search: string,
@@ -81,7 +83,7 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
-
+  
   const handleMenuClick = (optionNum: number) => {
     navigate(`user/${sessionStorage.getItem('userId')}?menuIndex=${optionNum}`);
   };
@@ -107,93 +109,93 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="sticky">
-        <Toolbar>
-          <Box
-            marginLeft={theme.spacing(2)}
-            height={theme.mixins.toolbar.minHeight}
-            display="flex"
-            alignItems="center"
-          >
-              <img height={IMG_HEIGHT} src={logo}/>
-          </Box>
-          <Box sx={{ flexGrow: 3 }} />
-          <Search>
-          <SearchIconWrapper>
-              <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-              placeholder="Search for shop"
-              inputProps={{ 'aria-label': 'search' }}
-              value={(search && search !== "null") ? search : ""}
-              onChange={handleSearch}
-          />
-          </Search>
-          <Box 
-            flexGrow={1} 
-            display="flex" 
-            flexDirection="row"
-            justifyContent="flex-end"
-          >
-          <Button 
-            color='secondary' 
-            size='medium' 
-            sx={{ boxShadow: 0 }} 
-            onClick={handleButtonClick}
-            variant="contained"
-            endIcon={isLoggedIn() ? <KeyboardArrowDown sx={{ color: "primary.main" }}/> : ""}
-            style={{ borderRadius: 25, height: 45 }}
-            startIcon={isLoggedIn() ? "" : <LoginIcon sx={{ color: "primary.main" }}/>}
-          >
-            {isLoggedIn() ? <Person sx={{ color: "primary.main" }}/> : <Typography color="primary.main">Login</Typography>}
-          </Button>
-          <Menu
-            id="mouse-over-popover"
-            open={Boolean(anchorEl)}
-            anchorEl={anchorEl}
-            onClose={handlePopoverClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-          >
-            <MenuItem onClick={() => handleMenuClick(0)}>
-              <ListItemIcon>
-                <AccountBox/>
-              </ListItemIcon>
-              <ListItemText>
-                Profile
-              </ListItemText>
-            </MenuItem>
-            {isVehicleOwner() && <MenuItem onClick={() => handleMenuClick(1)}>
-              <ListItemIcon>
-                <RequestQuote/>
-              </ListItemIcon>
-              <ListItemText>
-                Quotes
-              </ListItemText>
-            </MenuItem>}
-            {isShopOwner() && <MenuItem onClick={() => handleMenuClick(1)}>
-              <ListItemIcon>
-                <Storefront/>
-              </ListItemIcon>
-              <ListItemText>
-                Shop Management
-              </ListItemText>
-            </MenuItem>}
-            <Divider/>
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <Logout/>
-              </ListItemIcon>
-              <ListItemText>
-                Logout
-              </ListItemText>
-            </MenuItem>
-          </Menu>
-          </Box>
-        </Toolbar>
-    </AppBar>
+      <AppBar position="sticky">
+          <Toolbar>
+            <Box
+              marginLeft={theme.spacing(2)}
+              height={theme.mixins.toolbar.minHeight}
+              display="flex"
+              alignItems="center"
+            >
+                <img height={IMG_HEIGHT} src={logo}/>
+            </Box>
+            <Box sx={{ flexGrow: 3 }} />
+            <Search>
+            <SearchIconWrapper>
+                <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+                placeholder="Search for shop"
+                inputProps={{ 'aria-label': 'search' }}
+                value={(search && search !== "null") ? search : ""}
+                onChange={handleSearch}
+            />
+            </Search>
+            <Box 
+              flexGrow={1} 
+              display="flex" 
+              flexDirection="row"
+              justifyContent="flex-end"
+            >
+            <Button 
+              color='secondary' 
+              size='medium' 
+              sx={{ boxShadow: 0 }} 
+              onClick={handleButtonClick}
+              variant="contained"
+              endIcon={isLoggedIn() ? <KeyboardArrowDown sx={{ color: "primary.main" }}/> : ""}
+              style={{ borderRadius: 25, height: 45 }}
+              startIcon={isLoggedIn() ? "" : <LoginIcon sx={{ color: "primary.main" }}/>}
+            >
+              {isLoggedIn() ? <Person sx={{ color: "primary.main" }}/> : <Typography color="primary.main">Login</Typography>}
+            </Button>
+            <Menu
+              id="mouse-over-popover"
+              open={Boolean(anchorEl)}
+              anchorEl={anchorEl}
+              onClose={handlePopoverClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+              <MenuItem onClick={() => handleMenuClick(0)}>
+                <ListItemIcon>
+                  <AccountBox/>
+                </ListItemIcon>
+                <ListItemText>
+                  Profile
+                </ListItemText>
+              </MenuItem>
+              {isVehicleOwner() && <MenuItem onClick={() => handleMenuClick(1)}>
+                <ListItemIcon>
+                  <RequestQuote/>
+                </ListItemIcon>
+                <ListItemText>
+                  Quotes
+                </ListItemText>
+              </MenuItem>}
+              {isShopOwner() && <MenuItem onClick={() => handleMenuClick(1)}>
+                <ListItemIcon>
+                  <Storefront/>
+                </ListItemIcon>
+                <ListItemText>
+                  Shop Management
+                </ListItemText>
+              </MenuItem>}
+              <Divider/>
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <Logout/>
+                </ListItemIcon>
+                <ListItemText>
+                  Logout
+                </ListItemText>
+              </MenuItem>
+            </Menu>
+            </Box>
+          </Toolbar>
+      </AppBar>
     </Box>
   );
 };

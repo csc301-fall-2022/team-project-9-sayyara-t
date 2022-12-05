@@ -37,7 +37,7 @@ export const PROFILE_TABS = {
   SHOP_MANAGEMENT: "Shop Management"
 };
 
-export const UI_WIDTH = 1300;
+export const UI_WIDTH = 1400;
 
 export const STATE = {
   ALL: 0,

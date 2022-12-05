@@ -52,10 +52,11 @@ const TopNav = ({ height, uiWidth }: TopNavProps) => {
   };
 
   return (
-    <Box height={height} bgcolor={theme.palette.primary.main}>
+    <Box height={height} bgcolor={theme.palette.primary.main} position="sticky">
       <Box 
         maxWidth={uiWidth}
         margin="0 auto"
+        position="sticky"
       >
         <Box
           display="flex"

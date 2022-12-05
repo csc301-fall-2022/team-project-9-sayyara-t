@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import logo from './sayyara_logo_transparent.png';
-import { Checkbox, FormControlLabel } from '@mui/material';
+import { Checkbox, FormControlLabel, Alert } from '@mui/material';
 import { useAuthService } from '../../services/useAuthService';
 import { User } from '../../interfaces';
 import { PATHS, ROLES } from '../../constants';
@@ -20,31 +20,40 @@ const SignUp = () => {
 
   const [errorMessages, setErrorMessages] = useState([] as Array<string>);
   const [isTextfieldValid, setIsTextfieldValid] = useState(false);
+  const [isError, setIsError] = useState(false);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
 
-    if (data.get('username') as string == "" || data.get('name') as string == "" || data.get('email') as string == ""
-      || data.get('phone') as string == "" || data.get('password') as string == "" || data.get('confirm_password') as string == "") {
-      setIsTextfieldValid(true);
-    } else {
-      const user: User = {
-        username: data.get('username') as string,
-        name: data.get('name') as string,
-        email: data.get('email') as string,
-        phone: data.get('phone') as string,
-        roleId: data.get('shopOwner') ? ROLES.SHOP_OWNER : ROLES.VEHICLE_OWNER,
-        userId: ""
-      };
+  if (data.get('username') as string == "" || data.get('name') as string == "" || data.get('email') as string == ""
+    || data.get('phone') as string == "" || data.get('password') as string == "" || data.get('confirm_password') as string == ""
+    || data.get('password') !== data.get('confirm_password')) {
+    setIsTextfieldValid(true);
+    setIsError(true);
+  } else {
+    const user: User = {
+      username: data.get('username') as string,
+      name: data.get('name') as string,
+      email: data.get('email') as string,
+      phone: data.get('phone') as string,
+      roleId: data.get('shopOwner') ? ROLES.SHOP_OWNER : ROLES.VEHICLE_OWNER,
+      userId: ""
+    };
 
-      const success = await authService.signUp(user, data.get('password') as string).then((success) => success,
-        (error: Error) => setErrorMessages([...errorMessages, error.message]));
+    const success = await authService.signUp(user, data.get('password') as string).then((success) => success,
+      (error: Error) => setErrorMessages([...errorMessages, error.message]));
 
-      if (success) {
-        navigate(PATHS.LOGIN);
-      }
+    if (success) {
+      navigate(PATHS.LOGIN);
     }
-  };
+  }
+};
+
+const renderPopUp = () => {
+  if (isError) {
+    return <ErrorMessages errorMessages={errorMessages} width={0} onDismiss={() => setErrorMessages(["Error with signing up"])} />;
+  }
+};
 
   return (
     <Container component="main" maxWidth="xs">
@@ -67,7 +76,7 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        {errorMessages.length > 0 && (<ErrorMessages errorMessages={errorMessages} width={0} onDismiss={() => setErrorMessages([])} />)}
+        {/* {errorMessages.length > 0 && (<ErrorMessages errorMessages={errorMessages} width={0} onDismiss={() => setErrorMessages([])} />)} */}
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -89,7 +98,6 @@ const SignUp = () => {
                 fullWidth
                 id="name"
                 label="Name"
-                autoFocus
                 error={isTextfieldValid}
               />
             </Grid>
@@ -147,6 +155,9 @@ const SignUp = () => {
               />
             </Grid>
           </Grid>
+          <div>
+            {renderPopUp()}
+          </div>
           <Button
             type="submit"
             fullWidth
