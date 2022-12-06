@@ -10,6 +10,12 @@ import { AccountBox, KeyboardArrowDown, Logout, Person, RequestQuote, Storefront
 import logo from '../../assets/images/logo-white.png';
 import { useAuthService } from '../../services/useAuthService';
 
+/* Component usage: This is the navigation bar for the main landing page of general users 
+ * (vehicle owners) por unregistered users.
+ * Contains:
+ * - The search function for the main page
+ * - A button to redirect to profile page (if logged in) or sign in page otherwise
+ */
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -50,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 })); 
 
-
+// Props needed for the component
 interface NavigationBarProps {
   search: string,
   setSearch: (_search: string) => void
@@ -64,30 +70,36 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
 
   const IMG_HEIGHT = Number(theme.mixins.toolbar.minHeight) - 15;
 
+  // function that checks if the user is logged in or not
   const isLoggedIn = () => {
     return sessionStorage.getItem('x-access-token') !== null &&
         sessionStorage.getItem('userId') !== null &&
         sessionStorage.getItem('roleId') !== null;
   };
 
+  // function that checks if the current user is a vehicle owner
   const isVehicleOwner = () => {
     return sessionStorage.getItem('roleId') !== null &&
       Number(sessionStorage.getItem('roleId')) === ROLES.VEHICLE_OWNER;
   };
 
+  // function that checks if the current user is a shop owner
   const isShopOwner = () => {
     return sessionStorage.getItem('roleId') !== null &&
       Number(sessionStorage.getItem('roleId')) === ROLES.SHOP_OWNER;
   };
 
+  // function that handles the input from search bar
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
   
+  // function that handles the menu button
   const handleMenuClick = (optionNum: number) => {
     navigate(`user/${sessionStorage.getItem('userId')}?menuIndex=${optionNum}`);
   };
 
+  // function that distinguishes between logged in users and unregistered users
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (isLoggedIn()) {
       setAnchorEl(event.currentTarget);
@@ -96,10 +108,12 @@ export const NavigationBar = ({ search, setSearch }: NavigationBarProps) => {
     }
   };
 
+  // function that enables and disables the menu button
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
 
+  // function that handles the logout feature for a logged user
   const handleLogout = () => {
     const success = authService.signOut();
     if (success) {

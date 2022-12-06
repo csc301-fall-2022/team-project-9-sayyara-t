@@ -182,7 +182,7 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
               >
                 {editEnabled ? <SaveAsIcon/> : <EditIcon/>}
               </Button>
-              {/* <Button
+              <Button
                 onClick={() => onRequestDelete()}
                 disabled={isLoading}
                 sx={{
@@ -195,7 +195,7 @@ const RequestCard = ({ request, vehicles, onRequestRemove, setRequest, index }: 
                 }}
               >
                 <RemoveIcon/>
-              </Button> */}
+              </Button>
             </Box>
           </Box>
           <Box

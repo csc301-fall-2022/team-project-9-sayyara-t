@@ -6,10 +6,17 @@ import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import shop from '../../assets/images/shop.jpeg';
 import Checkbox from '@mui/material/Checkbox';
-import { Button, CardActionArea } from '@mui/material';
+import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import {useNavigate} from "react-router-dom";
 
+/* Component usage: A tile (card) the represents a single shop available in the system
+ * Contains:
+ * - An image (supposedly provided by the shop owner) as a cover for the shop
+ * - A checkbox for logged in users to select this shop for requesting a quote
+ */
+
+// Needed props for this component
 interface ShopTileProps {
   name: string,
   id: string,
@@ -21,6 +28,7 @@ export const ShopTile = ({ name, id, selectedShops, setSelectedShops}: ShopTileP
   const navigate = useNavigate();
   const [selected, setSelected] = useState(false);
 
+  // function that handles the check box
   const handleSelect = () => {
     if (selected === false) {
       setSelected(true);
@@ -36,7 +44,8 @@ export const ShopTile = ({ name, id, selectedShops, setSelectedShops}: ShopTileP
       setSelectedShops(_selected);
     }
   };
-
+ 
+  // function that handles the redirection between landing page and the shop profile page
   const handleInfo = async () => {
     navigate(`shop-profile/${id}`);
   };

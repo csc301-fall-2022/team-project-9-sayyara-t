@@ -6,6 +6,12 @@ import { Service, ShopService } from '../../interfaces';
 import { useServiceService } from '../../services/useServiceService';
 import { LinearProgress } from '@mui/material';
 
+/* Component usage: A tile (card) the represents a service offered by this shop
+ * Contains:
+ * - All related information about this service (type of service, name of the service, 
+ * estimated price)
+ * - dynamically rendered given a list of services for a shop
+ */
 
 interface ServiceInfoProps {
   shopService: ShopService
@@ -18,6 +24,7 @@ export const ServiceInfo = ({ shopService }: ServiceInfoProps) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // function that loads all necessary data for the page
     const loadData = async () => {
       setLoading(true);
       await serviceService.getServiceById(shopService.serviceId).then((_service: Service) => {

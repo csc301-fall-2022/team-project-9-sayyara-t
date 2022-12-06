@@ -4,6 +4,10 @@ import { Request, User, Vehicle } from '../../../interfaces';
 import { useRequestService } from '../../../services/useRequestService';
 import ErrorMessages from '../../../shared/ErrorMessages';
 import RequestCard from './RequestCard';
+import { Grid, Alert, Button } from '@mui/material';
+import { PATHS } from '../../../constants';
+import { useNavigate } from 'react-router-dom';
+
 
 interface QuotesProps {
   user: User,
@@ -12,14 +16,21 @@ interface QuotesProps {
 
 const Quotes = ({ user, vehicles }: QuotesProps) => {
   const theme = useTheme();
+  // const navigate = useNavigate();
   const requestService = useRequestService();
 
   const [requests, setRequests] = useState([] as Request[]);
   const [errorMessages, setErrorMessages] = useState([] as string[]);
+  // const [isEmpty, setIsEmpty] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
-      await requestService.getRequestsbyUserId(user.userId).then((_requests) => setRequests(_requests),
+      await requestService.getRequestsbyUserId(user.userId).then((_requests: Array<Request>) => {
+        // if (requests.length !== 0) {
+        //   setIsEmpty(true);
+        // }
+        setRequests(_requests);
+      },
       (error: Error) => setErrorMessages([...errorMessages, error.message]));
     };
 
@@ -38,6 +49,30 @@ const Quotes = ({ user, vehicles }: QuotesProps) => {
     setRequests(_requests);
   };
 
+//   const handlePage = () => {
+//     navigate(PATHS.LANDING);
+//   };
+
+//   const renderPopUp = () => {
+//     if (isEmpty) {
+//       return<Grid container flexGrow={1} marginBottom={5}>
+//       <Alert
+//           severity='info'
+//           action={
+//           <Button color="inherit" size="small" onClick={handlePage}>
+//               Back to main page
+//           </Button>
+//           }
+//           sx={{
+//               flexGrow: 1
+//           }}
+//       >
+//           You have no quotes
+//       </Alert>
+//   </Grid>;
+//     }
+// };
+
   return (
     <Box>
       {errorMessages.length > 0 ? 
@@ -51,6 +86,9 @@ const Quotes = ({ user, vehicles }: QuotesProps) => {
             marginBottom={theme.spacing(5)} 
             key={request.requestId}
           >
+            {/* <div>
+              {renderPopUp()}
+            </div> */}
             <RequestCard
               request={request} 
               vehicles={vehicles}
