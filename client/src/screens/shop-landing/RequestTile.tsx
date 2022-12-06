@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import { Button, CardHeader, Grid, Box, Paper, Stack, TextField } from '@mui/material';
+import { Button, CardHeader, Grid, Box, Paper, Stack, TextField, CardContent, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Request, Service, Quote } from '../../interfaces';
 import EditIcon from '@mui/icons-material/Edit';
@@ -12,7 +10,7 @@ import { useQuoteService } from '../../services/useQuoteService';
 import { useServiceService } from '../../services/useServiceService';
 import { useRequestService } from '../../services/useRequestService';
 import { NEW_USED, OEM_AFTER } from '../../constants';
-import { useShopService } from '../../services/useShopService';
+import InfoMessage from '../../shared/InfoMessage';
 
 /* Component usage: This is a tile (card) that represents a request sent to this owner
  * Contains:
@@ -26,7 +24,6 @@ import { useShopService } from '../../services/useShopService';
 interface RequestProps {
   request: Request,
   index: number,
-  shopId: string,
   setRequest: (_request: Request, index: number) => void
 }
 
@@ -38,12 +35,11 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps) => {
+export const RequestTile = ({ request, index, setRequest }: RequestProps) => {
   const theme = useTheme();
-  const quoteService = useQuoteService();
+  const quoteService = useQuoteService();      
   const serviceService = useServiceService();
   const requestService = useRequestService();
-  const shopService = useShopService();
   const [editEnabled, setEditEnabled] = useState(false);
   const [services, setServices] = useState([] as Service[]);
 
@@ -140,6 +136,10 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
     }
   };
 
+  const calculateTotal = (labour: number, parts: number, fees: number, discount: number) => {
+    return labour + parts + fees - discount;
+  };
+
   return (
     <Box>
       <Card sx={{ minWidth: 250 }}>
@@ -214,6 +214,11 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
               </Grid>
             <Typography variant='h5'>Quote</Typography>
             <Grid container spacing={theme.spacing(3)} marginTop={theme.spacing(1)}>
+              {editEnabled && (
+                <Grid item xs={12}>
+                  <InfoMessage msg={"There are unsaved changes"} action={<></>}/>
+                </Grid>
+              )}
               <Grid item xs={12}>
                 <Grid container spacing={theme.spacing(3)}>
                 <Grid item xs={6}>
@@ -227,7 +232,11 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
                       size="small"
                       type="number"
                       value={quote.labour}
-                      onChange={(event) => setQuote({...quote, labour: Number(event.target.value)})}
+                      onChange={(event) => setQuote({
+                        ...quote, 
+                        labour: Number(event.target.value),
+                        total: calculateTotal(Number(event.target.value), quote.parts, quote.fees, quote.discount)
+                      })}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -241,7 +250,10 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
                       size="small"
                       type="number"
                       value={quote.parts}
-                      onChange={(event) => setQuote({...quote, parts: Number(event.target.value)})}
+                      onChange={(event) => setQuote({
+                        ...quote, parts: Number(event.target.value),
+                        total: calculateTotal(quote.labour, Number(event.target.value), quote.fees, quote.discount)
+                      })}
                     />
                   </Grid>
                   <Grid item xs={4}>
@@ -255,7 +267,11 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
                       size="small"
                       type="number"
                       value={quote.fees}
-                      onChange={(event) => setQuote({...quote, fees: Number(event.target.value)})}
+                      onChange={(event) => setQuote({
+                        ...quote, 
+                        fees: Number(event.target.value),
+                        total: calculateTotal(quote.labour, quote.parts, Number(event.target.value), quote.discount)
+                      })}
                     />
                   </Grid>
                   <Grid item xs={4}>
@@ -269,7 +285,11 @@ export const RequestTile = ({ request, index, shopId, setRequest }: RequestProps
                       size="small"
                       type="number"
                       value={quote.discount}
-                      onChange={(event) => setQuote({...quote, discount: Number(event.target.value)})}
+                      onChange={(event) => setQuote({
+                        ...quote, 
+                        discount: Number(event.target.value),
+                        total: calculateTotal(quote.labour, quote.parts, quote.fees, Number(event.target.value))
+                      })}
                     />
                   </Grid>
                   <Grid item xs={4}>

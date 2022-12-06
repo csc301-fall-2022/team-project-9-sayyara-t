@@ -7,12 +7,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { Box, Grid, Stack, Typography, Paper, InputBase, Button, Alert } from '@mui/material';
+import { Box, Grid, Stack, Typography, Paper, InputBase, Button } from '@mui/material';
 import { User } from '../../interfaces';
 import { useShopService } from '../../services/useShopService';
 import { useRequestService } from '../../services/useRequestService';
-import { STATE, UI_WIDTH, REWORK} from '../../constants';
+import { STATE, UI_WIDTH, REWORK } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import InfoMessage from '../../shared/InfoMessage';
 
 /* Component usage: This is the body of the landing page for shop owners
  * Contains:
@@ -91,7 +92,7 @@ export const ShopQuotesList = ({ searchService,
 
     const [shops, setShops] = useState([] as Array<Shop>);
     const [requests, setRequests] = useState([] as Array<Request>);
-    const [isEmpty, setIsEmpty] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(true);
 
     // function that handles the search by services
     const handleSearchService = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,32 +133,12 @@ export const ShopQuotesList = ({ searchService,
             setRequests(results.flat());
           });
     };
-    
-    const renderPopUp = () => {
-        if (!isEmpty) {
-            return<Grid container flexGrow={1} marginBottom={5}>
-                    <Alert
-                        severity='info'
-                        action={
-                        <Button color="inherit" size="small" onClick={handleCreate}>
-                            Create a shop
-                        </Button>
-                        }
-                        sx={{
-                            flexGrow: 1
-                        }}
-                    >
-                        You have not created a shop yet! Please do so in shop management
-                    </Alert>
-                </Grid>;
-        }
-    };
 
     useEffect(() => {
       const loadData = async () => {
         await shopService.getShopsForUser(user.userId).then( async (_shops: Array<Shop>) => {
           if (_shops.length !== 0) {
-            setIsEmpty(true);
+            setIsEmpty(false);
           }
           setShops(_shops);
           const results = await Promise.all(_shops.map((_shop) => requestService.getRequestByShop(_shop.shopId)));
@@ -290,10 +271,16 @@ export const ShopQuotesList = ({ searchService,
                 }}
                 >
                     <div>
-                        {renderPopUp()}
+                        {isEmpty && (<InfoMessage 
+                            msg="You have not created a shop yet! Please do so in shop management"
+                            action={
+                            <Button color="inherit" size="small" onClick={handleCreate}>
+                                Create a shop
+                            </Button>}
+                        />)}
                     </div>
                     <Stack spacing={5} direction="column" marginBottom={theme.spacing(6)}>
-                        {requests.map((request, index) => (<RequestTile key={request.requestId} setRequest={setRequest} index={index} request={request} shopId={request.shopId}/>))}
+                        {requests.map((request, index) => (<RequestTile key={request.requestId} setRequest={setRequest} index={index} request={request}/>))}
                     </Stack>
                 </Box>
             </Grid>
