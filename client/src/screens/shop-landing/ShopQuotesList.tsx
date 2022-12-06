@@ -7,12 +7,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { Box, Grid, Stack, Typography, Paper, InputBase, Button, Alert } from '@mui/material';
+import { Box, Grid, Stack, Typography, Paper, InputBase, Button } from '@mui/material';
 import { User } from '../../interfaces';
 import { useShopService } from '../../services/useShopService';
 import { useRequestService } from '../../services/useRequestService';
-import { STATE, UI_WIDTH, REWORK, PATHS} from '../../constants';
+import { STATE, UI_WIDTH, REWORK } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import InfoMessage from '../../shared/InfoMessage';
 
 interface ShopQuotesListProps {
     searchService: string
@@ -83,7 +84,7 @@ export const ShopQuotesList = ({ searchService,
 
     const [shops, setShops] = useState([] as Array<Shop>);
     const [requests, setRequests] = useState([] as Array<Request>);
-    const [isEmpty, setIsEmpty] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(true);
 
     const handleSearchService = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchService(event.target.value);
@@ -119,32 +120,12 @@ export const ShopQuotesList = ({ searchService,
             setRequests(results.flat());
           });
     };
-    
-    const renderPopUp = () => {
-        if (!isEmpty) {
-            return<Grid container flexGrow={1} marginBottom={5}>
-                    <Alert
-                        severity='info'
-                        action={
-                        <Button color="inherit" size="small" onClick={handleCreate}>
-                            Create a shop
-                        </Button>
-                        }
-                        sx={{
-                            flexGrow: 1
-                        }}
-                    >
-                        You have not created a shop yet! Please do so in shop management
-                    </Alert>
-                </Grid>;
-        }
-    };
 
     useEffect(() => {
       const loadData = async () => {
         await shopService.getShopsForUser(user.userId).then( async (_shops: Array<Shop>) => {
           if (_shops.length !== 0) {
-            setIsEmpty(true);
+            setIsEmpty(false);
           }
           setShops(_shops);
           const results = await Promise.all(_shops.map((_shop) => requestService.getRequestByShop(_shop.shopId)));
@@ -227,10 +208,9 @@ export const ShopQuotesList = ({ searchService,
                             <FormControlLabel control={<Radio />} label='Awaiting response' value={STATE.AWAITING}/>
                             <FormControlLabel control={<Radio />} label='Accepted' value={STATE.ACCEPTED}/>
                             <FormControlLabel control={<Radio />} label='Cancelled' value={STATE.CANCELLED}/>
-                            <FormControlLabel control={<Radio />} label='Expired' value={STATE.EXPIRED}/>
                         </RadioGroup>
                     </Item>
-                    <Item>
+                    {/* <Item>
                         <Typography
                             variant="h6"
                             component="div"
@@ -254,7 +234,7 @@ export const ShopQuotesList = ({ searchService,
                             <FormControlLabel control={<Radio />} label='Rework' value={REWORK.REWORK}/>
                             <FormControlLabel control={<Radio />} label='Non-rework' value={REWORK.NON_REWORK}/>
                         </RadioGroup>
-                    </Item>
+                    </Item> */}
                     <Button
                         sx={{
                         bgcolor: "primary.main",
@@ -276,10 +256,16 @@ export const ShopQuotesList = ({ searchService,
                 }}
                 >
                     <div>
-                        {renderPopUp()}
+                        {isEmpty && (<InfoMessage 
+                            msg="You have not created a shop yet! Please do so in shop management"
+                            action={
+                            <Button color="inherit" size="small" onClick={handleCreate}>
+                                Create a shop
+                            </Button>}
+                        />)}
                     </div>
                     <Stack spacing={5} direction="column" marginBottom={theme.spacing(6)}>
-                        {requests.map((request, index) => (<RequestTile key={request.requestId} setRequest={setRequest} index={index} request={request} shopId={request.shopId}/>))}
+                        {requests.map((request, index) => (<RequestTile key={request.requestId} setRequest={setRequest} index={index} request={request}/>))}
                     </Stack>
                 </Box>
             </Grid>
