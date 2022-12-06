@@ -1,17 +1,33 @@
 # Sayyara
 
-TBA...
+## Requirements
 
-## Scripts
+- Node.js
+- MySQL server
 
-### `npm run install:all`
+## Basic Setup for Development
 
-- Install required packages for development
+- Clone the repo
 
-### `npm run test:all`
+  - `git clone git@github.com:csc301-fall-2022/team-project-9-sayyara-t.git`
+  
+- Install all dependencies
 
-- Runs all Jest test cases
+  - Run `npm run install` in the root directory
+  
+- Setup the database
 
+  - Please refer to `./documentation/Database.pdf` for more information
+  
+- Start up the server
+
+  - Run `npm run start:server` in the root directory
+  
+- Start up the client
+
+  - `cd ./client` and run `npm run dev`
+  
+For topics like hosting, testing or APIs, check out `./documentation` for more information.
 
 
 
