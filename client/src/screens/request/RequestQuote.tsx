@@ -314,7 +314,7 @@ const RequestQuote = () => {
           {errorMessages.length > 0 ? <ErrorMessages 
             errorMessages={errorMessages} 
             width={0} 
-            onDismiss={() => setErrorMessages([])}
+            onDismiss={() => navigate(PATHS.LANDING)}
           /> : renderBody()}
         </>}
       </Box>
