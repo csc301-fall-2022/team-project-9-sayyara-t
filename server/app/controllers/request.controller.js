@@ -6,6 +6,23 @@ const Service = require("../models").Service
 const Shop = require("../models").Shop
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/requests/
+ * Method: POST
+ * Fields: [
+ *  user_id: @var UUID
+ *  shop_id: @var UUID
+ *  vehicle_id: @var UUID
+ *  quote_id: @var UUID
+ *  linked_request_id: @var UUID
+ *  services: @var JSON
+ *  state: @var INTEGER
+ *  description: @var STRING
+ *  new_used: @var INTEGER
+ *  oem_after: @var INTEGER
+ * ]
+ * Description: Creates a Request model instance with the inputted information
+ */
 exports.create = (req, res)=>{
     const newRequest = {
       user_id: req.body.user_id,

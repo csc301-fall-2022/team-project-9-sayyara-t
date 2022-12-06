@@ -3,6 +3,16 @@ const Service = require("../models").Service
 const Shop = require("../models").Shop
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/services/
+ * Method: POST
+ * Fields: [
+ *  type: @var STRING
+ *  name: @var STRING
+ * ]
+ * Description: Creates a Service model instance with the inputted information
+ * Note: a service here is for the fixed service list for shops to choose from, not for the services belonging to a shop profile. For those, see ShopService.controller.js
+ */
 exports.create = (req, res)=>{
   const newService = {
     type: req.body.type,

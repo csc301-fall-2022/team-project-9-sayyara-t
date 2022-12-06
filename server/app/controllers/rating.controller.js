@@ -2,6 +2,18 @@ const db = require("../models");
 const Rating = require("../models").Rating
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/ratings/
+ * Method: POST
+ * Fields: [
+ *  user_id: @var UUID
+ *  shop_id: @var UUID
+ *  comment: @var STRING
+ *  star: @var INTEGER
+ *  price: @var INTEGER
+ * ]
+ * Description: Creates a Rating model instance with the inputted information
+ */
 exports.create = (req, res)=>{
     const newRating = {
       user_id: req.body.user_id,

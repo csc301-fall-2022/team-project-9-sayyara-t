@@ -2,6 +2,15 @@ const db = require("../models");
 const shopAdmin = require("../models").ShopAdmin
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/shopadmins/
+ * Method: POST
+ * Fields: [
+ *  user_id: @var UUID
+ *  shop_id: @var UUID
+ * ]
+ * Description: Creates a Shop Admin model instance with the inputted information
+ */
 exports.create = (req, res)=>{
     const newShopAdmin = {
       user_id: req.body.user_id,

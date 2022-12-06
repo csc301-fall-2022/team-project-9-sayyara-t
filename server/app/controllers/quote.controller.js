@@ -3,6 +3,20 @@ const Quote = require("../models").Quote;
 const Request = require("../models").Request;
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/quptes/
+ * Method: POST
+ * Fields: [
+ *  labour: @var FLOAT
+ *  parts: @var JSON
+ *  fees: @var JSON
+ *  discount: @var FLOAT
+ *  total: @var FLOAT
+ *  note: @var STRING
+ * ]
+ * Description: Creates a Quote model instance with the inputted information
+ */
+
 exports.create = (req, res)=>{
     const newQuote = {
       labour: req.body.labour,

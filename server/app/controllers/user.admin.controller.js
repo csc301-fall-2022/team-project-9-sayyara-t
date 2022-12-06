@@ -4,6 +4,19 @@ const {Shop} = require("../models");
 const User = require("../models").User;
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/user/admin/create
+ * Method: POST
+ * Fields: [
+ *  role_id: @var INTEGER
+ *  username: @var STRING
+ *  email: @var STRING
+ *  password: @var STRING
+ *  name: @var STRING
+ *  phone: @var STRING
+ * ]
+ * Description: Creates a User model instance with the inputted information
+ */
 exports.create = (req, res)=>{
     const newUser = {
         role_id: req.body.role_id,
