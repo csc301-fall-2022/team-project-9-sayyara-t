@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import TopNav from '../profile/TopNav';
 import { ShopQuotesList } from './ShopQuotesList';
 import {useNavigate} from "react-router-dom";
-import { useParams } from 'react-router-dom';
 import { PATHS, UI_WIDTH } from '../../constants';
-import { Request } from '../../interfaces';
 import { useUserService } from '../../services/useUserService';
 import { User } from '../../interfaces';
 
@@ -16,7 +14,6 @@ const ShopLandingPage = () => {
   // const [requests, setRequests] = useState([] as Array<Request>);
   const [user, setUser] = useState({} as User);
   const navigate = useNavigate();
-  const params = useParams();
   const userService = useUserService();
 
   useEffect(() => {
