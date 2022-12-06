@@ -33,6 +33,11 @@ exports.create = (req, res)=>{
       });
 }
 
+/**
+ * Endpoint: /api/ratings/
+ * Method: GET
+ * Description: find all the ratings in the database
+ */
 exports.findAll = (req, res)=>{
     Rating.findAll({attributes: ['id', 'user_id', 'shop_id', 'comment', 'star', 'price', 'createdAt', 'updatedAt']}).then(data=>{res.send(data)})
   .catch(err => {
@@ -43,6 +48,14 @@ exports.findAll = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/ratings/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the rating with the id passed in as a parameter
+ */
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -63,6 +76,14 @@ exports.findOne = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/vehicles/:id
+ * Method: UPDATE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Update the Rating model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -87,6 +108,14 @@ exports.update = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Delete the Rating model instance with the id passed in as a paramter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -111,6 +140,14 @@ exports.delete = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/ratings/shop/:shop_id
+ * Method: GET
+ * Parameters: [
+ *  shop_id: @var UUID
+ * ]
+ * Description: 
+ */
 exports.findAverage = async (req, res) => {
   const shop_id = req.params.shop_id
 

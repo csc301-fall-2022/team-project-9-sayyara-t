@@ -37,6 +37,14 @@ exports.create = (req, res)=>{
       });
 }
 
+/**
+ * Endpoint: /api/quotes/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the quote with the id passed in as a parameter
+ */
 exports.findOne = (req, res) => {
     const id = req.params.id; 
   
@@ -57,6 +65,19 @@ exports.findOne = (req, res) => {
       });
   };
 
+/**
+ * Endpoint: /api/quotes/:id
+ * Method: PUT
+ * Fields: [
+ *  labour: @var FLOAT
+ *  parts: @var JSON
+ *  fees: @var JSON
+ *  discount: @var FLOAT
+ *  total: @var FLOAT
+ *  note: @var STRING
+ * ]
+ * Description: Update the Quote model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
 const id = req.params.id;
 
@@ -81,6 +102,14 @@ const id = req.params.id;
     });
 };
 
+/**
+ * Endpoint: /api/quotes/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Delete the quote with the id passed in as a parameter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -105,6 +134,11 @@ exports.delete = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/quotes
+ * Method: GET
+ * Description: Get all the quotes in the database
+ */
 exports.findAll = (req, res) => {
     Quote.findAll({
         attributes: ['id', 'labour', 'parts', 'fees', 'discount', 'total', 'note', 'createdAt', 'updatedAt']
@@ -118,6 +152,14 @@ exports.findAll = (req, res) => {
         });
 };
 
+/**
+ * Endpoint: /api/shop/:shop_id
+ * Method: GET
+ * Parameters: [
+ *  shop_id: @var UUID
+ * ]
+ * Description: Find all quotes for the shop with shop_id
+ */
 exports.findAllByShopID = async (req, res) => {
     const shop_id = req.params.shop_id;
     const quote_id_query = await Request.findAll({
@@ -135,6 +177,14 @@ exports.findAllByShopID = async (req, res) => {
     res.send(data)
 }
 
+/**
+ * Endpoint: /api/user/:user_id
+ * Method: GET
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: Find all quotes for the user with user_id
+ */
 exports.findAllByUserID = async (req, res) => {
     const user_id = req.params.user_id;
     const quote_id_query = await Request.findAll({

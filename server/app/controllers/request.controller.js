@@ -46,6 +46,11 @@ exports.create = (req, res)=>{
       });
 }
 
+/**
+ * Endpoint: /api/requests/
+ * Method: GET
+ * Description: find all instances of Request models from the database
+ */
 exports.findAll = (req, res)=>{
   Request.findAll({attributes: ['id', 'user_id', 'shop_id', 'vehicle_id', 'quote_id', 'linked_request_id', 
   'services', 'state', 'description', 'new_used', 'oem_after', 'createdAt', 'updatedAt']}).then(data=>{res.send(data)})
@@ -57,6 +62,13 @@ exports.findAll = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/requests/filter
+ * Method: POST
+ * Parameters: [
+ * ]
+ * Description: 
+ */
 exports.findAllFilter = async (req, res)=>{
   const name_filter = req.body.name; // name of user
   var user_ids
@@ -155,6 +167,14 @@ exports.findAllFilter = async (req, res)=>{
   }
 }
 
+/**
+ * Endpoint: /api/requests/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the Request model instance with the id passed in as a paramter
+ */
 exports.findOne = (req, res) => {
     const id = req.params.id; 
   
@@ -176,6 +196,14 @@ exports.findOne = (req, res) => {
       });
   };
 
+/**
+ * Endpoint: /api/requests/:id
+ * Method: PUT
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Update the Request model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
 const id = req.params.id;
 
@@ -200,6 +228,14 @@ const id = req.params.id;
     });
 };
 
+/**
+ * Endpoint: /api/requests/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: delete the Request model instance with the id passed in as a paramter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -224,6 +260,14 @@ exports.delete = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/requests/shop/:shop_id
+ * Method: GET
+ * Parameters: [
+ *  shop_id: @var UUID
+ * ]
+ * Description: find all Request model instances associated with the shop with shop_id passed in as a paramter
+ */
 exports.findAllByShopID = (req, res)=>{
   const shop_id = req.params.shop_id;
   Request.findAll({
@@ -241,6 +285,14 @@ exports.findAllByShopID = (req, res)=>{
 };
 
 
+/**
+ * Endpoint: /api/requests/user/:user_id
+ * Method: GET
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: find all Request model instance requested by the user with user_id passed in as a paramter
+ */
 exports.findAllByUserID = (req, res)=>{
   const user_id = req.params.user_id;
   Request.findAll({

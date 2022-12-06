@@ -28,6 +28,11 @@ exports.create = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/services
+ * Method: GET
+ * Description: final all Service model instances in the database
+ */
 exports.findAll = (req, res)=>{
   Service.findAll({
     attributes: ['id', 'type', 'name', 'createdAt', 'updatedAt']
@@ -41,6 +46,14 @@ exports.findAll = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/services/name/:name
+ * Method: GET
+ * Parameters: [
+ *  name: @var STRING
+ * ]
+ * Description: find all Service model instance with the name passed in as a paramter
+ */
 exports.findAllByName = (req, res)=>{
   const name = req.params.name;
 
@@ -57,6 +70,14 @@ exports.findAllByName = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/services/type/:type
+ * Method: GET
+ * Parameters: [
+ *  type: @var STRING
+ * ]
+ * Description: find all Service model instances with the type passed in as a paramter
+ */
 exports.findAllByType = (req, res)=>{
   const type = req.params.type;
 
@@ -73,6 +94,14 @@ exports.findAllByType = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/services/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the Service model instance with the id passed in as a paramter
+ */
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -95,6 +124,14 @@ exports.findOne = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/vehicles/:id
+ * Method: UPDATE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Update the Rating model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
   const id = req.params.id;
   
