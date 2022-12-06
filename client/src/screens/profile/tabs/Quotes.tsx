@@ -16,19 +16,19 @@ interface QuotesProps {
 
 const Quotes = ({ user, vehicles }: QuotesProps) => {
   const theme = useTheme();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const requestService = useRequestService();
 
   const [requests, setRequests] = useState([] as Request[]);
   const [errorMessages, setErrorMessages] = useState([] as string[]);
-  // const [isEmpty, setIsEmpty] = useState(true);
+  const [isEmpty, setIsEmpty] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
       await requestService.getRequestsbyUserId(user.userId).then((_requests: Array<Request>) => {
-        // if (requests.length !== 0) {
-        //   setIsEmpty(true);
-        // }
+        if (_requests.length !== 0) {
+          setIsEmpty(false);
+        }
         setRequests(_requests);
       },
       (error: Error) => setErrorMessages([...errorMessages, error.message]));
@@ -46,32 +46,33 @@ const Quotes = ({ user, vehicles }: QuotesProps) => {
   const onRequestRemove = (index: number) => {
     const _requests = [...requests];
     _requests.splice(index, 1);
+    if (_requests.length === 0) {
+      setIsEmpty(true);
+    }
     setRequests(_requests);
   };
 
-//   const handlePage = () => {
-//     navigate(PATHS.LANDING);
-//   };
+  const handlePage = () => {
+    navigate(PATHS.LANDING);
+  };
 
-//   const renderPopUp = () => {
-//     if (isEmpty) {
-//       return<Grid container flexGrow={1} marginBottom={5}>
-//       <Alert
-//           severity='info'
-//           action={
-//           <Button color="inherit" size="small" onClick={handlePage}>
-//               Back to main page
-//           </Button>
-//           }
-//           sx={{
-//               flexGrow: 1
-//           }}
-//       >
-//           You have no quotes
-//       </Alert>
-//   </Grid>;
-//     }
-// };
+  const renderPopUp = () => {
+    return<Grid container flexGrow={1} marginBottom={5}>
+            <Alert
+                severity='info'
+                action={
+                <Button color="inherit" size="small" onClick={handlePage}>
+                    Back to main page
+                </Button>
+                }
+                sx={{
+                    flexGrow: 1
+                }}
+            >
+                You have no available requests or quotes
+            </Alert>
+        </Grid>;
+};
 
   return (
     <Box>
@@ -81,14 +82,14 @@ const Quotes = ({ user, vehicles }: QuotesProps) => {
           width={0} 
           onDismiss={() => setErrorMessages([])}
         /> : <Box>
+          <div>
+            {isEmpty && renderPopUp()}
+          </div>
           {requests.map((request, index) => (
           <Box 
             marginBottom={theme.spacing(5)} 
             key={request.requestId}
           >
-            {/* <div>
-              {renderPopUp()}
-            </div> */}
             <RequestCard
               request={request} 
               vehicles={vehicles}
