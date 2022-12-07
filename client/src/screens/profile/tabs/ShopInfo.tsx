@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Grid, TextField, Typography, Button, CircularProgress } from '@mui/material';
+import { Box, Grid, TextField, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 import { useTheme } from '@mui/material/styles';
@@ -10,6 +10,7 @@ import ServiceCard from './ServiceCard';
 import { useShopServiceService } from '../../../services/useShopServiceService';
 import { useShopAdminServices } from '../../../services/useShopAdminServices';
 import { useServiceService } from '../../../services/useServiceService';
+import { Delete } from '@mui/icons-material';
 
 interface ShopInfoProps {
   user: User,
@@ -17,10 +18,11 @@ interface ShopInfoProps {
   index: number,
   setShop: (_shop: Shop, index: number) => void,
   errorMessages: Array<string>,
-  setErrorMessages: (_errorMessages: Array<string>) => void
+  setErrorMessages: (_errorMessages: Array<string>) => void,
+  onDeleteShop: (_shop: Shop, index: number) => void
 }
 
-const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages }: ShopInfoProps) => {
+const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages, onDeleteShop }: ShopInfoProps) => {
   const theme = useTheme();
   const shopService = useShopService();
   const shopServiceService = useShopServiceService();
@@ -30,6 +32,7 @@ const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages 
   const [shopServices, setShopServices] = useState([] as Array<ShopService>);
   const [isShopChanged, setIsShopChanged] = useState(false);
   const [servicesList, setServicesList] = useState([] as Array<Service>);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -89,6 +92,37 @@ const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages 
         (error: Error) => setErrorMessages([...errorMessages, error.message]));
     }, (error: Error) => setErrorMessages([...errorMessages, error.message]));
     setIsShopChanged(false);
+  };
+
+  const deleteShop = () => {
+    setDeleteDialogOpen(false);
+    onDeleteShop(shop, index);
+  };
+
+  const renderDeleteDialog = () => {
+    return (
+      <Dialog open={deleteDialogOpen}>
+        <DialogTitle>Delete Shop</DialogTitle>
+        <DialogContent>Are you sure you want to delete this shop? This action is irreversible.</DialogContent>
+        <DialogActions>
+          <Button 
+            onClick={() => setDeleteDialogOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            sx={{
+              bgcolor: "primary.main",
+              "&:hover": { bgcolor: "primary.dark" },
+              "&:disabled": { bgcolor: "secondary.main"}
+            }}
+            onClick={deleteShop}
+          >
+            <Typography fontWeight="bold" sx={{ color: "white" }}>Confirm</Typography>
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
   };
 
   return (
@@ -242,6 +276,41 @@ const ShopInfo = ({ user, shop, index, setShop, errorMessages, setErrorMessages 
             )))}
           </Box>
         )}
+        <Box
+          sx={{
+            border: 2,
+            borderColor: "error.light",
+            borderRadius: 1,
+            height: 75,
+            marginTop: theme.spacing(20),
+            padding: theme.spacing(5),
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+          >
+            <Typography fontWeight="bold">Delete Shop</Typography>
+            <Typography>Permanently delete this shop</Typography>
+          </Box>
+          <Button
+            sx={{
+              bgcolor: "error.light",
+              "&:hover": { bgcolor: "error.main" },
+              "&:disabled": { bgcolor: "secondary.main"}
+            }}
+            onClick={() => setDeleteDialogOpen(true)}
+          >
+            <Delete sx={{ color: "red", marginRight: theme.spacing(2) }}/>
+            <Typography fontWeight="bold" sx={{ color: "red" }}>Delete Shop</Typography>
+          </Button>
+          {renderDeleteDialog()}
+        </Box>
       </Box>
     </Box>
   );

@@ -12,7 +12,7 @@ const palette = {
   },
   error: {
     light: "#ffcccc",
-    main: "#f44336"
+    main: "#f59d9d"
   }
 };
 
