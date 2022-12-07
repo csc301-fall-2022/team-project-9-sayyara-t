@@ -68,6 +68,9 @@ exports.findOne = (req, res) => {
 /**
  * Endpoint: /api/quotes/:id
  * Method: PUT
+ * Parameter: [
+ *  id: @var UUID
+ * ]
  * Fields: [
  *  labour: @var FLOAT
  *  parts: @var JSON
