@@ -37,6 +37,14 @@ exports.findSelf = (req, res) => {
  * Parameters: [
  *  user_id: @var UUID
  * ]
+ * Fields: [
+ *  role_id: @var INTEGER
+ *  username: @var STRING
+ *  email: @var STRING
+ *  password: @var STRING
+ *  name: @var STRING
+ *  phone: @var STRING
+ * ]
  * Description: Update the Service model instance with the id passed in as a paramter to contain the inputted information
  */
 exports.update = (req, res) => {

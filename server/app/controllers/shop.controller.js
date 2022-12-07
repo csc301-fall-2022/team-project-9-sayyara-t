@@ -147,6 +147,14 @@ exports.findOne = (req, res) => {
  * Parameters: [
  *  id: @var UUID
  * ]
+ * Fields: [
+ *  name: @var STRING
+ *  address: @var STRING
+ *  phone: @var STRING
+ *  email: @var STRING
+ *  time: @var JSON
+ *  description: @var STRING
+ * ]
  * Description: Update the Shop model instance with the id passed in as a paramter to contain the inputted information
  */
 exports.update = (req, res) => {

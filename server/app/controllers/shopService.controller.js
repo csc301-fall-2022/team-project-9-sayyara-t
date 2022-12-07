@@ -132,6 +132,12 @@ const id = req.params.id;
  * Parameters: [
  *  id: @var UUID
  * ]
+ * Fields: [
+ *  shop_id: @var UUID
+ *  service_id: @var UUID
+ *  description: @var STRING
+ *  price: @var INTEGER
+ * ]
  * Description: Update the Service model instance with the id passed in as a paramter to contain the inputted information
  */
 exports.update = (req, res) => {

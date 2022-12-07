@@ -86,6 +86,9 @@ exports.findOne = (req, res) => {
 /**
  * Endpoint: /api/vehicles/:id
  * Method: PUT
+ * Paramters: [
+ *  id: @var UUID
+ * ]
  * Fields: [
  *  plate: @var STRING
  *  model: @var STRING

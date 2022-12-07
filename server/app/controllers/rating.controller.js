@@ -82,6 +82,13 @@ exports.findOne = (req, res) => {
  * Parameters: [
  *  id: @var UUID
  * ]
+ * Fields: [
+ *  user_id: @var UUID
+ *  shop_id: @var UUID
+ *  comment: @var STRING
+ *  star: @var INTEGER
+ *  price: @var INTEGER
+ * ]
  * Description: Update the Rating model instance with the id passed in as a paramter to contain the inputted information
  */
 exports.update = (req, res) => {

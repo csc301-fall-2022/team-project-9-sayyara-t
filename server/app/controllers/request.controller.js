@@ -202,6 +202,18 @@ exports.findOne = (req, res) => {
  * Parameters: [
  *  id: @var UUID
  * ]
+ * Fields: [
+ *  user_id: @var UUID
+ *  shop_id: @var UUID
+ *  vehicle_id: @var UUID
+ *  quote_id: @var UUID
+ *  linked_request_id: @var UUID
+ *  services: @var JSON
+ *  state: @var INTEGER
+ *  description: @var STRING
+ *  new_used: @var INTEGER
+ *  oem_after: @var INTEGER
+ * ]
  * Description: Update the Request model instance with the id passed in as a paramter to contain the inputted information
  */
 exports.update = (req, res) => {
