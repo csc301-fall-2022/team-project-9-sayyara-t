@@ -46,7 +46,8 @@ exports.signup = (req, res) => {
  * Fields: [
  *  username: @var STRING
  * ]
- * Description: find the User model instance associated with the username entered as a field
+ * Description: find the User model instance associated with the username entered as a field. Create the JWT authorization
+ * token with the user id as a payload, and return that along with the user information.
  */
 exports.signin = (req, res) => {
     User.findOne({
