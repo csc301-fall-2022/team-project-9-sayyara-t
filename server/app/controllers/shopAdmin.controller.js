@@ -112,7 +112,7 @@ exports.findOne = (req, res) => {
 
 /**
  * Endpoint: /api/shopadmins/:id
- * Method: UPDATE
+ * Method: PUT
  * Parameters: [
  *  id: @var UUID
  * ]

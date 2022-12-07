@@ -128,7 +128,7 @@ const id = req.params.id;
 
 /**
  * Endpoint: /api/shopservices/:id
- * Method: UPDATE
+ * Method: PUT
  * Parameters: [
  *  id: @var UUID
  * ]
