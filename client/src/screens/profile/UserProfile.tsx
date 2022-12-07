@@ -112,6 +112,7 @@ const UserProfile = () => {
       case PROFILE_TABS.SHOP_MANAGEMENT:
         return (<ShopManagement 
           user={user}  
+          maxWidth={UI_WIDTH - 200}
         />);
       default:
         return (<></>);

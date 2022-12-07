@@ -4,15 +4,16 @@ import { Box, Tab, Tabs, Grid, Button, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useShopService } from '../../../services/useShopService';
 
-import { Service, Shop, Time, User } from '../../../interfaces';
+import { Shop, Time, User } from '../../../interfaces';
 import ShopInfo from './ShopInfo';
 import ErrorMessages from '../../../shared/ErrorMessages';
 
 interface ShopManagementProps {
-  user: User
+  user: User,
+  maxWidth: number
 }
 
-const ShopManagement = ({ user }: ShopManagementProps) => {
+const ShopManagement = ({ user, maxWidth }: ShopManagementProps) => {
   const theme = useTheme();
   const shopService = useShopService();
 
@@ -26,7 +27,6 @@ const ShopManagement = ({ user }: ShopManagementProps) => {
         setShops(_shops);
       }, (error: Error) => {
         setErrorMessages([...errorMessages, error.message]);
-        console.log(error.message);
       });
     };
 
@@ -48,9 +48,20 @@ const ShopManagement = ({ user }: ShopManagementProps) => {
     setShops(_shops);
   };
 
+  const deleteShop = async (_shop: Shop, index: number) => {
+    await shopService.deleteShop(_shop.shopId).then(() => {
+      const _shops = [...shops];
+      _shops.splice(index, 1);
+      setShops(_shops);
+      if (selectedShop > 0) {
+        setSelectedShop(selectedShop - 1);
+      }
+    }, (error: Error) => setErrorMessages([...errorMessages, error.message]));
+  };
+
   return (
     <Box>
-      <Box>
+      <Box maxWidth={maxWidth}>
         <Grid container justifyContent="flex-end">
           <Button
             onClick={createShop}
@@ -86,6 +97,7 @@ const ShopManagement = ({ user }: ShopManagementProps) => {
             }}
             errorMessages={errorMessages}
             setErrorMessages={setErrorMessages}
+            onDeleteShop={deleteShop}
           />}
         </Box>
       </Box>
