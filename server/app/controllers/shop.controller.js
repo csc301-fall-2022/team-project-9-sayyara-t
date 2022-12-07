@@ -39,12 +39,15 @@ exports.create = (req, res)=>{
 }
 
 /**
- * Endpoint: /api/shops/
- * Method: UPDATE
+ * Endpoint: /api/shops/:sort/:search
+ * Method: GET
  * Parameters: [
- *  search: @var UUID
+ *  sort: @var STRING
+ *  search: @var STRING
  * ]
- * Description: sort all shop model instances
+ * Description: Sort all shop model instances by the :sort parameter passed in the request, which should either be "star" or "price". 
+ * Shops are sorted by the average star/price value they have from their respective Rating model instances. Also filters all shops
+ * by their names, returning all Shop models with a name field containing the :search parameter passed in the request.
  */
 exports.findAll = async (req, res)=>{ 
   search = req.params.search == "null" ? "" : req.params.search;
