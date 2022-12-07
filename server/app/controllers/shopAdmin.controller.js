@@ -9,7 +9,7 @@ const Op = db.Sequelize.Op;
  *  user_id: @var UUID
  *  shop_id: @var UUID
  * ]
- * Description: Creates a Shop Admin model instance with the inputted information
+ * Description: Creates a ShopAdmin model instance with the inputted information
  */
 exports.create = (req, res)=>{
     const newShopAdmin = {
@@ -27,6 +27,11 @@ exports.create = (req, res)=>{
       });
 }
 
+/**
+ * Endpoint: /api/shopadmins
+ * Method: GET
+ * Description: find all ShopAdmin model instances in the database
+ */
 exports.findAll = (req, res)=>{
     shopAdmin.findAll({attributes: ['id', 'user_id', 'shop_id', 'createdAt', 'updatedAt']}).then(data=>{res.send(data)})
   .catch(err => {
@@ -37,6 +42,14 @@ exports.findAll = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/shopadmins/user/:user_id
+ * Method: GET
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: find all ShopAdmin model instances associated with the user with the user_id passed in as a paramter
+ */
 exports.findAllByUserID = (req, res)=>{
   const user_id = req.params.user_id;
   shopAdmin.findAll({attributes:  ['id', 'user_id', 'shop_id', 'createdAt', 'updatedAt'], where: {user_id:user_id}})
@@ -49,6 +62,14 @@ exports.findAllByUserID = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/shopadmins/shop/:shop_id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find all ShopAdmin model instances associated with the shop with the shop_id passed in as a paramter
+ */
 exports.findAllByShopID = (req, res)=>{
   const shop_id = req.params.shop_id;
   shopAdmin.findAll({attributes:  ['id', 'user_id', 'shop_id', 'createdAt', 'updatedAt'], where: {shop_id:shop_id}})
@@ -61,6 +82,14 @@ exports.findAllByShopID = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/shopadmins/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the ShopAdmin model instance with the id passed in as a paramter
+ */
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -81,6 +110,14 @@ exports.findOne = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/shopadmins/:id
+ * Method: UPDATE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Update the ShopAdmin model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -105,6 +142,14 @@ exports.update = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/shopadmins/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: delete the ShopAdmin model instance with the id passed in as a paramter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 

@@ -6,7 +6,7 @@ const Op = db.Sequelize.Op;
 
 /**
  * Endpoint: /api/user/admin/create
- * Method: POST
+ * Method: POST 
  * Fields: [
  *  role_id: @var INTEGER
  *  username: @var STRING
@@ -37,6 +37,11 @@ exports.create = (req, res)=>{
         });
 }
 
+/**
+ * Endpoint: /api/user/admin/
+ * Method: GET
+ * Description: find all User model instances in the database
+ */
 exports.findAll = (req, res)=>{
     console.log("Entered Function")
     User.findAll().then(data=>{res.send(data)})
@@ -48,6 +53,14 @@ exports.findAll = (req, res)=>{
         });
 }
 
+/**
+ * Endpoint: /api/user/admin/:user_id
+ * Method: GET
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: find the User model instance with the user_id passed in as a paramter
+ */
 exports.findOne = (req, res) => {
     const user_id = req.params.id;
 
@@ -68,6 +81,14 @@ exports.findOne = (req, res) => {
         });
 };
 
+/**
+ * Endpoint: /api/user/admin/:id
+ * Method: UPDATE
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: Update the User model instance with the user_id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
     const user_id = req.params.id;
 
@@ -92,6 +113,14 @@ exports.update = (req, res) => {
         });
 };
 
+/**
+ * Endpoint: /api/user/admin/:id
+ * Method: DELETE
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: delete the User model instance with the id passed in as a paramter
+ */
 exports.delete = (req, res) => {
     const user_id = req.params.id;
 

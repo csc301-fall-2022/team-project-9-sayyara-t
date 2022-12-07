@@ -38,6 +38,14 @@ exports.create = (req, res)=>{
       });
 }
 
+/**
+ * Endpoint: /api/shops/
+ * Method: UPDATE
+ * Parameters: [
+ *  search: @var UUID
+ * ]
+ * Description: sort all shop model instances
+ */
 exports.findAll = async (req, res)=>{ 
   search = req.params.search == "null" ? "" : req.params.search;
   sort = req.params.sort
@@ -84,6 +92,14 @@ exports.findAll = async (req, res)=>{
   res.send(actualResponse)
 }
 
+/**
+ * Endpoint: /api/shops/user/:user_id
+ * Method: GET
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: find all Shop model instance associated with the user with user_id passed in as a paramter
+ */
 exports.findAllByUserID = async (req, res) =>{
   const user_id = req.params.user_id;
   // Get all ShopAdmin models, an array of dicts
@@ -97,6 +113,14 @@ exports.findAllByUserID = async (req, res) =>{
   res.send(shopIDs)
 }
 
+/**
+ * Endpoint: /api/shops/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the shop model instance with the id passed in as a paramter
+ */
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -117,6 +141,14 @@ exports.findOne = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/shops/:id
+ * Method: UPDATE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Update the Shop model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -141,6 +173,14 @@ exports.update = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/shops/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: delete the Shop model instance with the id passed in as a paramter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 

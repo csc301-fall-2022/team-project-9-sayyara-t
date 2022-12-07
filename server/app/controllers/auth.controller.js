@@ -7,6 +7,19 @@ const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+/**
+ * Endpoint: /api/auth/signup
+ * Method: POST
+ * Fields: [
+ *  role_id: @var INTEGER
+ *  username: @var STRING
+ *  email: @var STRING
+ *  password: @var STRING
+ *  name: @var STRING
+ *  phone: @var STRING
+ * ]
+ * Description: Create a User model instance using the fields posted
+ */
 exports.signup = (req, res) => {
     // Save User to Database
     User.create({
@@ -27,6 +40,14 @@ exports.signup = (req, res) => {
         });
 };
 
+/**
+ * Endpoint: /api/auth/signin
+ * Method: GET
+ * Fields: [
+ *  username: @var STRING
+ * ]
+ * Description: find the User model instance associated with the username entered as a field
+ */
 exports.signin = (req, res) => {
     User.findOne({
         where: {

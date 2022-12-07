@@ -125,12 +125,12 @@ exports.findOne = (req, res) => {
 };
 
 /**
- * Endpoint: /api/vehicles/:id
+ * Endpoint: /api/services/:id
  * Method: UPDATE
  * Parameters: [
  *  id: @var UUID
  * ]
- * Description: Update the Rating model instance with the id passed in as a paramter to contain the inputted information
+ * Description: Update the Service model instance with the id passed in as a paramter to contain the inputted information
  */
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -156,6 +156,14 @@ exports.update = (req, res) => {
   });
 };
 
+/**
+ * Endpoint: /api/services/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: delete the Service model instance with the id passed in as a paramter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 

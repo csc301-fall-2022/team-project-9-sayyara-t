@@ -32,6 +32,11 @@ exports.create = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/shopservices/
+ * Method: GET
+ * Description: find all ShopService model instances in the database
+ */
 exports.findAll = (req, res)=>{
   ShopService.findAll({
       attributes: ['id', 'shop_id', 'service_id', 'description', 'price', 'createdAt', 'updatedAt']
@@ -45,6 +50,14 @@ exports.findAll = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/shopservices/shop/:shop_id
+ * Method: GET
+ * Parameters: [
+ *  shop_id: @var UUID
+ * ]
+ * Description: find all ShopService model instances associated with the shop with the shop_id passed in as a paramter
+ */
 exports.findAllByShopID = (req, res)=>{
   const shop_id = req.params.shop_id;
   ShopService.findAll({
@@ -60,6 +73,14 @@ exports.findAllByShopID = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/shopservices/service/:service_id
+ * Method: GET
+ * Parameters: [
+ *  service_id: @var UUID
+ * ]
+ * Description: find all the Shop model instances associated with the Service model instance with the service_id passed in as a paramter
+ */
 exports.findAllByServiceID = (req, res)=>{
   const service_id = req.params.service_id;
   ShopService.findAll({
@@ -75,6 +96,14 @@ exports.findAllByServiceID = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/shopservices/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the ShopService model instance with the id passed in as a paramter
+ */
 exports.findOne = (req, res) => {
 const id = req.params.id;
 
@@ -97,6 +126,14 @@ const id = req.params.id;
   });
 };
 
+/**
+ * Endpoint: /api/shopservices/:id
+ * Method: UPDATE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Update the Service model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -121,6 +158,14 @@ exports.update = (req, res) => {
   });
 };
 
+/**
+ * Endpoint: /api/shopservices/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: delete the ShopService model instance with the id passed in as a paramter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 
