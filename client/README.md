@@ -88,4 +88,42 @@ screens
     It is made up of 3 components: A navigation bar at the top of the screen, a side bar for filtering shops at the left side of the screen, and a list view of cards for each shop. Each component is represented accordingly in each file.\
     Loading the landing page utilizes the functions in `services/useShopService.ts` to fetch all shops. 
 - **profile**\
-    This subdirectory contains all the components that make up the profile page for both vehicle owners and shop owners. 
+    This subdirectory contains all the components that make up the profile page for both vehicle owners and shop owners. \
+    Vehicle owners and shop owners have access to different profile page to conduct different actions. We split this up using "tabs" so each user type can view their version of profiles. The final profile page is made of these "tabs". 
+    - *Vehicle Owner Profile*\
+    Vehicle owners can add or remove vehicles, modify their information, and view their quotes in their profile screen. Therefore `tabs/ProfileTab.tsx`, `tabs/RequestCard.tsx`, and `tabs/VehicleCard.tsx` are used. 
+    - *Shop Owner Profile*\
+    Shop owners can add or remove services, modify their shop information, and view their requests for quotes in their profile screen. Therefore `tabs/ShopInfo.tsx`, `tabs/ShopManagement.tsx`, `tabs/ServiceCard.tsx` and `tabs/RequestCard.tsx` are used. 
+- **request**\
+    This subdirectory contains the screen that allows the user to submit a request for quotes after selecting their vehicle, the service they want, and the shop(s) that offer the service.
+- **shop**\
+    This subdirectory contains what the users see after clicking on a shop tile in the landing page. The user will be redirected to the shop main page where relevant information, such as services, price range, and ratings are displayed. In this screen vehicle owners can also request a quote from the shop directly. 
+- **shop-landing**\
+    This subdirectory contains the code that make up the shop owner landing page. This is the landing page for shop owners once they log in so instead of seeing a tile view of shops, they see a tile view of incoming requests for quotes. Similar to the filter functionalities on the vehicle owner landing page, here the shop owner can also filter and sort their incoming requests by service and client. 
+
+## Services/
+This folder contains all the API call wrappers used by components from `screens`. The main purpose of these wrappers is that these are the functions that send out POST/PUT/GET request and receive feedback from the server, we wanted to have these wrappers to server as a layer of abstraction between the front-end and the back-end and this also enforces some security for our system. We will briefly explain what each file in this folder do. 
+- **useAPIService.ts**\
+    This is the most important file here. This file provides functions that serve as the base for all API request, what all the other files are changing is what data to send over in these API calls and how returned values are processed. This is used in all subsequent files. 
+- **useAuthService.ts**\
+    This file provides wrapper functions for API calls related to user log in, user sign up, and user sign out. The returned value for authentication corresponds to a user in the remote database, and this result is stored as session global information. 
+- **useQuoteService.ts**\
+    This file provides wrapper functions for API calls related to quotes (create, update, get by id), this is used for both vehicle owners and shop owners. 
+- **useRatingService.ts**\
+    This file provides wrapper functions for API calls related to ratings, although somewhat poorly named, this includes getting the average rating and the average price range of a certain shop. This is used in the landing page for sorting and when someone clicks on a shop tile, this information is displayed. 
+- **useRequestService.ts**\
+    This file provides wrapper functions for API calls related to requests for quotes. These wrappers are used by both shop owner and vehicle owner as a vehicle owner would create a request, the shop owner would then view it, sort it by a certain order if wanted, and update it. 
+- **useServiceService.ts**\
+    This file provides wrapper functions for API calls related to services provided by a specific shop. This is mainly used in the landing page after a shop tile is clicked, and a list of that shop's services is displayed. 
+- **useShopAdminService.ts**\
+    This file provides wrapper functions for API calls related to create a new shop. This is used when a shop owner first logs into the website and they click on the option to create their shop posting, therefore making themself the shop admin. 
+- **useShopService.ts**\
+    This file provides wrapper functions for API calls related to shops. This involves getting, creating, updating all information related to shops. The main place this is used is in the landing page, where all the shops are fetched and displayed in a tile format. 
+- **useShopServiceService.ts**\
+    This file provides wrapper functions for API calls related to service for shop owners. This is slightly different from the previous `useServiceService.ts` as these wrappers are aimed towards the usage of shop owner functionalities, such as the ability to create or update or remove a service, instead of plainly fetching for all services of a shop. 
+- **useUserServicce.ts**\
+    This file provides wrapper functions for API calls related to user information. This is mainly used in profile page where personal information is being displayed or updated. 
+- **useVehicleService.ts**\
+    This file provides wrapper functions for API calls related to vehicles. This is mainly used by vehicle owner's side of the application where the users can add, update, or remove vehicles. 
+
+    
