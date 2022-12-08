@@ -28,7 +28,6 @@ db.sequelize.sync()
 require("./app/routes/shop.route")(app);
 require("./app/routes/auth.route")(app);
 require("./app/routes/user.route.js")(app);
-require("./app/routes/user.admin.route.js")(app);
 require("./app/routes/service.route")(app);
 require("./app/routes/rating.route")(app);
 require("./app/routes/shopAdmin.route")(app);
