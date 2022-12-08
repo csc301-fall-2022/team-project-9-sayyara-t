@@ -7,18 +7,20 @@ import SideNav from './SideNav';
 
 import { useUserService } from '../../services/useUserService';
 import { useVehicleService } from '../../services/useVehicleService';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 import { User, Vehicle } from '../../interfaces';
-import { ROLES, PROFILE_TABS, PATHS } from '../../constants';
+import { ROLES, PROFILE_TABS, PATHS, UI_WIDTH } from '../../constants';
 import ErrorMessages from '../../shared/ErrorMessages';
 import ShopManagement from './tabs/ShopManagement';
 import ProfileTab from './tabs/ProfileTab';
+import Quotes from './tabs/Quotes';
 
 const UserProfile = () => {
   const params = useParams();
+  const [searchParams] = useSearchParams();
   const theme = useTheme();
   const userService = useUserService();
   const vehicleService = useVehicleService();
@@ -28,8 +30,6 @@ const UserProfile = () => {
   const [vehicles, setVehicles] = useState([] as Array<Vehicle>);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [errorMessages, setErrorMessages] = useState([] as Array<string>);
-
-  const UI_WIDTH = 1300;
 
   const [menuItems, setMenuItems] = useState([PROFILE_TABS.PROFILE]);
 
@@ -86,6 +86,11 @@ const UserProfile = () => {
       }
     };
     
+    const _selectedIndex = searchParams.get("menuIndex");
+
+    if (_selectedIndex) {
+      setSelectedIndex(Number(_selectedIndex));
+    }
     loadData();
   }, []);
 
@@ -103,10 +108,11 @@ const UserProfile = () => {
           setErrorMessages={setErrorMessages}
         />);
       case PROFILE_TABS.QUOTES:
-        return (<></>);
+        return (<Quotes user={user} vehicles={vehicles}/>);
       case PROFILE_TABS.SHOP_MANAGEMENT:
         return (<ShopManagement 
           user={user}  
+          maxWidth={UI_WIDTH - 200}
         />);
       default:
         return (<></>);

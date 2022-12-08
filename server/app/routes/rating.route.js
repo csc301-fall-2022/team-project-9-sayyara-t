@@ -5,6 +5,7 @@ module.exports = app =>{
 
     router.post("/", rating.create);
     router.get("/", rating.findAll);
+    router.get("/shop/:shop_id", rating.findAverage);
     router.get("/:id", rating.findOne);
     router.put("/:id", rating.update);
     router.delete("/:id", rating.delete);

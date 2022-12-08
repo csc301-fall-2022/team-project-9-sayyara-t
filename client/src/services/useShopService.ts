@@ -1,6 +1,4 @@
-import { Service, Shop, Time, RequestResult } from '../interfaces';
-import { ResultType } from '@remix-run/router/dist/utils';
-import shopsData from '../assets/mock/shopData.json';
+import { Shop, Time, RequestResult } from '../interfaces';
 import { useAPIService } from './useAPIService';
 
 // wrapper hook for all Shop related API services
@@ -91,9 +89,6 @@ export const useShopService = () => {
       description: shop.description,
       time: shop.time
     };
-
-    console.log("Updating Shop");
-    console.log(shop);
     
     const result: RequestResult = await apiService.apiRequest(`${API_PATH}/${shop.shopId}`, 'PUT', data);
 
@@ -121,9 +116,6 @@ export const useShopService = () => {
       time: shop.time
     };
 
-    console.log("Creating Shop");
-    console.log(shop);
-
     const result: RequestResult = await apiService.apiRequest(`${API_PATH}/`, 'POST', inputData);
 
     const responseData = result.data as Record<string, unknown>;
@@ -136,36 +128,18 @@ export const useShopService = () => {
     return responseData.id as string;
   };
   
-  // TODO: replace mock API call to real API call
-  const deleteShop = async (shop: Shop): Promise<boolean> => {
-    const data = {
-      shopId: shop.shopId,
-      ownerIds: shop.ownerIds,
-      name: shop.name,
-      address: shop.address,
-      phone: shop.phone,
-      email: shop.email,
-      services: shop.services,
-      description: shop.description
-    };
+  const deleteShop = async (shopId: string): Promise<boolean> => {
     
-    console.log("Deleting Shop");
-    console.log(shop);
-
-    // const success = true;
-
-    // return success ? success : Promise.reject<boolean>(new Error("Failed to delete shop"));
-    
-    const result: RequestResult = await apiService.apiRequest(`${API_PATH}/${shop.shopId}`, 'DELETE', data);
+    const result: RequestResult = await apiService.apiRequest(`${API_PATH}/${shopId}`, 'DELETE', {});
 
     const responseData = result.data as Record<string, unknown>;
 
-      if (!result.success) {
-        const msg = responseData.message || "Unexpected Error";
-        return Promise.reject<boolean>(new Error(`Failed to delete the requested shop: ${msg}`));
-      }
+    if (!result.success) {
+      const msg = responseData.message || "Unexpected Error";
+      return Promise.reject<boolean>(new Error(`Failed to delete the requested shop: ${msg}`));
+    }
 
-      return result.success;
+    return result.success;
   
   };
 

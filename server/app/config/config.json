@@ -1,5 +1,6 @@
 {
-  "development": {
+  "env": "prod",
+  "prod": {
     "username": "doadmin",
     "password": "AVNS_0iQEJIRcg6wXhOD-O3W",
     "database": "sayyara",
@@ -12,5 +13,26 @@
         "rejectUnauthorized": false
       }
     }
+  },
+  "test": {
+    "username": "doadmin",
+    "password": "AVNS_0iQEJIRcg6wXhOD-O3W",
+    "database": "sayyara_test",
+    "port": 25060,
+    "host": "mysql-db-csc311-do-user-12762219-0.b.db.ondigitalocean.com",
+    "dialect": "mysql",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  },
+  "local": {
+    "username": "root",
+    "password": "your passwordd",
+    "database": "sayyara",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }

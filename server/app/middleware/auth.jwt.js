@@ -3,6 +3,15 @@ const config = require("../config/auth.config.js");
 const db = require("../models");
 const User = require("../models").User;
 
+/**
+ *
+ * @param req  x-access-token: @var STRING as a header containing the JWT access token
+ * @param res
+ * @param next
+ * @returns {*}
+ *
+ * Checks to see if the JTW token passed is valid, and if so sets the decoded user id and goes to the next middleware method.
+ */
 verifyToken = (req, res, next) => {
     let token = req.headers["x-access-token"];
 
@@ -23,6 +32,14 @@ verifyToken = (req, res, next) => {
     });
 };
 
+/**
+ *
+ * @param req user_id: @var describing a user id
+ * @param res
+ * @param next
+ *
+ * Checks if the user_id in the req is an admin
+ */
 isAdmin = (req, res, next) => {
     User.findByPk(req.user_id).then(user => {
         if (user.role_id === 1){
@@ -37,6 +54,14 @@ isAdmin = (req, res, next) => {
     });
 };
 
+/**
+ *
+ * @param req user_id: @var describing a user id
+ * @param res
+ * @param next
+ *
+ * Checks if the user_id in the req is a shop owner
+ */
 isShopOwner = (req, res, next) => {
     User.findByPk(req.user_id).then(user => {
         if (user.role_id === 3){
@@ -50,6 +75,14 @@ isShopOwner = (req, res, next) => {
     });
 };
 
+/**
+ *
+ * @param req user_id: @var describing a user id
+ * @param res
+ * @param next
+ *
+ * Checks if the user_id in the req is a vehicle owner
+ */
 isVehicleOwner = (req, res, next) => {
     User.findByPk(req.user_id).then(user => {
         if (user.role_id === 2){

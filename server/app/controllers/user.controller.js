@@ -3,6 +3,14 @@ const bcrypt = require("bcryptjs");
 const User = require("../models").User;
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/user/details
+ * Method: GET
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: find the User model instance with the user_id passed in as a paramter
+ */
 exports.findSelf = (req, res) => {
     const user_id = req.user_id;
 
@@ -23,6 +31,22 @@ exports.findSelf = (req, res) => {
         });
 };
 
+/**
+ * Endpoint: /api/user/:id
+ * Method: PUT
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Fields: [
+ *  role_id: @var INTEGER
+ *  username: @var STRING
+ *  email: @var STRING
+ *  password: @var STRING
+ *  name: @var STRING
+ *  phone: @var STRING
+ * ]
+ * Description: Update the Service model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
     const user_id = req.user_id;
 

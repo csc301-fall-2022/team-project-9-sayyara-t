@@ -8,26 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      shop_id: {
+      type: {
         allowNull: false,
-        type: Sequelize.UUID,
-        onDelete: 'CASCADE',
-        references:{
-          model: 'Shops',
-          key: 'id',
-        }
+        type: Sequelize.STRING
       },
       name: {
         allowNull: false,
         type: Sequelize.STRING
-      },
-      description: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      price: {
-        allowNull: false,
-        type: Sequelize.FLOAT
       },
       createdAt: {
         allowNull: false,

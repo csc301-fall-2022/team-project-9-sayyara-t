@@ -2,6 +2,19 @@ const db = require("../models");
 const Vehicle = require("../models").Vehicle;
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/vehicles
+ * Method: POST
+ * Fields: [
+ *  plate: @var STRING
+ *  model: @var STRING
+ *  vin: @var STRING
+ *  mileage: @var STRING
+ *  type: @var STRING
+ *  user_id: @var UUID
+ * ]
+ * Description: Creates a Vehicle model instance with the inputted information
+ */
 exports.create = (req, res)=>{
     const newVehicle = {
       plate: req.body.plate,
@@ -22,6 +35,14 @@ exports.create = (req, res)=>{
       });
 }
 
+/**
+ * Endpoint: /api/vehicles/user/:user_id
+ * Method: GET
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: Finds all vehicles with the user_id passed in as a parameter
+ */
 exports.findAllByUserID = (req, res)=>{
   const user_id = req.params.user_id;
   Vehicle.findAll({attributes: ['id', 'user_id', 'plate', 'model', 'vin', 'mileage', 'type', 'createdAt', 'updatedAt'], where: {user_id:user_id}})
@@ -34,6 +55,14 @@ exports.findAllByUserID = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/vehicles/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the vehicle with the id passed in as a parameter
+ */
 exports.findOne = (req, res) => {
     const id = req.params.id; 
   
@@ -54,7 +83,23 @@ exports.findOne = (req, res) => {
       });
   };
 
-exports.update = (req, res) => {
+/**
+ * Endpoint: /api/vehicles/:id
+ * Method: PUT
+ * Paramters: [
+ *  id: @var UUID
+ * ]
+ * Fields: [
+ *  plate: @var STRING
+ *  model: @var STRING
+ *  vin: @var STRING
+ *  mileage: @var STRING
+ *  type: @var STRING
+ *  user_id: @var USER
+ * ]
+ * Description: Update the Vehicle model instance with the id passed in as a paramter to contain the inputted information
+ */
+  exports.update = (req, res) => {
 const id = req.params.id;
 
   Vehicle.update(req.body, {
@@ -78,6 +123,14 @@ const id = req.params.id;
     });
 };
 
+/**
+ * Endpoint: /api/vehicles/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Delete the vehicle with the id passed in as a parameter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 

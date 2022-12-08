@@ -2,6 +2,18 @@ const db = require("../models");
 const Rating = require("../models").Rating
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/ratings/
+ * Method: POST
+ * Fields: [
+ *  user_id: @var UUID
+ *  shop_id: @var UUID
+ *  comment: @var STRING
+ *  star: @var INTEGER
+ *  price: @var INTEGER
+ * ]
+ * Description: Creates a Rating model instance with the inputted information
+ */
 exports.create = (req, res)=>{
     const newRating = {
       user_id: req.body.user_id,
@@ -21,6 +33,11 @@ exports.create = (req, res)=>{
       });
 }
 
+/**
+ * Endpoint: /api/ratings/
+ * Method: GET
+ * Description: find all the ratings in the database
+ */
 exports.findAll = (req, res)=>{
     Rating.findAll({attributes: ['id', 'user_id', 'shop_id', 'comment', 'star', 'price', 'createdAt', 'updatedAt']}).then(data=>{res.send(data)})
   .catch(err => {
@@ -31,6 +48,14 @@ exports.findAll = (req, res)=>{
   });
 }
 
+/**
+ * Endpoint: /api/ratings/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the rating with the id passed in as a parameter
+ */
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -51,6 +76,21 @@ exports.findOne = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/vehicles/:id
+ * Method: PUT
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Fields: [
+ *  user_id: @var UUID
+ *  shop_id: @var UUID
+ *  comment: @var STRING
+ *  star: @var INTEGER
+ *  price: @var INTEGER
+ * ]
+ * Description: Update the Rating model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -75,6 +115,14 @@ exports.update = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: Delete the Rating model instance with the id passed in as a paramter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -98,3 +146,36 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+/**
+ * Endpoint: /api/ratings/shop/:shop_id
+ * Method: GET
+ * Parameters: [
+ *  shop_id: @var UUID
+ * ]
+ * Description: 
+ */
+exports.findAverage = async (req, res) => {
+  const shop_id = req.params.shop_id
+
+  allShopRatings = await Rating.findAll( {attributes: ['id', 'shop_id', 'star', 'price'], where: {shop_id: shop_id}})
+
+  average_price = 0
+  average_stars = 0
+
+  for (var i=0; i < allShopRatings.length; i++){
+    average_price = average_price + allShopRatings[i].price
+    average_stars = average_stars + allShopRatings[i].star
+  }
+
+  average_price = (average_price/allShopRatings.length)
+  average_stars = (average_stars/allShopRatings.length)
+  average_price = average_price.toFixed(2)
+  average_stars = average_stars.toFixed(2)
+
+  res.send({
+    "average_price": average_price,
+    "average_stars" : average_stars
+  })
+
+}

@@ -5,6 +5,19 @@ const ShopAdmin = require("../models").ShopAdmin
 const Rating = require("../models").Rating
 const Op = db.Sequelize.Op;
 
+/**
+ * Endpoint: /api/shops/
+ * Method: POST
+ * Fields: [
+ *  name: @var STRING
+ *  address: @var STRING
+ *  phone: @var STRING
+ *  email: @var STRING
+ *  time: @var JSON
+ *  description: @var STRING
+ * ]
+ * Description: Creates a Shop model instance with the inputted information
+ */
 exports.create = (req, res)=>{
     const newShop = {
       name: req.body.name,
@@ -25,6 +38,17 @@ exports.create = (req, res)=>{
       });
 }
 
+/**
+ * Endpoint: /api/shops/:sort/:search
+ * Method: GET
+ * Parameters: [
+ *  sort: @var STRING
+ *  search: @var STRING
+ * ]
+ * Description: Sort all shop model instances by the :sort parameter passed in the request, which should either be "star" or "price". 
+ * Shops are sorted by the average star/price value they have from their respective Rating model instances. Also filters all shops
+ * by their names, returning all Shop models with a name field containing the :search parameter passed in the request.
+ */
 exports.findAll = async (req, res)=>{ 
   search = req.params.search == "null" ? "" : req.params.search;
   sort = req.params.sort
@@ -71,6 +95,14 @@ exports.findAll = async (req, res)=>{
   res.send(actualResponse)
 }
 
+/**
+ * Endpoint: /api/shops/user/:user_id
+ * Method: GET
+ * Parameters: [
+ *  user_id: @var UUID
+ * ]
+ * Description: find all Shop model instance associated with the user with user_id passed in as a paramter
+ */
 exports.findAllByUserID = async (req, res) =>{
   const user_id = req.params.user_id;
   // Get all ShopAdmin models, an array of dicts
@@ -84,6 +116,14 @@ exports.findAllByUserID = async (req, res) =>{
   res.send(shopIDs)
 }
 
+/**
+ * Endpoint: /api/shops/:id
+ * Method: GET
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: find the shop model instance with the id passed in as a paramter
+ */
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -104,6 +144,22 @@ exports.findOne = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/shops/:id
+ * Method: PUT
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Fields: [
+ *  name: @var STRING
+ *  address: @var STRING
+ *  phone: @var STRING
+ *  email: @var STRING
+ *  time: @var JSON
+ *  description: @var STRING
+ * ]
+ * Description: Update the Shop model instance with the id passed in as a paramter to contain the inputted information
+ */
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -128,6 +184,14 @@ exports.update = (req, res) => {
     });
 };
 
+/**
+ * Endpoint: /api/shops/:id
+ * Method: DELETE
+ * Parameters: [
+ *  id: @var UUID
+ * ]
+ * Description: delete the Shop model instance with the id passed in as a paramter
+ */
 exports.delete = (req, res) => {
   const id = req.params.id;
 

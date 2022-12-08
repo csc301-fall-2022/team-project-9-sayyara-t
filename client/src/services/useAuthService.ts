@@ -51,8 +51,16 @@ export const useAuthService = () => {
     return result.success;
   };
 
+  const signOut = (): boolean => {
+    sessionStorage.removeItem('x-access-token');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('roleId');
+    return true;
+  };
+
   return {
     signUp,
-    signIn
+    signIn,
+    signOut
   };
 };
