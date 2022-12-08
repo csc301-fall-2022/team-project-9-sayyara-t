@@ -1,11 +1,14 @@
 # Sayyara
 
+This branch of our app has everything set up for ease of marking - all config files are preconfigured.
+
+You will be connected to a remote database with some mock data.
+
 ## Requirements
 
 - Node.js
-- MySQL server
 
-## Basic Setup for Development
+## Basic Setup for Marking
 
 - Clone the repo
 
@@ -15,10 +18,6 @@
 
   - Run `npm run install` in the root directory
   
-- Setup the database
-
-  - Please refer to `./documentation/Database.pdf` for more information
-  
 - Start up the server
 
   - Run `npm run start:server` in the root directory
@@ -27,7 +26,7 @@
 
   - `cd ./client` and run `npm run dev`
   
-For topics like hosting, testing or APIs, check out `./documentation` for more information.
+  
 
 
 
