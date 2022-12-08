@@ -1,11 +1,11 @@
 {
   "env": "prod",
   "prod": {
-    "username": "doadmin",
-    "password": "AVNS_0iQEJIRcg6wXhOD-O3W",
-    "database": "sayyara",
-    "port": 25060,
-    "host": "mysql-db-csc311-do-user-12762219-0.b.db.ondigitalocean.com",
+    "username": "dbadmin",
+    "password": "abc123",
+    "database": "sayyara_prod",
+    "port": 12345,
+    "host": "mysql-host.com",
     "dialect": "mysql",
     "dialectOptions": {
       "ssl": {
@@ -15,11 +15,11 @@
     }
   },
   "test": {
-    "username": "doadmin",
-    "password": "AVNS_0iQEJIRcg6wXhOD-O3W",
+    "username": "dbadmin",
+    "password": "abc123",
     "database": "sayyara_test",
-    "port": 25060,
-    "host": "mysql-db-csc311-do-user-12762219-0.b.db.ondigitalocean.com",
+    "port": 12345,
+    "host": "mysql-host.com",
     "dialect": "mysql",
     "dialectOptions": {
       "ssl": {
@@ -30,7 +30,7 @@
   },
   "local": {
     "username": "root",
-    "password": "your passwordd",
+    "password": "abc123",
     "database": "sayyara",
     "host": "127.0.0.1",
     "dialect": "mysql"
