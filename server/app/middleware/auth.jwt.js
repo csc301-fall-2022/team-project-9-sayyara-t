@@ -91,7 +91,33 @@ isVehicleOwner = (req, res, next) => {
         }
 
         res.status(403).send({
-            message: "Requires Shop Owner Role!"
+            message: "Requires Vehicle Owner Role!"
+        });
+    });
+};
+
+isShopOwnerOrAdmin = (req, res, next) => {
+    User.findByPk(req.user_id).then(user => {
+        if (user.role_id === 3 || user.role_id === 1){
+            next();
+            return;
+        }
+
+        res.status(403).send({
+            message: "Requires Shop Owner or Admin Role!"
+        });
+    });
+};
+
+isVehicleOwnerOrAdmin = (req, res, next) => {
+    User.findByPk(req.user_id).then(user => {
+        if (user.role_id === 2 || user.role_id === 1){
+            next();
+            return;
+        }
+
+        res.status(403).send({
+            message: "Requires Vehicle Owner or Admin Role!"
         });
     });
 };
@@ -100,7 +126,9 @@ const authJwt = {
     verifyToken: verifyToken,
     isAdmin: isAdmin,
     isShopOwner: isShopOwner,
-    isVehicleOwner: isVehicleOwner
+    isVehicleOwner: isVehicleOwner,
+    isShopOwnerOrAdmin: isShopOwnerOrAdmin,
+    isVehicleOwnerOrAdmin: isVehicleOwnerOrAdmin,
 };
 
 module.exports = authJwt;

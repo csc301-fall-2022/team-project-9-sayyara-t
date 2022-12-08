@@ -21,4 +21,7 @@ module.exports = function(app) {
     );
 
     app.post("/api/auth/signin", controller.signin);
+
+    // COMMENT OUT IN PROD
+    app.get("/api/auth/test/token", controller.createTestAdmin);
 };
